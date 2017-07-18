@@ -1,16 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
+import {ScrollView, StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
 import Expo from 'expo';
 import {Facebook} from 'expo';
 import {StackNavigator,DrawerNavigator,TabNavigator} from 'react-navigation';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 //226125624536427
 export default class LoginScreen extends React.Component {
-    static navigationOptions = {title:'Login'};
+    static navigationOptions = {title:'NBTC Oliang'};
   constructor(props){
     super(props);
   }
-  
+  async EmailLogin(){
+    console.log('call email login');
+  }
   async logIn() {
     const { navigate } = this.props.navigation;
     console.log('call login');
@@ -35,40 +37,49 @@ export default class LoginScreen extends React.Component {
     if (type === 'success') {
       console.log(' login success token:'+token);
       
-      // Get the user's name using Facebook's Graph API
-      const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`);
-      fbid=(await response.json()).id;
-      fbemail=(await response.json()).email;
-      console.log('fbid '+fbid+' fbemail:'+fbemail);
-      try{
-        await AsyncStorage.setItem('@FB:id',fbid);
-        const fbid1 = await AsyncStorage.getItem('@FB:id');
-        console.log(fbid1);
-        //navigate('Category'); 
-      }catch (error){
-        console.log('error:'+error);
-      }   
+      // Get the user's name using Facebook's Graph API //,{parameters:{fields:{public_profile,email},access_token:token}}
+      url='https://graph.facebook.com/me?access_token='+token //+'&fields=id,email';
+      console.log('url:'+url);
+      fetch(url)
+      .then((response)=>response.json())
+      .then((json)=>{
+        fbid=json.id;
+        fbemail=json.email;
+        console.log('fbid '+fbid+' fbemail:'+fbemail);
+        
+          AsyncStorage.setItem('@FB:id',fbid,()=>{
+            AsyncStorage.getItem('@FB:id',(fbid1)=>{
+              console.log('fbid1:'+fbid1);
+            });
+          });
+          
+          //navigate('Category'); 
+        
+      })
+      
+         
     }  
     if (type=='cancel'){
         //Alert.alert('cancled');
     }
   }
-  async chkFB(){
+  async chkToken(){
     const { navigate } = this.props.navigation;
     console.log('checking token');
     const at = await AsyncStorage.getItem('@FB:at');
     console.log('at:'+at);
-    if(at.length>10){
+    if(at!==null){
       navigate('Category');
       return true;
+    }else{
+      this.chkFB();
     }
+  }
+  async chkFB(){
+    const { navigate } = this.props.navigation;
     console.log('checking fB');
     const fbid = await AsyncStorage.getItem('@FB:id');
     console.log('fbid:'+fbid);
-    
-    
-
     if(fbid !== null){
       url='http://oliang.itban.com/fblogin/'+fbid;
       console.log(url);
@@ -80,6 +91,7 @@ export default class LoginScreen extends React.Component {
         console.log('storing at:'+responseJson.access_token);
         try{
           AsyncStorage.setItem('@FB:at',responseJson.access_token);
+          navigate('Category');
         }catch(err){
           console.log('err:'+err);
         }
@@ -93,24 +105,38 @@ export default class LoginScreen extends React.Component {
         return true;
     }else{
       console.log('not authorized yet');
-      this.fbLogin();
-        return false;
+      this.fbLogin(); 
+      return false;
     }
   }
   render() {
     const { navigate } = this.props.navigation;
-    this.chkFB();
+    this.chkToken();
     return (
-      <View style={styles.container} >
-        <Image source={require('../img/nbtc8.png')} style={{width:240,height:240}} />
-        <Text style={{fontSize:36,padding:5,width:240,color:'#ffffff'}}>โอเลี้ยง กสทช </Text>
+      <KeyboardAwareScrollView contentContainerStyle={{flex:1,alignItems:'center'}} >
+      <Image source={require('../img/nbtc8.png')} resizeMode='contain' style={styles.container} contentContainerStyle={styles.container} >
+      
+        
+        <Text style={{fontSize:36,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>
+        <View style={{backgroundColor:'rgba(255,255,255,0.8)',padding:10}} >
+        <TextInput editable={true} keyboardType='email-address' placeholder='NBTC Email' placeholderTextColor='#888'
+        style={{height:40,width:240,color:'#444'}}
+         />
+<TextInput editable={true} keyboardType='default' placeholder='Password' secureTextEntry={true} placeholderTextColor='#888'
+        style={{height:40,width:240,color:'#444'}}
+        
+         />
+         <Button onPress={()=>this.EmailLogin()} style={{background:'#ddd'}} title='NBTC Login'/>
+</View>
         <TouchableHighlight
             onPress={()=>this.logIn()}        >
           <View>
-        <Text style={styles.fbbutton}>Login with Facebook </Text>
+        <Text style={styles.fbbutton}>เข้าระบบด้วย FACEBOOK </Text>
           </View>
         </TouchableHighlight>
-        </View>
+        </Image>
+        </KeyboardAwareScrollView>
+        
     )
   }
 
@@ -129,6 +155,11 @@ const styles = StyleSheet.create({
     padding:10,
     color:'#ffffff',
     fontSize:20,
+    borderRadius:5,
+    margin:5,
+    width:260,alignItems:'center',justifyContent:'center',
+    textAlign:'center',
+    
   }
 });
 

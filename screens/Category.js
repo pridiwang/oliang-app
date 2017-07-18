@@ -54,10 +54,20 @@ export default class CategoryScreen extends React.Component{
           />
           
           </ScrollView>
+          <Button title="Logout" onPress={()=>{this.UserLogout()}} />
           </Image>
           </View>
       )
     }
+  }
+  UserLogout(){
+    const { navigate } = this.props.navigation;
+    console.log('loging out');
+    AsyncStorage.clear(()=>{
+      console.log('async storage cleared ');
+      navigate('Login');
+    });
+
   }
 }
 
