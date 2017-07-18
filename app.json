@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "sdkVersion": "18.0.0",
+    "facebookScheme": "fb226125624536427",
+    "name":"NBTC Oliang",
+    "icon":"./img/nbtc.png",
+    "version": "1.0.0",
+    "slug":"nbtc-oliang-app",
+    "ios":{
+      "bundleIdentifier":"net.pridi.oliang"
+    },
+    "android":{
+      "package": "net.pridi.oliang"
+    },
+    "packagerOpts": {
+      "assetExts": ["ttf"]
+    }
+  },
+  "facebookScheme": "fb226125624536427"
+}
