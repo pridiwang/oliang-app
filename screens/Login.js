@@ -6,14 +6,43 @@ import {StackNavigator,DrawerNavigator,TabNavigator} from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 //226125624536427
 export default class LoginScreen extends React.Component {
-    static navigationOptions = {title:'NBTC Oliang'};
+  static navigationOptions = {title:'NBTC Oliang'};
   constructor(props){
     super(props);
   }
-  async EmailLogin(){
+  EmailLogin(){
+    const { navigate } = this.props.navigation;
     console.log('call email login');
+    let email=this.state.email;
+    
+    let password=this.state.password;
+    console.log('state email:'+email+ ' password:'+password);
+    url='http://oliang.itban.com/emaillogin/';
+    fetch(url,{method:'POST',
+    headers:{'Authorization': 'EM '+email+'|'+password},
+    body:JSON.stringify({email:email,password:password}),
+    })
+    .then((response)=>response.json())
+    .then((json)=>{
+      token=json.access_token;
+      console.log(json)
+      try{
+          console.log('token:'+token);
+          AsyncStorage.setItem('@FB:at',token,()=>{
+            AsyncStorage.getItem('@FB:at',(err,at1)=>{
+              console.log('token '+token+ ' stored at:'+at1);
+              //navigate('Category');
+            });
+          });
+      }catch(err){
+          console.log('err:'+err);
+      }
+    })
+    .catch((error)=>{
+      console.error(error)
+    });
   }
-  async logIn() {
+  logIn() {
     const { navigate } = this.props.navigation;
     console.log('call login');
     
@@ -48,7 +77,7 @@ export default class LoginScreen extends React.Component {
         console.log('fbid '+fbid+' fbemail:'+fbemail);
         
           AsyncStorage.setItem('@FB:id',fbid,()=>{
-            AsyncStorage.getItem('@FB:id',(fbid1)=>{
+            AsyncStorage.getItem('@FB:id',(err,fbid1)=>{
               console.log('fbid1:'+fbid1);
             });
           });
@@ -63,55 +92,64 @@ export default class LoginScreen extends React.Component {
         //Alert.alert('cancled');
     }
   }
-  async chkToken(){
+
+  chkToken(){
     const { navigate } = this.props.navigation;
     console.log('checking token');
-    const at = await AsyncStorage.getItem('@FB:at');
-    console.log('at:'+at);
-    if(at!==null){
-      navigate('Category');
-      return true;
-    }else{
-      this.chkFB();
-    }
+    AsyncStorage.getItem('@FB:at',(err,at)=>{
+      console.log('at:'+at);
+      if(at!==null){
+        navigate('Category');
+        return true;
+      }else{
+        this.chkFB();
+        return false;
+      }
+    });
+    
   }
-  async chkFB(){
+  chkFB(){
     const { navigate } = this.props.navigation;
     console.log('checking fB');
-    const fbid = await AsyncStorage.getItem('@FB:id');
-    console.log('fbid:'+fbid);
-    if(fbid !== null){
-      url='http://oliang.itban.com/fblogin/'+fbid;
-      console.log(url);
-      return fetch(url)
-      .then((response)=>response.json())
-      .then((responseJson)=>{
-        console.log(responseJson);
-        //this.setState('access_token',responseJson.access_token);
-        console.log('storing at:'+responseJson.access_token);
-        try{
-          AsyncStorage.setItem('@FB:at',responseJson.access_token);
-          navigate('Category');
-        }catch(err){
-          console.log('err:'+err);
-        }
-      },function(){
+    AsyncStorage.getItem('@FB:id',(err,fbid)=>{
+      console.log('fbid:'+fbid);
+      if(fbid !== null){
+        url='http://oliang.itban.com/fblogin/'+fbid;
+        console.log(url);
+        return fetch(url)
+        .then((response)=>response.json())
+        .then((responseJson)=>{
+          console.log(responseJson);
+          //this.setState('access_token',responseJson.access_token);
+          console.log('storing at:'+responseJson.access_token);
+          try{
+            AsyncStorage.setItem('@FB:at',responseJson.access_token);
+            navigate('Category');
+          }catch(err){
+            console.log('err:'+err);
+          }
+        },function(){
 
-      }); 
+        }); 
 
-        console.log('authorzied ');
-        console.log(fbid);
-        //navigate('Category');
-        return true;
-    }else{
-      console.log('not authorized yet');
-      this.fbLogin(); 
-      return false;
-    }
+          console.log('authorzied ');
+          console.log(fbid);
+          //navigate('Category');
+          return true;
+      }else{
+        console.log('not authorized yet');
+        //this.fbLogin(); 
+        return false;
+      }
+    });
+  }
+  async componentDidMount(){
+    console.log('component did mount');
+    this.chkToken(); 
   }
   render() {
     const { navigate } = this.props.navigation;
-    this.chkToken();
+    
     return (
       <KeyboardAwareScrollView contentContainerStyle={{flex:1,alignItems:'center'}} >
       <Image source={require('../img/nbtc8.png')} resizeMode='contain' style={styles.container} contentContainerStyle={styles.container} >
@@ -120,12 +158,17 @@ export default class LoginScreen extends React.Component {
         <Text style={{fontSize:36,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>
         <View style={{backgroundColor:'rgba(255,255,255,0.8)',padding:10}} >
         <TextInput editable={true} keyboardType='email-address' placeholder='NBTC Email' placeholderTextColor='#888'
-        style={{height:40,width:240,color:'#444'}}
+        style={{height:40,width:240,color:'#444'}} 
+        onChangeText={(email)=>this.setState({email:email})}
          />
 <TextInput editable={true} keyboardType='default' placeholder='Password' secureTextEntry={true} placeholderTextColor='#888'
         style={{height:40,width:240,color:'#444'}}
-        
-         />
+        onChangeText={(password)=>{
+            console.log('fill in password:'+password)
+            this.setState({password:password})
+            }
+
+        }/>
          <Button onPress={()=>this.EmailLogin()} style={{background:'#ddd'}} title='NBTC Login'/>
 </View>
         <TouchableHighlight
