@@ -52,9 +52,14 @@ export default class CategoryScreen extends React.Component{
             </TouchableHighlight>
             }
           />
-          
+          <View style={{flexDirection:'row'}}>
+          <Button style={styles.btn}  title="NBTC App Universe" onPress={()=>{this.props.navigation.navigate('AppUni')}} />
+          <View style={{width:10}}></View><Button style={styles.btn} title="Logout" onPress={()=>{this.UserLogout()}} />
+            </View>
           </ScrollView>
-          <Button title="Logout" onPress={()=>{this.UserLogout()}} />
+          
+            
+          
           </Image>
           </View>
       )
@@ -74,4 +79,5 @@ export default class CategoryScreen extends React.Component{
 const styles = StyleSheet.create({
   container:{flex:1,justifyContent:'center',alignItems:'stretch'},
   catname:{fontSize:20,color:'#fff'},
+  btn:{margin:5,width:100,backgroundColor:'rgba(0,0,0,0)'},
 });
