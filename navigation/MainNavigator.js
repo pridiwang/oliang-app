@@ -1,4 +1,4 @@
-import {StackNavigator,DrawerNavigator,TabNavigator} from 'react-navigation';
+import {StackNavigator,DrawerNavigator} from 'react-navigation';
 
 import App from '../App';
 import LoginScreen from '../screens/Login';
@@ -7,11 +7,15 @@ import PostsScreen from '../screens/Posts';
 import DetailScreen from '../screens/PostDetail';
 import PlayerScreen from '../screens/PostPlayer';
 import AppUniverse from '../screens/AppUniverse';
+import Profile from '../screens/Profile';
+import Test from '../screens/Test';
+
 
 export default MainNavigator = StackNavigator({
-    Login: {screen: LoginScreen},
+   
     Category: {screen: CategoryScreen},
-    
+    Profile: {screen: Profile},
+    Login: {screen: LoginScreen}, 
     Posts: {screen: PostsScreen},
     Detail: {screen: DetailScreen},
     Player: {screen: PlayerScreen},    

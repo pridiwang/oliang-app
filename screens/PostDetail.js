@@ -48,25 +48,37 @@ export default class DetailScreen extends React.Component{
             )
         }else{
 
-
+//<HTMLView style={styles.content} value={params.data.content} />
+//<WebView hasZoom='true' source={{uri:'http://oliang.itban.com/content/'+params.data.id}} style={{marginTop:20}} />
           return(
               <ScrollView style={styles.container}>
                   <View style={{flex:1,height:150,position:'relative'}}>
                   <Image resizeMode="cover" source={{uri:params.data.img}} style={styles.img}/>
                   </View>
+              <View style={{padding:10}} >
               <Text style={styles.title}>{params.data.title}</Text>
-              <HTMLView style={styles.content} value={params.data.content} />
+              <HTMLView style={styles.content} value={params.data.content} hasZoom='true' />
+              
+              </View>
+              <WebView
+        source={{uri: 'https://github.com/facebook/react-native'}}
+        style={{marginTop: 20}}
+      />
               </ScrollView>
           )
         }
     }
 }
-
-
+//<HTMLView stylesheet={htmlstyles} value={params.data.content} style={styles.container}/>
 const styles=StyleSheet.create({
     container:{flex:1,position:'relative'},
     img:{position:'absolute',top:0,left:0,bottom:0,right:0},
     vdo:{width:320,height:240},
     title:{fontSize:20,padding:5},
-    content:{padding:5}
+    content:{padding:10}
+});
+
+const htmlstyles=StyleSheet.create({
+    body:{padding:20,flex:1,margin:10},    
+    p:{margin:0,color:'#444444',padding:10,fontSize:16},
 });

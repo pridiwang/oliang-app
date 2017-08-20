@@ -1,9 +1,14 @@
 import React from 'react';
 import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
+import {StackNavigator,DrawerNavigator} from 'react-navigation';
+import Drawer from 'react-native-drawer';
+import ControlPanel from './ControlPanel';
+import Profile from './Profile';
+import Logout from './Logout';
 
-export default class CategoryScreen extends React.Component{
+class Category extends React.Component{
   static navigationOptions={
-      header:null,      
+      header:null,
   }
   constructor(props){
     super(props);
@@ -36,15 +41,21 @@ export default class CategoryScreen extends React.Component{
       </View>
       )
     }else{
-      
+//        <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
+//<Image source={require('../img/menu-icon.png')}            style={{width:30,height:30}}             />
       return (
+      
           <View style={styles.container} contentContainerStyle={styles.container} >
+            
+            
+        
         <Image style={{flex:1,height:720}} resizeMode='cover' source={{uri:'http://oliang.itban.com/img/background1.png'}} >
         <ScrollView 
         contentContainerStyle={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',paddingTop:50,}}
          >
-        
+
           <Text style={{flex:1,backgroundColor:'rgba(0,0,0,0)',color:'#a00',fontSize:48}}>โอเลี้ยง กสทช</Text>
+          
           <ListView style={{flex:1,width:320,padding:5}} dataSource={this.state.dataSource}
             renderRow={ (dr) =>
             <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
@@ -52,16 +63,16 @@ export default class CategoryScreen extends React.Component{
             </TouchableHighlight>
             }
           />
-          <View style={{flexDirection:'row'}}>
-          <Button style={styles.btn}  title="NBTC App Universe" onPress={()=>{this.props.navigation.navigate('AppUni')}} />
-          <View style={{width:10}}></View><Button style={styles.btn} title="Logout" onPress={()=>{this.UserLogout()}} />
-            </View>
+          
           </ScrollView>
           
             
-          
+          <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
+              <Image source={require('../img/menu-icon.png')}            style={{width:30,height:30}}             />
+            </TouchableHighlight>
           </Image>
           </View>
+       
       )
     }
   }
@@ -80,4 +91,18 @@ const styles = StyleSheet.create({
   container:{flex:1,justifyContent:'center',alignItems:'stretch'},
   catname:{fontSize:20,color:'#fff'},
   btn:{margin:5,width:100,backgroundColor:'rgba(0,0,0,0)'},
+});
+
+export default CategoryScreen = DrawerNavigator({
+  Back:{
+    screen: Category,
+  },
+  Profile:{
+    screen: Profile,
+  },
+  Logout:{
+    screen: Logout,
+  }
+},{
+  headerMode:'null',
 });
