@@ -1,20 +1,21 @@
 {
-  "expo": {
-    "sdkVersion": "18.0.0",
-    "facebookScheme": "fb226125624536427",
-    "name":"NBTC Oliang",
-    "icon":"./img/nbtc.png",
-    "version": "1.0.0",
-    "slug":"nbtc-oliang-app",
-    "ios":{
-      "bundleIdentifier":"net.pridi.oliang"
+    "expo": {
+        "sdkVersion": "18.0.0",
+        "privacy": "public",
+        "facebookScheme": "fb226125624536427",
+        "name": "NBTC Oliang",
+        "icon": "./img/nbtc.png",
+        "version": "1.0.0",
+        "slug": "nbtc-oliang-app",
+        "ios": {
+            "bundleIdentifier": "th.go.nbtc.oliang"
+        },
+        "android": {
+            "package": "th.go.nbtc.oliang"
+        },
+        "packagerOpts": {
+            "assetExts": ["ttf"]
+        }
     },
-    "android":{
-      "package": "net.pridi.oliang"
-    },
-    "packagerOpts": {
-      "assetExts": ["ttf"]
-    }
-  },
-  "facebookScheme": "fb226125624536427"
+    "facebookScheme": "fb226125624536427"
 }
