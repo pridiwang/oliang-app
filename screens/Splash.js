@@ -14,7 +14,7 @@ export default class Splash extends React.Component{
     componentDidMount() {
         setTimeout(()=>{
             this.props.navigation.navigate('Login')    
-        }, 3000);
+        }, 5000);
         
     }
     render(){
@@ -32,7 +32,7 @@ export default class Splash extends React.Component{
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container:{backgroundColor:'#ffffff',
         flex:1,flexDirection:'column',alignItems:'center'
     ,justifyContent:'center'},
     img:{flex:1,width:320},

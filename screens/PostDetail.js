@@ -59,10 +59,10 @@ export default class DetailScreen extends React.Component{
             title: params.data.title,
             message: "Hola mundo",
             url: params.data.img,
-            subject: "Share from Oliang NBTC" //  for email
+            subject: "Share from Oliang NBTC" //  for email 
           };
           let shareContent={
-              message: params.data.title+':'+params.data.content,
+              message: params.data.title+': '+params.data.content,
               title: params.data.title,
               url:contentURL,
           }
@@ -91,14 +91,9 @@ export default class DetailScreen extends React.Component{
                   </View>
               <View style={{padding:10}} >
               <Text style={styles.title}>{params.data.title}</Text>
-              <HTMLView style={styles.content} value={params.data.content} hasZoom='true' />
-              
-              </View>
-              <WebView
-        source={{uri: 'https://github.com/facebook/react-native'}}
-        style={{marginTop: 20}}
-      /> 
-      <Button onPress={()=>{Share.share(shareContent)}} title="Basic Share"></Button>
+              <HTMLView style={styles.content} hasZoom='true' stylesheet={htmlstyles} value={params.data.content}  />
+              </View>         
+      <Button onPress={()=>{Share.share(shareContent)}} title="Share"></Button>
               </ScrollView>
           )
         }
@@ -110,7 +105,7 @@ const styles=StyleSheet.create({
     img:{position:'absolute',top:0,left:0,bottom:0,right:0},
     vdo:{width:320,height:240},
     title:{fontSize:20,padding:5},
-    content:{padding:10},
+    content:{padding:10,},
     instructions: {
         marginTop: 20,
         marginBottom: 20,
@@ -119,7 +114,8 @@ const styles=StyleSheet.create({
 
 const htmlstyles=StyleSheet.create({
     body:{padding:20,flex:1,margin:10},    
-    p:{margin:0,color:'#444444',padding:10,fontSize:16},
+    p:{margin:0,color:'#444444',padding:0},
+    
 });
 
 //  twitter icon

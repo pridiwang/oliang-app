@@ -53,10 +53,10 @@ class Category extends React.Component{
         <ScrollView 
         contentContainerStyle={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',paddingTop:50,}}
          >
-
-          <Text style={{flex:1,backgroundColor:'rgba(0,0,0,0)',color:'#a00',fontSize:48}}>โอเลี้ยง กสทช</Text>
+         <Image source={require ('../img/oliang-text.png')} style={{width:300,flex:0.3}} />
           
-          <ListView style={{flex:1,width:320,padding:5}} dataSource={this.state.dataSource}
+          
+          <ListView style={{flex:1,width:320,padding:5,paddingTop:30,bottom:0}} dataSource={this.state.dataSource}
             renderRow={ (dr) =>
             <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
             <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
@@ -76,6 +76,7 @@ class Category extends React.Component{
       )
     }
   }
+  //<Text style={{flex:1,backgroundColor:'rgba(0,0,0,0)',color:'#a00',fontSize:48}}>โอเลี้ยง กสทช</Text>
   UserLogout(){
     const { navigate } = this.props.navigation;
     console.log('loging out');
