@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet,AsyncStorage} from 'react-native';
 
-
 export const themeLight= StyleSheet.create({
     container:{flex:1,position:'relative'},
     img:{position:'absolute',top:0,left:0,bottom:0,right:0},
