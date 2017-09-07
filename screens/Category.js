@@ -1,12 +1,13 @@
 import React from 'react';
 import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
-import {StackNavigator,DrawerNavigator} from 'react-navigation';
-import Drawer from 'react-native-drawer';
-import ControlPanel from './ControlPanel';
+import{ DrawerNavigator } from 'react-navigation';
+import {MainNavigator} from '../navigation/MainNavigator';
+
 import Profile from './Profile';
+import AboutScreen from './About';
 import Logout from './Logout';
 
-class Category extends React.Component{
+export class CategoryScreen extends React.Component{
   static navigationOptions={
       header:null,
   }
@@ -14,6 +15,7 @@ class Category extends React.Component{
     super(props);
     console.log('constructor ');
     this.state={isLoading:true};
+    AsyncStorage.setItem('theme','Light');
   }
   componentDidMount() { 
     url='http://oliang.itban.com/catlist';
@@ -34,6 +36,8 @@ class Category extends React.Component{
   }
   render(){
     console.log('render');
+    theme=AsyncStorage.getItem('theme');
+    console.log('curtheme:'+theme);
     if(this.state.isLoading==true){
       return (
         <View>
@@ -43,37 +47,42 @@ class Category extends React.Component{
     }else{
 //        <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
 //<Image source={require('../img/menu-icon.png')}            style={{width:30,height:30}}             />
-      return (
+      
+return (
       
           <View style={styles.container} contentContainerStyle={styles.container} >
             
             
         
-        <Image style={{flex:1,height:720}} resizeMode='cover' source={{uri:'http://oliang.itban.com/img/background1.png'}} >
+        <Image style={{flex:1,height:720,padding:5}} resizeMode='cover' source={{uri:'http://oliang.itban.com/img/background1.png'}} >
+        
+        <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
+              <Image source={require('../img/menu-icon.png')}            style={{width:30,height:30,marginTop:30}}             />
+            </TouchableHighlight>
+
         <ScrollView 
-        contentContainerStyle={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',paddingTop:50,}}
+        contentContainerStyle={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',paddingTop:30,}}
          >
-         <Image source={require ('../img/oliang-text.png')} style={{width:300,flex:0.3}} />
+         <Image source={require ('../img/oliang-text.png')} style={{width:280,flex:0.25,marginBottom:60,paddingBottom:50}} />
           
           
-          <ListView style={{flex:1,width:320,padding:5,paddingTop:30,bottom:0}} dataSource={this.state.dataSource}
+          <ListView style={{flex:1,width:320,padding:5,paddingTop:0,bottom:0}} dataSource={this.state.dataSource}
             renderRow={ (dr) =>
             <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
             <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
             </TouchableHighlight>
             }
           />
-          
+          <TextInput placeholder="search" style={{}}/>
           </ScrollView>
           
             
-          <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
-              <Image source={require('../img/menu-icon.png')}            style={{width:30,height:30}}             />
-            </TouchableHighlight>
+          
           </Image>
           </View>
        
       )
+      
     }
   }
   //<Text style={{flex:1,backgroundColor:'rgba(0,0,0,0)',color:'#a00',fontSize:48}}>โอเลี้ยง กสทช</Text>
@@ -94,16 +103,11 @@ const styles = StyleSheet.create({
   btn:{margin:5,width:100,backgroundColor:'rgba(0,0,0,0)'},
 });
 
-export default CategoryScreen = DrawerNavigator({
-  Back:{
-    screen: Category,
-  },
-  Profile:{
-    screen: Profile,
-  },
-  Logout:{
-    screen: Logout,
-  }
+export default DrawNavigator = DrawerNavigator({
+  Back:{    screen: CategoryScreen,  },
+  Profile:{    screen: Profile,  },
+  About:{    screen: AboutScreen,  },
+  Logout:{    screen: Logout, }
 },{
   headerMode:'null',
 });

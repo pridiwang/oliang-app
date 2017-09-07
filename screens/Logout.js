@@ -12,16 +12,24 @@ static navigationOptions = {
     ),
     header:null,
   };
-
-
- UserLogout(){
+  constructor(props){
+    super(props);
+    
+  }
+  componentDidMount() {
     const { navigate } = this.props.navigation;
-    console.log('loging out');
     AsyncStorage.clear(()=>{
       console.log('async storage cleared ');
-      navigate('Login');
+      navigate('Splash');
     });
-
+    
+  }
+  render(){
+    return(
+      <View>
+        <Text>Loggin Out</Text>
+        </View>
+    )
   }
 
 }

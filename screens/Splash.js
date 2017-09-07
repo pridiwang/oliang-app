@@ -8,8 +8,10 @@ export default class Splash extends React.Component{
     constructor (props) {
         super(props);
         this.state = {
-            signedin: false
+            signedin: false,
+            theme:'Light',
         };
+        
     }
     componentDidMount() {
         setTimeout(()=>{

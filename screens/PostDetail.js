@@ -5,6 +5,7 @@ import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
 import Expo,{Video} from 'expo';
 //import Share, {ShareSheet, Button} from 'react-native-share';
+import {themeDark,themeLight} from './Styles';
 
 export default class DetailScreen extends React.Component{
 
@@ -100,17 +101,7 @@ export default class DetailScreen extends React.Component{
     }
 }
 //<HTMLView stylesheet={htmlstyles} value={params.data.content} style={styles.container}/>
-const styles=StyleSheet.create({
-    container:{flex:1,position:'relative'},
-    img:{position:'absolute',top:0,left:0,bottom:0,right:0},
-    vdo:{width:320,height:240},
-    title:{fontSize:20,padding:5},
-    content:{padding:10,},
-    instructions: {
-        marginTop: 20,
-        marginBottom: 20,
-      },
-});
+const styles=themeDark;
 
 const htmlstyles=StyleSheet.create({
     body:{padding:20,flex:1,margin:10},    

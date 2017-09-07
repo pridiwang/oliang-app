@@ -4,6 +4,10 @@ import { Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput,
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import renderif from '../utility/renderif';
+import {themeLight,themeDark} from './Styles';
+
+const styles=themeLight;
+AsyncStorage.setItem('theme','Light');
 
 export default class PostsScreen extends React.Component{
     static navigationOptions=({navigation})=>({
@@ -12,10 +16,17 @@ export default class PostsScreen extends React.Component{
     });
     constructor(props){
         super(props);
+        console.log('constructor');
+        theme=AsyncStorage.setItem("theme","Light");
+        
         this.state={
             isLoading:true,
             refreshing:false,
+            theme:'Light',
         }
+        theme=AsyncStorage.getItem("theme");
+        console.log(theme);
+        
     }
     _onRefresh(){
         this.setState({refreshing: true});
@@ -63,8 +74,14 @@ export default class PostsScreen extends React.Component{
                 </View>
             )
         }else{
+            theme=AsyncStorage.getItem('theme');
+            console.log('theme');
+            console.log(theme);
+            if(theme=='Light') styles=themeLight;
+            if(theme=='Dark') styles=themeDark;
+            
             return(
-                <View style={{flex:4,padding:10,}} >
+                <View style={styles.postView} >
                     
                     <ListView style={{flex:5}}
                         refreshControl={
@@ -107,37 +124,3 @@ export default class PostsScreen extends React.Component{
     }
 }
 
-const styles=StyleSheet.create({
-    container: {
-        flex:4,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    postItem:{
-        flex:1,
-        flexDirection:'row',
-        padding:3,
-        borderBottomWidth:1,
-        borderColor:'#cccccc',
-    },
-    postImg:{
-       height:100,      
-       flex:3,
-
-    },
-    postTitle:{
-        flex:6,
-        paddingLeft:5,
-        fontSize:14,
-        position:'relative',
-
-    },
-    postRead:{
-        flex:1,
-        position:'absolute',
-        bottom:10,
-        right:0,
-       
-    }
-
-});

@@ -10,17 +10,22 @@ import AppUniverse from '../screens/AppUniverse';
 import Profile from '../screens/Profile';
 import Test from '../screens/Test';
 import Splash from '../screens/Splash';
+import AboutScreen from '../screens/About';
+import Logout from '../screens/Logout';
 
 
 export default MainNavigator = StackNavigator({
-    Splash: { screen: Splash },
-    Category: { screen: CategoryScreen },
+    Category: { screen: CategoryScreen },   
     Profile: { screen: Profile },
+    Splash: { screen: Splash },
+
     Login: { screen: LoginScreen },
     Posts: { screen: PostsScreen },
     Detail: { screen: DetailScreen },
     Player: { screen: PlayerScreen },
     AppUni: { screen: AppUniverse },
+    About: { screen: AboutScreen },
 }, {
     headerMode: 'screen',
 });
+

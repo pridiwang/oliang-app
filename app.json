@@ -3,15 +3,15 @@
         "sdkVersion": "18.0.0",
         "privacy": "public",
         "facebookScheme": "fb226125624536427",
-        "name": "NBTC Oliang",
+        "name": "โอเลี้ยง กสทช",
         "icon": "./img/nbtc.png",
         "version": "1.0.0",
         "slug": "nbtc-oliang-app",
         "ios": {
-            "bundleIdentifier": "th.go.nbtc.oliang"
+            "bundleIdentifier": "th.go.nbtc.oliang.staging"
         },
         "android": {
-            "package": "th.go.nbtc.oliang"
+            "package": "th.go.nbtc.oliang.staging"
         },
         "packagerOpts": {
             "assetExts": ["ttf"]
