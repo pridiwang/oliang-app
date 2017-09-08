@@ -7,7 +7,7 @@ import renderif from '../utility/renderif';
 import {themeLight,themeDark} from './Styles';
 
 const styles=themeLight;
-AsyncStorage.setItem('theme','Light');
+
 
 export default class PostsScreen extends React.Component{
     static navigationOptions=({navigation})=>({
@@ -17,15 +17,16 @@ export default class PostsScreen extends React.Component{
     constructor(props){
         super(props);
         console.log('constructor');
-        theme=AsyncStorage.setItem("theme","Light");
-        
         this.state={
             isLoading:true,
             refreshing:false,
             theme:'Light',
         }
-        theme=AsyncStorage.getItem("theme");
-        console.log(theme);
+        AsyncStorage.getItem('theme',(err,result)=>{
+            console.log('stored '+result);
+            if(result=='Light') styles=themeLight;
+            if(result=='Dark') styles=themeDark;
+        });
         
     }
     _onRefresh(){
@@ -66,6 +67,10 @@ export default class PostsScreen extends React.Component{
         });
     } 
     render(){
+        AsyncStorage.getItem('theme',(err,result)=>{
+            console.log(result);
+
+          });
         //Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
         if(this.state.isLoading){
             return(
@@ -74,11 +79,7 @@ export default class PostsScreen extends React.Component{
                 </View>
             )
         }else{
-            theme=AsyncStorage.getItem('theme');
-            console.log('theme');
-            console.log(theme);
-            if(theme=='Light') styles=themeLight;
-            if(theme=='Dark') styles=themeDark;
+            
             
             return(
                 <View style={styles.postView} >

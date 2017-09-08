@@ -5,8 +5,11 @@ import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
 import Expo,{Video} from 'expo';
 //import Share, {ShareSheet, Button} from 'react-native-share';
-import {themeDark,themeLight} from './Styles';
+import {themeDark,themeLight,htmlDark,htmlLight} from './Styles';
 
+const styles=themeDark;
+const htmlStyles=htmlDark;
+    
 export default class DetailScreen extends React.Component{
 
     static navigationOptions=({navigation})=>({
@@ -17,6 +20,19 @@ export default class DetailScreen extends React.Component{
         this.state = {
           visible: false
         }
+        AsyncStorage.getItem('theme',(err,result)=>{
+            console.log('stored '+result);
+            if(result=='Light'){
+                styles=themeLight;
+                htmlstyles=htmlLight;
+                console.log('using themeLight htmlLight ');
+            } 
+            if(result=='Dark'){
+                styles=themeDark;
+                htmlstyles=htmlDark;
+                console.log('using themeDark htmlDark ');
+            } 
+        });
       }
       onCancel() {
         console.log("CANCEL")
@@ -46,6 +62,19 @@ export default class DetailScreen extends React.Component{
         
     }
     render(){
+        AsyncStorage.getItem('theme',(err,result)=>{
+            console.log('stored '+result);
+            if(result=='Light'){
+                styles=themeLight;
+                htmlstyles=htmlLight;
+                console.log('using themeLight htmlLight ');
+            } 
+            if(result=='Dark'){
+                styles=themeDark;
+                htmlstyles=htmlDark;
+                console.log('using themeDark htmlDark ');
+            } 
+        });
         this.MarkRead();
         const {params} = this.props.navigation.state;
         let contentURL="http://oliang.itban.com/content/"+params.data.id;
@@ -92,7 +121,7 @@ export default class DetailScreen extends React.Component{
                   </View>
               <View style={{padding:10}} >
               <Text style={styles.title}>{params.data.title}</Text>
-              <HTMLView style={styles.content} hasZoom='true' stylesheet={htmlstyles} value={params.data.content}  />
+              <HTMLView style={styles.content} hasZoom='true' stylesheet={htmlStyles} value={params.data.content}  />
               </View>         
       <Button onPress={()=>{Share.share(shareContent)}} title="Share"></Button>
               </ScrollView>
@@ -101,13 +130,8 @@ export default class DetailScreen extends React.Component{
     }
 }
 //<HTMLView stylesheet={htmlstyles} value={params.data.content} style={styles.container}/>
-const styles=themeDark;
 
-const htmlstyles=StyleSheet.create({
-    body:{padding:20,flex:1,margin:10},    
-    p:{margin:0,color:'#444444',padding:0},
-    
-});
+
 
 //  twitter icon
 const TWITTER_ICON = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAABvFBMVEUAAAAA//8AnuwAnOsAneoAm+oAm+oAm+oAm+oAm+kAnuwAmf8An+0AqtUAku0AnesAm+oAm+oAnesAqv8An+oAnuoAneoAnOkAmOoAm+oAm+oAn98AnOoAm+oAm+oAmuoAm+oAmekAnOsAm+sAmeYAnusAm+oAnOoAme0AnOoAnesAp+0Av/8Am+oAm+sAmuoAn+oAm+oAnOoAgP8Am+sAm+oAmuoAm+oAmusAmucAnOwAm+oAmusAm+oAm+oAm+kAmusAougAnOsAmukAn+wAm+sAnesAmeoAnekAmewAm+oAnOkAl+cAm+oAm+oAmukAn+sAmukAn+0Am+oAmOoAmesAm+oAm+oAm+kAme4AmesAm+oAjuMAmusAmuwAm+kAm+oAmuoAsesAm+0Am+oAneoAm+wAmusAm+oAm+oAm+gAnewAm+oAle0Am+oAm+oAmeYAmeoAmukAoOcAmuoAm+oAm+wAmuoAneoAnOkAgP8Am+oAm+oAn+8An+wAmusAnuwAs+YAmegAm+oAm+oAm+oAmuwAm+oAm+kAnesAmuoAmukAm+sAnukAnusAm+oAmuoAnOsAmukAqv9m+G5fAAAAlHRSTlMAAUSj3/v625IuNwVVBg6Z//J1Axhft5ol9ZEIrP7P8eIjZJcKdOU+RoO0HQTjtblK3VUCM/dg/a8rXesm9vSkTAtnaJ/gom5GKGNdINz4U1hRRdc+gPDm+R5L0wnQnUXzVg04uoVSW6HuIZGFHd7WFDxHK7P8eIbFsQRhrhBQtJAKN0prnKLvjBowjn8igenQfkQGdD8A7wAAAXRJREFUSMdjYBgFo2AUDCXAyMTMwsrGzsEJ5nBx41HKw4smwMfPKgAGgkLCIqJi4nj0SkhKoRotLSMAA7Jy8gIKing0KwkIKKsgC6gKIAM1dREN3Jo1gSq0tBF8HV1kvax6+moG+DULGBoZw/gmAqjA1Ay/s4HA3MISyrdC1WtthC9ebGwhquzsHRxBfCdUzc74Y9UFrtDVzd3D0wtVszd+zT6+KKr9UDX749UbEBgULIAbhODVHCoQFo5bb0QkXs1RAvhAtDFezTGx+DTHEchD8Ql4NCcSyoGJYTj1siQRzL/JKeY4NKcSzvxp6RmSWPVmZhHWnI3L1TlEFDu5edj15hcQU2gVqmHTa1pEXJFXXFKKqbmM2ALTuLC8Ak1vZRXRxa1xtS6q3ppaYrXG1NWjai1taCRCG6dJU3NLqy+ak10DGImx07LNFCOk2js6iXVyVzcLai7s6SWlbnIs6rOIbi8ViOifIDNx0uTRynoUjIIRAgALIFStaR5YjgAAAABJRU5ErkJggg==";

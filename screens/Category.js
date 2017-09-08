@@ -15,7 +15,7 @@ export class CategoryScreen extends React.Component{
     super(props);
     console.log('constructor ');
     this.state={isLoading:true};
-    AsyncStorage.setItem('theme','Light');
+    
   }
   componentDidMount() { 
     url='http://oliang.itban.com/catlist';
@@ -35,9 +35,9 @@ export class CategoryScreen extends React.Component{
     });
   }
   render(){
-    console.log('render');
-    theme=AsyncStorage.getItem('theme');
-    console.log('curtheme:'+theme);
+    AsyncStorage.getItem('theme',(err,result)=>{
+      console.log('set to:'+result);
+    });
     if(this.state.isLoading==true){
       return (
         <View>

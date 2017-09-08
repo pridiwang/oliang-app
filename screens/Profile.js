@@ -7,7 +7,17 @@ export default class Profile extends React.Component{
   constructor (props){
     super(props)
     
-    this.state = {theme: 'Light'}
+    this.state = {theme: 'Light'};
+    AsyncStorage.getItem('theme',(err,result)=>{
+      
+      if(result){
+        console.log('got theme at construct :'+result);
+        this.state.theme=result;
+        console.log('get state theme:'+this.state.theme);
+      }else{
+
+      }
+    });
     
 }
  static navigationOptions = {
@@ -22,13 +32,34 @@ export default class Profile extends React.Component{
   };
   handleOnPress(value){
     this.setState({theme:value},()=>{
-      console.log('set theme: '+value);
-      console.log('state.theme:'+this.state.theme);
-      AsyncStorage.setItem('theme',value);
+      AsyncStorage.setItem('theme',value,()=>{
+        AsyncStorage.getItem('theme',(err,result)=>{
+          console.log('set to:'+result);
+        });
+      });
     });
     
 }
+componentWillMount(){
+  AsyncStorage.getItem('theme',(err,result)=>{
+    if(result){
+      console.log('got theme at render :'+result);
+      this.state.theme=result;
+    }else{
+
+    }
+  });
+}
     render(){
+      AsyncStorage.getItem('theme',(err,result)=>{
+        
+        if(result){
+          console.log('got theme at render :'+result);
+          this.state.theme=result;
+        }else{
+  
+        }
+      });
         console.log('rederging state.theme:'+this.state.theme);
         return(
             <View style={styles.container} >
