@@ -18,20 +18,25 @@ export class CategoryScreen extends React.Component{
     
   }
   componentDidMount() { 
-    url='https://oliang.itban.com/catlist';
-    console.log('url:'+url);
-    return fetch(url)
-    .then((response)=>response.json())
-    .then((responseJson)=>{
-      console.log('fetch ok');
-      let ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>1 !== r2});
-      this.setState({ isLoading: false, dataSource: ds.cloneWithRows(responseJson.data),},
-        function(err){
-            console.log('err:'+err);
-        });
-    })
-    .catch((error) => {
-      console.error(error);
+    AsyncStorage.getItem('at',(err,at)=>{
+      console.log(' stored at:'+at+' error '+err);
+      //navigate('Category');
+      url='https://oliang.itban.com/catlist';
+      console.log('url:'+url);
+      console.log('at:'+at);
+      return fetch(url,{method:'GET',headers:{'Authorization':at}})
+      .then((response)=>response.json())
+      .then((responseJson)=>{
+        console.log('fetch ok');
+        let ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>1 !== r2});
+        this.setState({ isLoading: false, dataSource: ds.cloneWithRows(responseJson.data),},
+          function(err){
+              console.log('err:'+err);
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     });
   }
   searchPost(){

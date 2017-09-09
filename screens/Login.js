@@ -28,12 +28,14 @@ export default class LoginScreen extends React.Component {
       console.log(json)
       try{
           console.log('token:'+token);
-          AsyncStorage.setItem('@FB:at',token,()=>{
-            AsyncStorage.getItem('@FB:at',(err,at1)=>{
+          AsyncStorage.setItem('at',token,()=>{
+            AsyncStorage.getItem('at',(err,at1)=>{
               console.log('token '+token+ ' stored at:'+at1);
-              //navigate('Category');
+              navigate('Category');
+
             });
           });
+          
       }catch(err){
           console.log('err:'+err);
       }
@@ -96,7 +98,7 @@ export default class LoginScreen extends React.Component {
   chkToken(){
     const { navigate } = this.props.navigation;
     console.log('checking token');
-    AsyncStorage.getItem('@FB:at',(err,at)=>{
+    AsyncStorage.getItem('at',(err,at)=>{
       console.log('at:'+at);
       if(at!==null){
         navigate('Category');
@@ -123,7 +125,7 @@ export default class LoginScreen extends React.Component {
           //this.setState('access_token',responseJson.access_token);
           console.log('storing at:'+responseJson.access_token);
           try{
-            AsyncStorage.setItem('@FB:at',responseJson.access_token);
+            AsyncStorage.setItem('at',responseJson.access_token);
             navigate('Category');
           }catch(err){
             console.log('err:'+err);
