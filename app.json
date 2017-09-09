@@ -4,7 +4,7 @@
         "privacy": "public",
         "facebookScheme": "fb226125624536427",
         "name": "โอเลี้ยง กสทช",
-        "icon": "./img/nbtc.png",
+        "icon": "./img/applogo1.png",
         "version": "1.0.0",
         "slug": "nbtc-oliang-app",
         "ios": {

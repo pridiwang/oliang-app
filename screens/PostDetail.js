@@ -123,7 +123,7 @@ export default class DetailScreen extends React.Component{
               <Text style={styles.title}>{params.data.title}</Text>
               <HTMLView style={styles.content} hasZoom='true' stylesheet={htmlStyles} value={params.data.content}  />
               </View>         
-      <Button onPress={()=>{Share.share(shareContent)}} title="Share"></Button>
+      <Button onPress={()=>{Share.share(shareContent)}} title="Share" style={styles.btn} ></Button>
               </ScrollView>
           )
         }

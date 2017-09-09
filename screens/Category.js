@@ -18,7 +18,7 @@ export class CategoryScreen extends React.Component{
     
   }
   componentDidMount() { 
-    url='http://oliang.itban.com/catlist';
+    url='https://oliang.itban.com/catlist';
     console.log('url:'+url);
     return fetch(url)
     .then((response)=>response.json())
@@ -34,6 +34,18 @@ export class CategoryScreen extends React.Component{
       console.error(error);
     });
   }
+  searchPost(){
+    search=this.state.text;
+    if(search==undefined){
+      return;
+    }
+    let dr={
+      "id":"0",
+      "name":search,
+    }
+    console.log('searching id'+dr.id+' keyword'+search);
+    this.props.navigation.navigate('Posts',{data:dr});
+  }
   render(){
     AsyncStorage.getItem('theme',(err,result)=>{
       console.log('set to:'+result);
@@ -47,33 +59,46 @@ export class CategoryScreen extends React.Component{
     }else{
 //        <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
 //<Image source={require('../img/menu-icon.png')}            style={{width:30,height:30}}             />
-      
+      // resizeMode='cover' flex:1,flexDirection:'column',contentContainerStyle={styles.container}
+      //,justifyContent:'space-between' width:240,flex:0.20,marginBottom:0,paddingBottom:50
+//flex:1,width:240,padding:5,paddingTop:0,bottom:0
 return (
       
-          <View style={styles.container} contentContainerStyle={styles.container} >
+          <View style={{flex:1,flexDirection:'row'}}  >
             
             
         
-        <Image style={{flex:1,height:720,padding:5}} resizeMode='cover' source={{uri:'http://oliang.itban.com/img/background1.png'}} >
-        
+        <Image style={{flex:1,paddingTop:15,flexDirection:'column',}} resizeMode="cover" source={require ('../img/background3.png')} >
+        <View style={{height:40,padding:5,flexDirection:'row',justifyContent:'space-between'} }> 
         <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
-              <Image source={require('../img/menu-icon.png')}            style={{width:30,height:30,marginTop:30}}             />
+              <Image source={require('../img/menu-icon.png')} style={{width:30,height:30,marginRight:10}} />
             </TouchableHighlight>
 
+            <TextInput placeholder="search" style={{height:30,width:200,color:'#ffffff',fontSize:20,borderBottomColor:'white',borderBottomWidth:1,alignItems:'center'}}
+            onChangeText={(text) => this.setState({text})}
+            />
+            <TouchableHighlight onPress={()=>{this.searchPost()}} >
+            <Image source={require ("../img/search-icon.png")} style={{height:30,width:30,right:0}} />
+            </TouchableHighlight>
+            
+
+            </View>
         <ScrollView 
-        contentContainerStyle={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',paddingTop:30,}}
+        contentContainerStyle={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',paddingTop:10,}}
          >
-         <Image source={require ('../img/oliang-text.png')} style={{width:280,flex:0.25,marginBottom:60,paddingBottom:50}} />
-          
-          
-          <ListView style={{flex:1,width:320,padding:5,paddingTop:0,bottom:0}} dataSource={this.state.dataSource}
+         <Image source={require ('../img/oliang-text.png')} style={{flex:0.3,width:240}} />
+         <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.2,width:160,margin:5}} />
+         
+         
+         
+          <ListView style={{marginTop:20,width:260}} dataSource={this.state.dataSource}
             renderRow={ (dr) =>
             <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
             <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
             </TouchableHighlight>
             }
           />
-          <TextInput placeholder="search" style={{}}/>
+          
           </ScrollView>
           
             
@@ -98,7 +123,7 @@ return (
 }
 
 const styles = StyleSheet.create({
-  container:{flex:1,justifyContent:'center',alignItems:'stretch'},
+  container:{flex:1,justifyContent:'center',alignItems:'center'},
   catname:{fontSize:20,color:'#fff'},
   btn:{margin:5,width:100,backgroundColor:'rgba(0,0,0,0)'},
 });
