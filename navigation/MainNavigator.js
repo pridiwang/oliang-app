@@ -15,7 +15,7 @@ import Logout from '../screens/Logout';
 
 
 export default MainNavigator = StackNavigator({
-    Splash: { screen: Splash },
+    Splash: { screen: Splash },    
     Login: { screen: LoginScreen },
     Category: { screen: CategoryScreen },   
     Posts: { screen: PostsScreen },

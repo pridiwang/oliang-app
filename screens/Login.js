@@ -6,7 +6,7 @@ import {StackNavigator,DrawerNavigator,TabNavigator} from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 //226125624536427
 export default class LoginScreen extends React.Component {
-  static navigationOptions = {title:'NBTC Oliang'};
+  static navigationOptions = {title:'เข้าระบบ'};
   constructor(props){
     super(props);
   }
@@ -17,7 +17,7 @@ export default class LoginScreen extends React.Component {
     
     let password=this.state.password;
     console.log('state email:'+email+ ' password:'+password);
-    url='http://oliang.itban.com/emaillogin/';
+    url='https://oliang.itban.com/emaillogin/';
     fetch(url,{method:'POST',
     headers:{'Authorization': 'EM '+email+'|'+password},
     body:JSON.stringify({email:email,password:password}),
@@ -81,10 +81,11 @@ export default class LoginScreen extends React.Component {
           AsyncStorage.setItem('@FB:id',fbid,()=>{
             AsyncStorage.getItem('@FB:id',(err,fbid1)=>{
               console.log('fbid1:'+fbid1);
+              navigate('Category'); 
             });
           });
           
-          //navigate('Category'); 
+          navigate('Category'); 
         
       })
       
@@ -116,7 +117,7 @@ export default class LoginScreen extends React.Component {
     AsyncStorage.getItem('@FB:id',(err,fbid)=>{
       console.log('fbid:'+fbid);
       if(fbid !== null){
-        url='http://oliang.itban.com/fblogin/'+fbid;
+        url='https://oliang.itban.com/fblogin/'+fbid;
         console.log(url);
         return fetch(url)
         .then((response)=>response.json())
@@ -126,7 +127,7 @@ export default class LoginScreen extends React.Component {
           console.log('storing at:'+responseJson.access_token);
           try{
             AsyncStorage.setItem('at',responseJson.access_token);
-            navigate('Category');
+            //navigate('Category');
           }catch(err){
             console.log('err:'+err);
           }
@@ -149,37 +150,41 @@ export default class LoginScreen extends React.Component {
     console.log('component did mount');
     this.chkToken(); 
   }
-  render() {
+  //<Text style={{fontSize:36,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>
+  /*<View style={{backgroundColor:'rgba(0,0,0,0.5)',flex:0.3,alignContent:'center',alignItems:'center',width:320}} > 
+   <Image source={require ('../img/oliang-text.png')} style={{flex:0.5,width:320,height:100}} />  
+   <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.4,width:240,backgroundColor:"#80000000"}} /> 
+   </View>
+  */
+   render() {
     const { navigate } = this.props.navigation;
     
     return (
-      <KeyboardAwareScrollView contentContainerStyle={{flex:1,alignItems:'center'}} >
-      <Image source={require('../img/nbtc8.png')} resizeMode='contain' style={styles.container} contentContainerStyle={styles.container} >
-      
-        
-        <Text style={{fontSize:36,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>
-        <View style={{backgroundColor:'rgba(255,255,255,0.8)',padding:10}} >
-        <TextInput editable={true} keyboardType='email-address' placeholder='NBTC Email' placeholderTextColor='#888'
-        style={{height:40,width:240,color:'#444'}} 
+      <KeyboardAwareScrollView contentContainerStyle={{flex:100,alignItems:'center'}} >
+      <Image source={require('../img/nbtc8.png')} resizeMode='contain' style={{flex:1,alignContent:'center',alignItems:'center'}} >
+        <View style={{backgroundColor:'rgba(180,180,180,0.5)',padding:10,margin:30,borderRadius:10}} >        
+        <Text style={{fontSize:16,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>
+        <TextInput editable={true} keyboardType='email-address' placeholder='NBTC Account' placeholderTextColor='#666666'
+        style={{height:40,width:240,color:'#000000'}} 
         onChangeText={(email)=>this.setState({email:email})}
          />
-<TextInput editable={true} keyboardType='default' placeholder='Password' secureTextEntry={true} placeholderTextColor='#888'
-        style={{height:40,width:240,color:'#444'}}
+<TextInput editable={true} keyboardType='default' placeholder='Password' secureTextEntry={true} placeholderTextColor='#666666'
+        style={{height:40,width:240,color:'#000000'}}
         onChangeText={(password)=>{
             console.log('fill in password:'+password)
             this.setState({password:password})
             }
 
         }/>
-         <Button onPress={()=>this.EmailLogin()} style={{background:'#ddd'}} title='NBTC Login'/>
-</View>
-        <TouchableHighlight
-            onPress={()=>this.logIn()}        >
-          <View>
-        <Text style={styles.fbbutton}>เข้าระบบด้วย FACEBOOK </Text>
-          </View>
+         <Button onPress={()=>this.EmailLogin()} style={{backgroundColor:'#0000dd'}} title='NBTC Login'/>
+
+        <TouchableHighlight  onPress={()=>this.logIn()} ><View>
+        <Text style={styles.fbbutton}>เข้าระบบด้วย FACEBOOK </Text></View>
         </TouchableHighlight>
+        </View>        
         </Image>
+        
+        
         </KeyboardAwareScrollView>
         
     )
@@ -200,7 +205,7 @@ const styles = StyleSheet.create({
     padding:10,
     color:'#ffffff',
     fontSize:20,
-    borderRadius:5,
+    borderRadius:10,
     margin:5,
     width:260,alignItems:'center',justifyContent:'center',
     textAlign:'center',

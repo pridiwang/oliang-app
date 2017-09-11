@@ -13,6 +13,12 @@ export default class Splash extends React.Component{
         };
         
     }
+    componentWillMount() {
+        setTimeout(()=>{
+            this.props.navigation.navigate('Login')    
+        }, 5000);
+        
+    }
     componentDidMount() {
         setTimeout(()=>{
             this.props.navigation.navigate('Login')    
@@ -20,11 +26,16 @@ export default class Splash extends React.Component{
         
     }
     render(){
-       
+        setTimeout(()=>{
+            this.props.navigation.navigate('Login')    
+        }, 500);
         return( 
             
         <View style={styles.container}>
+            <TouchableHighlight onPress={()=>this.props.navigation.navigate('Login')} > 
            <Image source={require('../img/nbtc-telecom.gif')} style={styles.img} />
+           </TouchableHighlight>
+        
         </View> 
         
         )
