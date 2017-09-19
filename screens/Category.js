@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
 import{ DrawerNavigator } from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
-
+import Expo from 'expo';
 import Profile from './Profile';
 import AboutScreen from './About';
 import Logout from './Logout';
@@ -15,6 +15,7 @@ export class CategoryScreen extends React.Component{
     super(props);
     console.log('constructor ');
     this.state={isLoading:true};
+    Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
     
   }
   componentDidMount() { 

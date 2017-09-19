@@ -4,6 +4,8 @@ import { StatusBar,Platform,ScrollView,ActivityIndicator, ListView,StyleSheet, T
 import MainNavigator from './navigation/MainNavigator';
 
 export default class App extends React.Component{
+  
+  
   render(){
     return(
       <View style={styles.container}>
