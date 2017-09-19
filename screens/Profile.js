@@ -21,7 +21,7 @@ export default class Profile extends React.Component{
     
 }
  static navigationOptions = {
-    drawerLabel: 'Profile',
+    drawerLabel: 'ตั้งค่า',
     drawerIcon: ({ tintColor }) => (
       <Image
         source={require('../img/user-icon.png')}
@@ -43,7 +43,7 @@ export default class Profile extends React.Component{
 componentWillMount(){
   AsyncStorage.getItem('theme',(err,result)=>{
     if(result){
-      console.log('got theme at render :'+result);
+      console.log('will mount got theme at render :'+result);
       this.state.theme=result;
     }else{
 
@@ -60,14 +60,16 @@ componentWillMount(){
   
         }
       });
+      /*<TextInput style={styles.txtInput} placeholder="Email" />
+          <TextInput style={styles.txtInput} placeholder="Password" />
+           */
         console.log('rederging state.theme:'+this.state.theme);
         return(
             <View style={styles.container} >
-                <Text>Profile</Text>
+                <Text>Settings</Text>
                 <Button title="Back" onPress={()=>this.props.navigation.navigate('Category')} />
           <Image source={require('../img/user-icon.png')} style={{width:100,height:100}} />
-          <TextInput style={styles.txtInput} placeholder="Email" />
-          <TextInput style={styles.txtInput} placeholder="Password" />
+          
           <View style={{flexDirection:'row',flex:1}}>
           <Text style={{flex:1 }} >Theme: </Text>
           <RadioButton currentValue={this.state.theme} value={'Light'} onPress={this.handleOnPress.bind(this)}>

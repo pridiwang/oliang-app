@@ -3,7 +3,7 @@ import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View
 
 export default class Logout extends React.Component{
 static navigationOptions = {
-    drawerLabel: 'Logout',
+    drawerLabel: 'ออกจากระบบ',
     drawerIcon: ({ tintColor }) => (
       <Image
         source={require('../img/exit-icon.png')}

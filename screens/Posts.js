@@ -45,9 +45,9 @@ export default class PostsScreen extends React.Component{
         console.log(at);
         cat=params.data.id;
         if(cat>0) {
-            url='http://oliang.itban.com/catposts/'+cat;
+            url='https://oliang.itban.com/catposts/'+cat;
         }else{
-            url='http://oliang.itban.com/searchposts/'+params.data.name;
+            url='https://oliang.itban.com/searchposts/'+params.data.name;
         }
         console.log('url:'+url);
         return fetch(url,{

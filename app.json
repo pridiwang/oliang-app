@@ -5,13 +5,17 @@
         "facebookScheme": "fb226125624536427",
         "name": "โอเลี้ยง กสทช",
         "icon": "./img/applogo1.png",
-        "version": "1.0.0",
+        "loading":{
+            "backgroundImage": "./img/nbtc-telecom.gif"
+        },
+        "version": "1.0.1",        
         "slug": "nbtc-oliang-app",
         "ios": {
             "bundleIdentifier": "th.go.nbtc.oliang.staging"
         },
         "android": {
-            "package": "th.go.nbtc.oliang.staging"
+            "package": "th.go.nbtc.oliang.staging",
+            "versionCode":"2"
         },
         "packagerOpts": {
             "assetExts": ["ttf"]

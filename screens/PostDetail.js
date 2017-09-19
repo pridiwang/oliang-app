@@ -7,8 +7,8 @@ import Expo,{Video} from 'expo';
 //import Share, {ShareSheet, Button} from 'react-native-share';
 import {themeDark,themeLight,htmlDark,htmlLight} from './Styles';
 
-const styles=themeDark;
-const htmlStyles=htmlDark;
+const styles=themeLight;
+const htmlStyles=htmlLight;
     
 export default class DetailScreen extends React.Component{
 

@@ -9,10 +9,12 @@ export default class LoginScreen extends React.Component {
   static navigationOptions = {title:'เข้าระบบ'};
   constructor(props){
     super(props);
+    
   }
   EmailLogin(){
     const { navigate } = this.props.navigation;
     console.log('call email login');
+    
     let email=this.state.email;
     
     let password=this.state.password;
@@ -146,6 +148,9 @@ export default class LoginScreen extends React.Component {
       }
     });
   }
+  async componentWillMount(){
+    
+  }
   async componentDidMount(){
     console.log('component did mount');
     this.chkToken(); 
@@ -166,6 +171,7 @@ export default class LoginScreen extends React.Component {
         <Text style={{fontSize:16,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>
         <TextInput editable={true} keyboardType='email-address' placeholder='NBTC Account' placeholderTextColor='#666666'
         style={{height:40,width:240,color:'#000000'}} 
+        
         onChangeText={(email)=>this.setState({email:email})}
          />
 <TextInput editable={true} keyboardType='default' placeholder='Password' secureTextEntry={true} placeholderTextColor='#666666'

@@ -67,14 +67,9 @@ export class CategoryScreen extends React.Component{
       // resizeMode='cover' flex:1,flexDirection:'column',contentContainerStyle={styles.container}
       //,justifyContent:'space-between' width:240,flex:0.20,marginBottom:0,paddingBottom:50
 //flex:1,width:240,padding:5,paddingTop:0,bottom:0
-return (
-      
-          <View style={{flex:1,flexDirection:'row'}}  >
-            
-            
-        
-        <Image style={{flex:1,paddingTop:15,flexDirection:'column',}} resizeMode="cover" source={require ('../img/background3.png')} >
-        <View style={{height:40,padding:5,flexDirection:'row',justifyContent:'space-between'} }> 
+//<View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center'}}  >
+/*
+        <View style={{height:40,padding:5,flex:1,flexDirection:'row',justifyContent:'space-between'} }> 
         <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
               <Image source={require('../img/menu-icon.png')} style={{width:30,height:30,marginRight:10}} />
             </TouchableHighlight>
@@ -85,17 +80,12 @@ return (
             <TouchableHighlight onPress={()=>{this.searchPost()}} >
             <Image source={require ("../img/search-icon.png")} style={{height:30,width:30,right:0}} />
             </TouchableHighlight>
-            
-
             </View>
         <ScrollView 
         contentContainerStyle={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',paddingTop:10,}}
          >
          <Image source={require ('../img/oliang-text.png')} style={{flex:0.3,width:240}} />
          <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.2,width:160,margin:5}} />
-         
-         
-         
           <ListView style={{marginTop:20,width:260}} dataSource={this.state.dataSource}
             renderRow={ (dr) =>
             <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
@@ -105,12 +95,55 @@ return (
           />
           
           </ScrollView>
+          <ScrollView 
+        contentContainerStyle={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',paddingTop:10,}}
+         >
+         <Image source={require ('../img/oliang-text.png')} style={{flex:0.3,width:240}} />
+         <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.2,width:160,margin:5}} />
+          <ListView style={{marginTop:20,width:260}} dataSource={this.state.dataSource}
+            renderRow={ (dr) =>
+            <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
+            <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
+            </TouchableHighlight>
+            }
+          />
           
-            
-          
-          </Image>
-          </View>
-       
+          </ScrollView>          
+flex:1,flexDirection:'row',justifyContent:'flex-end'
+*/
+
+return (
+  <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
+    <Image 
+        style={{flex:1,flexDirection:'column',paddingTop:15,alignItems:'center',justifyContent:'space-around',height:1024}} 
+        resizeMode="cover" 
+        source={require ('../img/background3.png')} >
+        <View style={{flex:0.1,height:40,paddingTop:5,flexDirection:'row',justifyContent:'space-between'} }> 
+        <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
+              <Image source={require('../img/menu-icon.png')} style={styles.icon} />
+            </TouchableHighlight>
+
+            <TextInput placeholder="search" 
+            style={{flex:8,height:30,width:200,color:'#ffffff',fontSize:20,backgroundColor:'rgba(255,255,255,0.3)',padding:3,borderRadius:5}}
+            onChangeText={(text) => this.setState({text})}
+            />
+            <TouchableHighlight onPress={()=>{this.searchPost()}} >
+            <Image source={require ("../img/search-icon.png")} style={styles.icon} />
+            </TouchableHighlight>
+            </View>
+        <Image source={require ('../img/oliang-text.png')} style={{flex:0.15,resizeMode:'contain'}} />
+        <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.1,resizeMode:'contain'}} />
+        <ListView style={{flex:6,marginTop:20,width:260,bottom:0}} dataSource={this.state.dataSource}
+            renderRow={ (dr) =>
+            <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
+            <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
+            </TouchableHighlight>
+            }
+          />
+    </Image>  
+
+  </View>
+  
       )
       
     }
@@ -131,6 +164,7 @@ const styles = StyleSheet.create({
   container:{flex:1,justifyContent:'center',alignItems:'center'},
   catname:{fontSize:20,color:'#fff'},
   btn:{margin:5,width:100,backgroundColor:'rgba(0,0,0,0)'},
+  icon:{resizeMode:'contain',height:30,width:30,margin:3}
 });
 
 export default DrawNavigator = DrawerNavigator({
