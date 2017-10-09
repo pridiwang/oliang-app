@@ -21,7 +21,7 @@ export default class Splash extends React.Component{
             
         <View style={styles.container}>
             <TouchableHighlight onPress={()=>this.props.navigation.navigate('Login')} > 
-           <Image source={require('../img/nbtc-telecom.gif')} style={styles.img} />
+           <Image source={require('../img/nbtc-telecom.gif')} style={styles.img} resizeMode="cover" />
            </TouchableHighlight>
         
         </View> 
@@ -36,5 +36,5 @@ const styles = StyleSheet.create({
     container:{backgroundColor:'#ffffff',
         flex:1,flexDirection:'column',alignItems:'center'
     ,justifyContent:'center'},
-    img:{flex:1,width:320},
+    img:{flex:1},
 });

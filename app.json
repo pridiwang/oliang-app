@@ -8,7 +8,7 @@
         "loading":{
             "backgroundImage": "./img/nbtc-telecom.gif"
         },
-        "version": "1.0.1",        
+        "version": "1.0.2",        
         "slug": "nbtc-oliang-app",
         "ios": {
             "bundleIdentifier": "th.go.nbtc.oliang.staging"

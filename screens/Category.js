@@ -116,9 +116,9 @@ flex:1,flexDirection:'row',justifyContent:'flex-end'
 return (
   <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
     <Image 
-        style={{flex:1,flexDirection:'column',paddingTop:15,alignItems:'center',justifyContent:'space-around',height:1024}} 
+        style={{flex:1,flexDirection:'column',paddingTop:15,alignItems:'center',justifyContent:'space-around',height:2048}} 
         resizeMode="cover" 
-        source={require ('../img/background3.png')} >
+        source={require ('../img/background5.png')} >
         <View style={{flex:0.1,height:40,paddingTop:5,flexDirection:'row',justifyContent:'space-between'} }> 
         <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
               <Image source={require('../img/menu-icon.png')} style={styles.icon} />
