@@ -11,11 +11,13 @@
         "version": "1.0.2",        
         "slug": "nbtc-oliang-app",
         "ios": {
-            "bundleIdentifier": "th.go.nbtc.oliang.staging"
+            "bundleIdentifier": "th.go.nbtc.oliang",
+	     "icon":"./img/applogo1.png"
         },
         "android": {
-            "package": "th.go.nbtc.oliang.staging",
-            "versionCode":2
+            "package": "th.go.nbtc.oliang",
+            "versionCode":2,
+	    "icon":"./img/applogo1.png"
         },
         "packagerOpts": {
             "assetExts": ["ttf"]
