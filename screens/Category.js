@@ -132,7 +132,7 @@ return (
             <Image source={require ("../img/search-icon.png")} style={styles.icon} />
             </TouchableHighlight>
             </View>
-        <Image source={require ('../img/oliang-text.png')} style={{flex:0.15,resizeMode:'contain'}} />
+        <Image source={require ('../img/oliang-text.png')} style={{flex:0.1,resizeMode:'contain'}} />
         <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.1,resizeMode:'contain'}} />
         <ListView style={{flex:6,marginTop:20,width:260,bottom:0}} dataSource={this.state.dataSource}
             renderRow={ (dr) =>

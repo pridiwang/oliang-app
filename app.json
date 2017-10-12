@@ -1,23 +1,24 @@
 {
     "expo": {
-        "sdkVersion": "18.0.0",
+        "sdkVersion": "21.0.0",
         "privacy": "public",
         "facebookScheme": "fb226125624536427",
         "name": "โอเลี้ยง กสทช",
-        "icon": "./img/applogo1.png",
+        "icon": "./img/appicon2_1024.png",
         "loading":{
-            "backgroundImage": "./img/nbtc-telecom.gif"
+            "backgroundImage": "./img/nbtc-telecom.png"
         },
-        "version": "1.0.2",        
+        "version": "1.0.3",        
         "slug": "nbtc-oliang-app",
         "ios": {
             "bundleIdentifier": "th.go.nbtc.oliang",
-	     "icon":"./img/applogo1.png"
+        "icon": "./img/appicon2_1024.png",
+		"buildNumber":"3"
         },
         "android": {
             "package": "th.go.nbtc.oliang",
             "versionCode":2,
-	    "icon":"./img/applogo1.png"
+        "icon": "./img/appicon2_1024.png",
         },
         "packagerOpts": {
             "assetExts": ["ttf"]
