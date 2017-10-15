@@ -2,6 +2,7 @@ import { StackNavigator, DrawerNavigator } from 'react-navigation';
 
 import App from '../App';
 import LoginScreen from '../screens/Login';
+import Noti from '../screens/Noti';
 import CategoryScreen from '../screens/Category';
 import PostsScreen from '../screens/Posts';
 import DetailScreen from '../screens/PostDetail';
@@ -17,6 +18,7 @@ import Logout from '../screens/Logout';
 export default MainNavigator = StackNavigator({
     Splash: { screen: Splash },    
     Login: { screen: LoginScreen },
+    Noti: { screen: Noti },
     Category: { screen: CategoryScreen },  
     Posts: { screen: PostsScreen },
     Detail: { screen: DetailScreen },
