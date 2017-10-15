@@ -17,11 +17,7 @@
         },
         "android": {
             "package": "th.go.nbtc.oliang",
-<<<<<<< HEAD
             "versionCode":4,
-=======
-            "versionCode":2,
->>>>>>> 1338d9b3e98db87cd3bbbdae20859819a4c2ba64
         "icon": "./img/appicon2_1024.png"
         },
         "packagerOpts": {

@@ -104,8 +104,8 @@ export default class LoginScreen extends React.Component {
     AsyncStorage.getItem('at',(err,at)=>{
       console.log('at:'+at);
       if(at!==null){
-        //navigate('Category');
-        navigate('Noti');
+        navigate('Category');
+        //navigate('Noti');
         return true;
       }else{
         this.chkFB();

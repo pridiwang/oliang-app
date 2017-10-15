@@ -3,9 +3,55 @@ import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View
 import{ DrawerNavigator } from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
 import Expo from 'expo';
+import { Permissions, Notifications } from 'expo';
 import Profile from './Profile';
 import AboutScreen from './About';
 import Logout from './Logout';
+
+const PUSH_ENDPOINT = 'https://oliang.itban.com/users/push-token';
+
+async function registerForPushNotificationsAsync(at) {
+  console.log('registerForPushNotificationsAsync');
+  const { status: existingStatus } = await Permissions.getAsync(
+    Permissions.NOTIFICATIONS
+  );
+  let finalStatus = existingStatus;
+
+  // only ask if permissions have not already been determined, because
+  // iOS won't necessarily prompt the user a second time.
+  if (existingStatus !== 'granted') {
+    // Android remote notification permissions are granted during the app
+    // install, so this will only ask on iOS
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    finalStatus = status;
+  }
+
+  // Stop here if the user did not grant permissions
+  if (finalStatus !== 'granted') {
+    return;
+  }
+
+  // Get the token that uniquely identifies this device
+  let token = await Notifications.getExpoPushTokenAsync();
+  //console.log('push token '+token+ ' at:'+at+ ' push_endpoint:'+PUSH_ENDPOINT);
+  // POST the token to your backend server from where you can retrieve it to send push notifications.
+  var formData = new FormData();
+  formData.append('push_token',token);
+  return fetch(PUSH_ENDPOINT, {
+    method:'POST',
+    headers: {
+      'Authorization': at,
+    },
+    body: formData,
+  })
+  .then((response)=>response.json())
+  .then((responseJson)=>{
+    console.log(responseJson)
+  });
+  
+  
+}
+
 
 export class CategoryScreen extends React.Component{
   static navigationOptions={
@@ -18,13 +64,17 @@ export class CategoryScreen extends React.Component{
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
     
   }
+  
   componentDidMount() { 
+    
+
     AsyncStorage.getItem('at',(err,at)=>{
       console.log(' stored at:'+at+' error '+err);
       //navigate('Category');
       url='https://oliang.itban.com/catlist';
-      console.log('url:'+url);
-      console.log('at:'+at);
+      //console.log('url:'+url);
+      //console.log('at:'+at);
+      registerForPushNotificationsAsync(at);
       return fetch(url,{method:'GET',headers:{'Authorization':at}})
       .then((response)=>response.json())
       .then((responseJson)=>{
@@ -39,6 +89,7 @@ export class CategoryScreen extends React.Component{
         console.error(error);
       });
     });
+    
   }
   searchPost(){
     search=this.state.text;
@@ -132,9 +183,9 @@ return (
             <Image source={require ("../img/search-icon.png")} style={styles.icon} />
             </TouchableHighlight>
             </View>
-        <Image source={require ('../img/oliang-text.png')} style={{flex:0.1,resizeMode:'contain'}} />
-        <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.1,resizeMode:'contain'}} />
-        <ListView style={{flex:6,marginTop:20,width:260,bottom:0}} dataSource={this.state.dataSource}
+        <Image source={require ('../img/oliang-text.png')} style={{flex:0.05,resizeMode:'contain'}} />
+        <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.05,resizeMode:'contain'}} />
+        <ListView style={{flex:8,marginTop:20,width:260,bottom:0}} dataSource={this.state.dataSource}
             renderRow={ (dr) =>
             <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
             <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
