@@ -7,6 +7,7 @@ import { Permissions, Notifications } from 'expo';
 import Profile from './Profile';
 import AboutScreen from './About';
 import Logout from './Logout';
+import PostNew from './PostNew';
 
 const PUSH_ENDPOINT = 'https://oliang.itban.com/users/push-token';
 
@@ -221,6 +222,7 @@ const styles = StyleSheet.create({
 
 export default DrawNavigator = DrawerNavigator({
   Back:{    screen: CategoryScreen,  },
+  Post:{    screen: PostNew,  },
   Profile:{    screen: Profile,  },
   About:{    screen: AboutScreen,  },
   Logout:{    screen: Logout, }

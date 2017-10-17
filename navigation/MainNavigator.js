@@ -13,6 +13,7 @@ import Test from '../screens/Test';
 import Splash from '../screens/Splash';
 import AboutScreen from '../screens/About';
 import Logout from '../screens/Logout';
+import PostNew from '../screens/PostNew';
 
 
 export default MainNavigator = StackNavigator({
@@ -25,6 +26,7 @@ export default MainNavigator = StackNavigator({
     Player: { screen: PlayerScreen },
     AppUni: { screen: AppUniverse },
     About: { screen: AboutScreen },
+    PostNew: { screen: PostNew },
 }, {
     headerMode: 'screen',
 });

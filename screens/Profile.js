@@ -68,6 +68,8 @@ componentWillMount(){
             <View style={styles.container} >
                 <Text>Settings</Text>
                 <Button title="Back" onPress={()=>this.props.navigation.navigate('Category')} />
+                
+                <Button title="เขียนบทความ" onPress={()=>this.props.navigation.navigate('PostNew')} />
           <Image source={require('../img/user-icon.png')} style={{width:100,height:100}} />
           
           <View style={{flexDirection:'row',flex:1}}>
