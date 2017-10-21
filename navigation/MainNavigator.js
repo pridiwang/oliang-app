@@ -18,8 +18,9 @@ import PostCamera from '../screens/PostCamera';
 //import Noti from '../screens/Noti';
 
 export default MainNavigator = StackNavigator({
-    Splash: { screen: Splash },    
     PostNew: { screen: PostNew },
+    
+    Splash: { screen: Splash },    
     PostCamera: { screen: PostCamera },
     
     Login: { screen: LoginScreen },
