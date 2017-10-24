@@ -168,7 +168,7 @@ flex:1,flexDirection:'row',justifyContent:'flex-end'
 return (
   <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
     <Image 
-        style={{flex:1,flexDirection:'column',paddingTop:15,alignItems:'center',justifyContent:'space-around',height:2048}} 
+        style={{flex:1,flexDirection:'column',paddingTop:15,alignItems:'center',justifyContent:'space-around',height:1024}} 
         resizeMode="cover" 
         source={require ('../img/background5.png')} >
         <View style={{flex:0.1,height:40,paddingTop:5,flexDirection:'row',justifyContent:'space-between'} }> 
@@ -184,8 +184,8 @@ return (
             <Image source={require ("../img/search-icon.png")} style={styles.icon} />
             </TouchableHighlight>
             </View>
-        <Image source={require ('../img/oliang-text.png')} style={{flex:0.05,resizeMode:'contain'}} />
-        <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.05,resizeMode:'contain'}} />
+        <Image source={require ('../img/oliang-text.png')} style={{flex:0.1,resizeMode:'contain'}} />
+        <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.1,resizeMode:'contain'}} />
         <ListView style={{flex:8,marginTop:20,width:260,bottom:0}} dataSource={this.state.dataSource}
             renderRow={ (dr) =>
             <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>

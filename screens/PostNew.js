@@ -6,12 +6,20 @@ import {Camera, Permissions, Notifications,ImagePicker } from 'expo';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 export default class PostNew extends React.Component{
     static navigationOptions=({navigation})=>({
-        
+        header:null,
+        drawerLabel: 'เขียนบทความใหม่',
+        drawerIcon: ({ tintColor }) => (
+          <Image
+            source={require('../img/post-icon.png')}
+            style={[styles.icon, {tintColor: tintColor}]}
+          />
+        ),
     });
     constructor(props) {
         super(props);
         this.state = {title: ''};
         this.state = {content: ''};
+        this.imgname = {imgname: ''};
       }
       async componentWillMount() {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -56,7 +64,7 @@ export default class PostNew extends React.Component{
           if(responseJson.response){
           
           console.log('fname:'+responseJson.fname);
-          this.state = {imgname: responseJson.fname};
+          this.setState({imgname:responseJson.fname});
           }
 
         })
@@ -74,21 +82,21 @@ export default class PostNew extends React.Component{
             return <Text>No access to camera</Text>;
           } else {
         return (
-          <KeyboardAwareScrollView style={{padding:10,paddingBottom:600}}>
+          <KeyboardAwareScrollView style={{padding:10,paddingTop:30}}>
             <Text style={{fontSize:30,color:'red',justifyContent:'center'}}>เขียนบทความใหม่</Text>
             <View style={{flexDirection:'row',justifyContent:'center'}} >
     <Button title='<-' onPress={()=>this.props.navigation.navigate('Category')} />
     <Button title='รูปภาพ' onPress={this._pickImage} />
-    <Button title='วิดีโอ' onPress={()=>this.props.navigation.navigate('PostCamera')} />
+    <Button title='วิดีโอ' onPress={this._pickImage} />
     <Button title='ส่งบทความ' onPress={()=>this.postSubmit()} />
     </View>
     {image && <Image source={{uri: image}} style={{width:320,height:200}} /> }
             <Text>เรื่อง</Text>
-            <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            <TextInput multiline={true} style={{height: 40, borderColor: 'gray', borderWidth: 1}}
     onChangeText={(title) => this.setState({title})}
     value={this.state.title}></TextInput>
     <Text>ข้อความ</Text>
-            <TextInput multiline={true} style={{height: 160, borderColor: 'gray', borderWidth: 1}}
+            <TextInput multiline={true} style={{height: 160, borderColor: 'gray', borderWidth: 1,textAlignVertical:'top'}}
     onChangeText={(content) => this.setState({content})}
     value={this.state.content}></TextInput>
   
@@ -97,3 +105,22 @@ export default class PostNew extends React.Component{
           }
     }
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+     alignItems: 'center',
+    justifyContent: 'center',
+    padding:30,    
+    
+  },
+  statusBarUnderlay: {
+    height: 24,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+  },
+  icon:{
+    width:20,height:20
+  },
+  txtInput:{height:30,margin:5,backgroundColor:'#eeeeee',padding:5,}
+
+});
