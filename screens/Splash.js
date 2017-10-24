@@ -34,7 +34,7 @@ export default class Splash extends React.Component{
 
 const styles = StyleSheet.create({
     container:{backgroundColor:'#ffffff',
-        flex:1,flexDirection:'column',alignItems:'center'
+        flex:1,flexDirection:'row',alignItems:'center'
     ,justifyContent:'center'},
-    img:{flex:1},
+    img:{flex:1,width:320},
 });
