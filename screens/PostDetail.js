@@ -116,7 +116,7 @@ export default class DetailScreen extends React.Component{
 //<WebView hasZoom='true' source={{uri:'http://oliang.itban.com/content/'+params.data.id}} style={{marginTop:20}} />
           return(
               <ScrollView style={styles.container}>
-                  <View style={{flex:1,height:400,position:'relative'}}>
+                  <View style={{flex:1,height:300,position:'relative'}}>
                   <Image resizeMode="cover" source={{uri:params.data.img}} style={styles.img}/>
                   </View>
               <View style={{padding:10}} >

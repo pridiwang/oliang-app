@@ -10,8 +10,8 @@ export const themeLight= StyleSheet.create({
     instructions: { marginTop: 20,marginBottom: 20,},
     postView:{flex:4,padding:5,backgroundColor:'#ffffff'},
     postItem:{        flex:1,flexDirection:'row',padding:3,borderBottomWidth:1,borderColor:'#cccccc',backgroundColor:'#ffffff',},
-    postImg:{ height:150,flex:3,},
-    postTitle:{ flex:6,paddingLeft:5,fontSize:14,position:'relative',color:'#000000',},
+    postImg:{ height:150,flex:4,},
+    postTitle:{ flex:4,paddingLeft:5,fontSize:14,position:'relative',color:'#000000',},
     postRead:{ flex:1,position:'absolute',bottom:10,right:0,},
     icon:{width:20,height:20}
 });
@@ -25,7 +25,7 @@ export const themeDark=StyleSheet.create({
     instructions: { marginTop: 20,marginBottom: 20,},
     postView:{flex:4,padding:5,backgroundColor:'#333333'},
     postItem:{flex:1,flexDirection:'row',padding:3,borderBottomWidth:1,borderColor:'#cccccc',backgroundColor:'#333333',},
-    postImg:{ height:150,flex:4,},
+    postImg:{ height:150,flex:5,},
     postTitle:{ flex:5,paddingLeft:5,fontSize:14,position:'relative',color:'#ffffff',},
     postRead:{ flex:1,position:'absolute',bottom:10,right:0,},
     icon:{width:20,height:20},

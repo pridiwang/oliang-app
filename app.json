@@ -13,11 +13,11 @@
         "ios": {
             "bundleIdentifier": "th.go.nbtc.oliang",
             "icon": "./img/appicon2_1024.png",
-		"buildNumber":"7"
+		"buildNumber":"8"
         },
         "android": {
             "package": "th.go.nbtc.oliang",
-            "versionCode":7,
+            "versionCode":8,
         "icon": "./img/appicon2_1024.png"
         },
         "packagerOpts": {
