@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert,Modal,View,Text,Button,TextInput,Image,StyleSheet,TouchableHighlight,TouchableOpacity, ScrollView}  from 'react-native';
+import {Picker,Alert,Modal,View,Text,Button,TextInput,Image,StyleSheet,TouchableHighlight,TouchableOpacity, ScrollView}  from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
 import {Camera, Permissions, Notifications,ImagePicker } from 'expo';
@@ -17,6 +17,7 @@ export default class PostNew extends React.Component{
     });
     constructor(props) {
         super(props);
+        this.state = {category: '1'};
         this.state = {title: ''};
         this.state = {content: ''};
         this.imgname = {imgname: ''};
@@ -41,8 +42,10 @@ export default class PostNew extends React.Component{
         return false;
       }
       var formData = new FormData();
+      formData.append('category',this.state.category);
       formData.append('title',this.state.title);
       formData.append('content',this.state.content);
+
       if(this.state.imgname!=undefined){
         formData.append('image',this.state.imgname);
       }
@@ -93,6 +96,20 @@ export default class PostNew extends React.Component{
         });
       }
     };
+    /*
+    <Text>หมวดหมู่</Text>
+    <Picker ref='category' style={{margin:0,height:30}} 
+  selectedValue={this.state.category}
+  onValueChange={(itemValue, itemIndex) => this.setState({category: itemValue})}>
+  <Picker.Item label="ทั่วไป" value="1" />
+  <Picker.Item label="จาก ลสทช" value="9" />
+  <Picker.Item label="บทความโอเลี้ยง" value="8" />
+  <Picker.Item label="รายงาน" value="6" />
+  <Picker.Item label="ข่าวและกิจกรรม" value="5" />
+  <Picker.Item label="แอพที่ต้องใช้" value="10" />
+
+</Picker>
+    */
     render(){
       let { image } = this.state;
         const { hasCameraPermission } = this.state;
@@ -104,7 +121,7 @@ export default class PostNew extends React.Component{
         return (
           <KeyboardAwareScrollView style={{padding:10,paddingTop:30}}>
           
-            <Text style={{fontSize:30,color:'red',justifyContent:'center'}}>เขียนบทความใหม่</Text>
+      <Text style={{flex:1,fontSize:24,backgroundColor:'#600',color:'white',textAlign:'center'}}> - เขียนบทความใหม่ - </Text>
             <View style={{flexDirection:'row',justifyContent:'center'}} >
     <Button title='<-' onPress={()=>this.props.navigation.navigate('Category')} />
     <Button title='รูปภาพ' onPress={this._pickImage} />
@@ -112,6 +129,7 @@ export default class PostNew extends React.Component{
     <Button title='ส่งบทความ' onPress={()=>this.postSubmit()} />
     </View>
     {image && <Image source={{uri: image}} style={{width:320,height:200}} /> }
+    
             <Text>เรื่อง</Text>
             <TextInput ref='title' multiline={true} style={{height: 40, borderColor: 'gray', borderWidth: 1}}
     onChangeText={(title) => this.setState({title})}  onSubmitEditing={(event) => { 
