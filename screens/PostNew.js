@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,Button,TextInput,Image,StyleSheet,TouchableHighlight,TouchableOpacity, ScrollView}  from 'react-native';
+import {Alert,Modal,View,Text,Button,TextInput,Image,StyleSheet,TouchableHighlight,TouchableOpacity, ScrollView}  from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
 import {Camera, Permissions, Notifications,ImagePicker } from 'expo';
@@ -26,16 +26,36 @@ export default class PostNew extends React.Component{
         this.setState({ hasCameraPermission: status === 'granted' });
       }
     postSubmit(){
+      if(this.state.title==undefined){
+        Alert.alert('แจ้งเตือน','กรุณาใส่ข้อมูลเรื่อง',[
+          {text:'Ok',onPress: ()=>this.refs.title.focus() }
+        ]);
+
+        return false;
+      }
+      if((this.state.content=='')||(this.state.content==undefined)){
+        Alert.alert('แจ้งเตือน','กรุณาใส่ข้อมูลข้อความ',[
+          {text:'OK',onPress: ()=>this.refs.content.focus() }
+        ]);
+        
+        return false;
+      }
       var formData = new FormData();
       formData.append('title',this.state.title);
       formData.append('content',this.state.content);
-      formData.append('image',this.state.imgname);
+      if(this.state.imgname!=undefined){
+        formData.append('image',this.state.imgname);
+      }
       console.log('posting title '+this.state.title+' content '+this.state.content+' imgname '+this.state.imgname);
       fetch('http://oliang.itban.com/postnew', { 
         method: 'POST',
         body: formData,
       })
-        //this.props.navigation.navigate('Category');
+        Alert.alert("สำเร็จ","เพิ่มบทความใหม่เรียบร้อยแล้ว",[
+          {text:'รับทราบ', onPress:()=>this.props.navigation.navigate('Category')}
+
+        ]); 
+        
         return true;
     }
     _pickImage = async () => {
@@ -83,6 +103,7 @@ export default class PostNew extends React.Component{
           } else {
         return (
           <KeyboardAwareScrollView style={{padding:10,paddingTop:30}}>
+          
             <Text style={{fontSize:30,color:'red',justifyContent:'center'}}>เขียนบทความใหม่</Text>
             <View style={{flexDirection:'row',justifyContent:'center'}} >
     <Button title='<-' onPress={()=>this.props.navigation.navigate('Category')} />
@@ -92,11 +113,13 @@ export default class PostNew extends React.Component{
     </View>
     {image && <Image source={{uri: image}} style={{width:320,height:200}} /> }
             <Text>เรื่อง</Text>
-            <TextInput multiline={true} style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-    onChangeText={(title) => this.setState({title})}
+            <TextInput ref='title' multiline={true} style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+    onChangeText={(title) => this.setState({title})}  onSubmitEditing={(event) => { 
+      this.refs.content.focus(); 
+    }}
     value={this.state.title}></TextInput>
     <Text>ข้อความ</Text>
-            <TextInput multiline={true} style={{height: 160, borderColor: 'gray', borderWidth: 1,textAlignVertical:'top'}}
+            <TextInput ref='content' multiline={true} style={{height: 160, borderColor: 'gray', borderWidth: 1,textAlignVertical:'top'}}
     onChangeText={(content) => this.setState({content})}
     value={this.state.content}></TextInput>
   
