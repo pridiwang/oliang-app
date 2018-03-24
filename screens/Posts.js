@@ -105,8 +105,10 @@ export default class PostsScreen extends React.Component{
                     <View style={{flex:1,}}>
                         <View style={styles.postItem}>
                             <Image source={{uri:rowData.img}} style={styles.postImg} resizeMode="cover" />
-                            <Text style={styles.postTitle}>{rowData.title} </Text>
-                             
+                            <View style={styles.postText} >
+                                <Text style={styles.postTitle}>{rowData.title} </Text>
+                                <Text style={styles.postAuthor}>{rowData.author} </Text>
+                            </View>
                         </View>
                         <View style={{flex:2}}>     
                             {renderif(rowData.unread=='0',

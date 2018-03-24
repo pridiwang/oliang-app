@@ -11,23 +11,39 @@ export default class LoginScreen extends React.Component {
     super(props);
     
   }
+  LoginFail(){
+    Alert.alert('User/Password ไม่ถูกต้อง');
+  }
   EmailLogin(){
     const { navigate } = this.props.navigation;
     console.log('call email login');
+    if(this.state==null){Alert.alert('กรุณากรอก NBTC account'); return;}
+    var email=this.state.email;
+    if(email==null) {Alert.alert('กรุณากรอก NBTC account'); return;}
     
-    let email=this.state.email;
-    
-    let password=this.state.password;
+    var password=this.state.password;
+    if(password==null) {Alert.alert('กรุณากรอกรหัสผ่าน'); return;}
+    var data = {
+      "user": this.state.email,
+      "password": this.state.password
+    }   
     console.log('state email:'+email+ ' password:'+password);
     url='https://oliang.itban.com/emaillogin/';
-    fetch(url,{method:'POST',
-    headers:{'Authorization': 'EM '+email+'|'+password},
-    body:JSON.stringify({email:email,password:password}),
+    var headers={Authorization: 'EM '+email+'|'+password,
+    'Accept': 'application/json,text/plain,*/*',
+    'Content-Type': 'application/json',
+  }
+    fetch(url,{
+      method: "post",
+      headers: headers,
+      body: JSON.stringify(data),
     })
     .then((response)=>response.json())
     .then((json)=>{
       token=json.access_token;
       console.log(json)
+      if(token==null) {this.LoginFail(); return;};
+      if(token=='') {this.LoginFail(); return;};
       try{
           console.log('token:'+token);
           AsyncStorage.setItem('at',token,()=>{
@@ -168,7 +184,7 @@ export default class LoginScreen extends React.Component {
     return (
       <KeyboardAwareScrollView contentContainerStyle={{flex:100,alignItems:'center'}} >
       <Image source={require('../img/nbtc8.png')} resizeMode='cover' style={{flex:1,alignContent:'center',alignItems:'center'}} >
-        <View style={{backgroundColor:'rgba(180,180,180,0.5)',padding:10,margin:30,borderRadius:10}} >        
+        <View style={{backgroundColor:'rgba(180,180,180,0.6)',padding:10,margin:30,borderRadius:10}} >        
         <Text style={{fontSize:16,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>
         <TextInput editable={true} keyboardType='email-address' placeholder='NBTC Account' placeholderTextColor='#666666'
         style={{height:40,width:240,color:'#000000'}} 
@@ -183,8 +199,10 @@ export default class LoginScreen extends React.Component {
             }
 
         }/>
-         <Button onPress={()=>this.EmailLogin()} style={{backgroundColor:'#0000dd'}} title='NBTC Login'/>
-
+        <TouchableHighlight  onPress={()=>this.logIn()} ><View>
+         <Text onPress={()=>this.EmailLogin()} style={styles.loginbutton} >NBTC Login</Text>
+        </View>
+        </TouchableHighlight>
         <TouchableHighlight  onPress={()=>this.logIn()} ><View>
         <Text style={styles.fbbutton}>เข้าระบบด้วย FACEBOOK </Text></View>
         </TouchableHighlight>
@@ -209,6 +227,17 @@ const styles = StyleSheet.create({
   },
   fbbutton:{
     backgroundColor:'#3b5998',
+    padding:10,
+    color:'#ffffff',
+    fontSize:20,
+    borderRadius:10,
+    margin:5,
+    width:260,alignItems:'center',justifyContent:'center',
+    textAlign:'center',
+    
+  },
+  loginbutton:{
+    backgroundColor:'#982233',
     padding:10,
     color:'#ffffff',
     fontSize:20,

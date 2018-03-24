@@ -5,10 +5,11 @@ import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
 import Expo,{Video} from 'expo';
 //import Share, {ShareSheet, Button} from 'react-native-share';
-import {themeDark,themeLight,htmlDark,htmlLight} from './Styles';
+import {themeDark,themeLight,htmlDark,htmlLight,txtLight,txtDark} from './Styles';
 
 const styles=themeLight;
 const htmlStyles=htmlLight;
+const txtStyles=txtLight;
     
 export default class DetailScreen extends React.Component{
 
@@ -25,11 +26,13 @@ export default class DetailScreen extends React.Component{
             if(result=='Light'){
                 styles=themeLight;
                 htmlstyles=htmlLight;
+                //txtStyles=txtLight;
                 console.log('using themeLight htmlLight ');
             } 
             if(result=='Dark'){
                 styles=themeDark;
                 htmlstyles=htmlDark;
+                //txtStyles=txtDark;
                 console.log('using themeDark htmlDark ');
             } 
         });
@@ -67,11 +70,13 @@ export default class DetailScreen extends React.Component{
             if(result=='Light'){
                 styles=themeLight;
                 htmlstyles=htmlLight;
+                //txtStyles=txtLight;
                 console.log('using themeLight htmlLight ');
             } 
             if(result=='Dark'){
                 styles=themeDark;
                 htmlstyles=htmlDark;
+                //txtStyles=txtDark;
                 console.log('using themeDark htmlDark ');
             } 
         });
@@ -121,7 +126,7 @@ export default class DetailScreen extends React.Component{
                   </View>
               <View style={{padding:10}} >
               <Text style={styles.title}>{params.data.title}</Text>
-              <HTMLView style={styles.content} hasZoom='true' stylesheet={htmlStyles} value={params.data.content}  />
+              <HTMLView hasZoom='true' stylesheet={htmlStyles} value={params.data.content}   />
               </View>         
       <Button onPress={()=>{Share.share(shareContent)}} title="Share" style={styles.btn} ></Button>
               </ScrollView>
