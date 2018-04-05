@@ -4,9 +4,10 @@ import { Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput,
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import renderif from '../utility/renderif';
-import {themeLight,themeDark} from './Styles';
+import {themeLight,themeDark,htmlLight,htmlDark} from './Styles';
 
 const styles=themeLight;
+const htmlStyles=htmlLight;
 
 
 export default class PostsScreen extends React.Component{
@@ -26,6 +27,8 @@ export default class PostsScreen extends React.Component{
             console.log('stored '+result);
             if(result=='Light') styles=themeLight;
             if(result=='Dark') styles=themeDark;
+            if(result=='Light') htmlStyles=htmlLight;
+            if(result=='Dark') htmlStyles=htmlDark;
         });
         
     }

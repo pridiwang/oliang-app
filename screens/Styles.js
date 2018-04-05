@@ -16,18 +16,19 @@ export const themeLight= StyleSheet.create({
     postAuthor:{fontSize:12,position:'relative',color:'#442222',padding:3,},
     
     postRead:{ flex:1,position:'absolute',bottom:10,right:0,},
-    icon:{width:20,height:20}
+    icon:{width:20,height:20},
+    htmlview:{color:'#222222'},
 });
 
 export const themeDark=StyleSheet.create({
-    container:{flex:1,position:'relative',backgroundColor:'#333333'},
+    container:{flex:1,position:'relative',backgroundColor:'#222222'},
     img:{position:'absolute',top:0,left:0,bottom:0,right:0},
     vdo:{width:320,height:240},
     title:{fontSize:28,padding:0,color:'#ffffff'},
     content:{padding:0,color:'#ffffff'},
     instructions: { marginTop: 20,marginBottom: 20,},
-    postView:{flex:4,padding:5,backgroundColor:'#333333'},
-    postItem:{flex:1,flexDirection:'row',padding:3,borderBottomWidth:1,borderColor:'#cccccc',backgroundColor:'#333333',},
+    postView:{flex:4,padding:5,backgroundColor:'#222222'},
+    postItem:{flex:1,flexDirection:'row',padding:3,borderBottomWidth:1,borderColor:'#cccccc',backgroundColor:'#222222',},
     postImg:{ height:150,flex:5,},
     postText:{flex:4,flexDirection:'column',  justifyContent: 'space-between'},
     postTitle:{ padding:3,fontSize:14,position:'relative',color:'#ffffff',},
@@ -35,13 +36,17 @@ export const themeDark=StyleSheet.create({
     postRead:{ flex:1,position:'absolute',bottom:10,right:0,},
     icon:{width:20,height:20},
     btn:{backgroundColor:'#FFFFFF'},
+    htmlview:{color:'#FFFFFF'},
 });
 export const htmlLight=StyleSheet.create({
+    body:{color:'#888888'},
     p:{fontSize:18,color:'#000000',lineHeight:24,marginBottom:0,marginTop:0,padding:0,margin:0},
 });
 export const htmlDark=StyleSheet.create({
-    a:{color:'#ffcccc'},
+    body:{color:'#ffffff'},
     p:{fontSize:18,color:'#FFFFFF',lineHeight:20,marginBottom:0,marginTop:0,padding:0,margin:0},
+    a:{color:'#ffcccc'},
+    
    
    ol:{color:'#FFFFFF'},
    li:{color:'#FFFFFF'},

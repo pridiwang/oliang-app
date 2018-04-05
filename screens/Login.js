@@ -182,7 +182,7 @@ export default class LoginScreen extends React.Component {
     const { navigate } = this.props.navigation;
     
     return (
-      <KeyboardAwareScrollView contentContainerStyle={{flex:100,alignItems:'center'}} >
+      <KeyboardAwareScrollView contentContainerStyle={{flex:100,alignItems:'center'}} keyboardShouldPersistTaps="always"  >
       <Image source={require('../img/nbtc8.png')} resizeMode='cover' style={{flex:1,alignContent:'center',alignItems:'center'}} >
         <View style={{backgroundColor:'rgba(180,180,180,0.6)',padding:10,margin:30,borderRadius:10}} >        
         <Text style={{fontSize:16,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>

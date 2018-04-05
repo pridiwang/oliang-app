@@ -4,7 +4,7 @@
         "privacy": "public",
         "facebookScheme": "fb226125624536427",
         "name": "โอเลี้ยง กสทช",
-        "icon": "./img/appicon3_1024.png",
+        "icon": "./img/appicon4_1024.png",
         "loading":{
             "backgroundImage": "./img/nbtc-telecom.png"
         },
@@ -19,7 +19,7 @@
         "android": {
             "package": "th.go.nbtc.oliang.staging",
             "versionCode":13,
-        "icon": "./img/appicon3_1024.png"
+        "icon": "./img/appicon4_1024.png"
         
         },
         "packagerOpts": {
