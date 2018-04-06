@@ -29,6 +29,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.2.9",
     "react-native-share": "^1.0.21",
     "react-native-social-share": "^1.1.0",
+    "react-native-webview-autoheight": "^1.0.5",
     "react-navigation": "^1.0.0-beta.11"
   }
 }

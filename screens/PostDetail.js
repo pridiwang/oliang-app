@@ -6,7 +6,7 @@ import HTMLView from 'react-native-htmlview';
 import Expo,{Video} from 'expo';
 //import Share, {ShareSheet, Button} from 'react-native-share';
 import {themeDark,themeLight,htmlDark,htmlLight,txtLight,txtDark} from './Styles';
-
+import MyWebView from 'react-native-webview-autoheight';
 const styles=themeLight;
 const htmlStyles=htmlLight;
 const txtStyles=txtLight;
@@ -119,7 +119,7 @@ export default class DetailScreen extends React.Component{
             )
         }else{
 
-//<HTMLView style={styles.content} value={params.data.content} />
+//<HTMLView style={styles.content} value={params.data.content} /><HTMLView hasZoom='true' stylesheet={htmlStyles}  value={params.data.content}   />
 //<WebView hasZoom='true' source={{uri:'http://oliang.itban.com/content/'+params.data.id}} style={{marginTop:20}} />
           return(
               <ScrollView style={styles.container}>
@@ -128,7 +128,11 @@ export default class DetailScreen extends React.Component{
                   </View>
               <View style={{padding:10}} >
               <Text style={styles.title}>{params.data.title}</Text>
-              <HTMLView hasZoom='true' stylesheet={htmlStyles}  value={params.data.content}   />
+              <MyWebView hasZoom='true' source={{uri:'http://oliang.itban.com/content/'+params.data.id,method:'GET'}} 
+      style={{marginTop:20,height:800,flex:1,backgroundColor:'rgba(0,0,0,0)', }} 
+      scrollEnabled={true}
+      /> 
+              
               </View>         
       <Button onPress={()=>{Share.share(shareContent)}} title="Share" style={styles.btn} ></Button>
               </ScrollView>

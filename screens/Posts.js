@@ -104,23 +104,26 @@ export default class PostsScreen extends React.Component{
                     <TouchableHighlight onPress={()=>{
                         rowData.unread=0;
                         this.props.navigation.navigate('Detail',{data:rowData})
-                        }}>
-                    <View style={{flex:1,}}>
-                        <View style={styles.postItem}>
-                            <Image source={{uri:rowData.img}} style={styles.postImg} resizeMode="cover" />
-                            <View style={styles.postText} >
-                                <Text style={styles.postTitle}>{rowData.title} </Text>
-                                <Text style={styles.postAuthor}>{rowData.author} </Text>
-                            </View>
-                        </View>
-                        <View style={{flex:2}}>     
-                            {renderif(rowData.unread=='0',
-                            <Ionicons style={styles.postRead} name="md-checkmark-circle" size={16} color="green" />
+                   }}>
+                        <View style={{flex:1,}}>
                             
-                            )}
+                                <View style={styles.postItem}>
+                                    {renderif(rowData.status=='publish',
+                                        <Image source={{uri:rowData.img}} style={styles.postImg} resizeMode="cover" />
+                                    )}
+                                    <View style={styles.postText} >
+                                        <Text style={styles.postTitle}>{rowData.title} </Text>
+                                        <Text style={styles.postAuthor}>{rowData.author} </Text>
+                                    </View>
+                                </View>
+                                <View style={{flex:2}}>     
+                                    {renderif(rowData.unread=='0',
+                                    <Ionicons style={styles.postRead} name="md-checkmark-circle" size={16} color="green" />
+                                    
+                                    )}
+                                </View>
+                            
                         </View>
-
-                    </View>
 
                     </TouchableHighlight>
                     </View>
