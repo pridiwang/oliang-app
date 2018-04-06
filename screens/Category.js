@@ -176,7 +176,7 @@ return (
               <Image source={require('../img/menu-icon.png')} style={styles.icon} />
             </TouchableHighlight>
 
-            <TextInput placeholder="search" 
+            <TextInput placeholder="search" underlineColorAndroid="rgba(0,0,0,0)"
             style={{flex:8,height:30,width:200,color:'#ffffff',fontSize:20,backgroundColor:'rgba(255,255,255,0.3)',padding:3,borderRadius:5}}
             onChangeText={(text) => this.setState({text})}
             />
