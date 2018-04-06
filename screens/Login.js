@@ -1,12 +1,12 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
+import {ScrollView, StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image,Platform } from 'react-native';
 import Expo from 'expo';
 import {Facebook} from 'expo';
 import {StackNavigator,DrawerNavigator,TabNavigator} from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 //226125624536427
 export default class LoginScreen extends React.Component {
-  static navigationOptions = {title:'เข้าระบบ'};
+  static navigationOptions = {title:'เข้าระบบ',headerStyle:{marginTop: Platform.OS ==='ios' ? 0 :-30 },};
   constructor(props){
     super(props);
     

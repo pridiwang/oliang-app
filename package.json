@@ -25,10 +25,8 @@
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-21.0.2.tar.gz",
     "react-native-drawer": "^2.3.0",
-    "react-native-fs": "^2.3.3",
     "react-native-htmlview": "^0.10.0",
     "react-native-keyboard-aware-scroll-view": "^0.2.9",
-    "react-native-media-player": "^0.3.4",
     "react-native-share": "^1.0.21",
     "react-native-social-share": "^1.1.0",
     "react-navigation": "^1.0.0-beta.11"

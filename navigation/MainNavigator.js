@@ -1,3 +1,4 @@
+import {Platform } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 
 import App from '../App';
@@ -24,7 +25,7 @@ export default MainNavigator = StackNavigator({
     PostNew: { screen: PostNew },
     PostCamera: { screen: PostCamera },
     
-    Login: { screen: LoginScreen },
+    Login: { screen: LoginScreen,headerStyle:{marginTop: Platform.OS ==='ios' ? 0 :-30 }, },
     
     Category: { screen: CategoryScreen },  
     Posts: { screen: PostsScreen },

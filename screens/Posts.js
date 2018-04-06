@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput, View,Button,
-    TouchableHighlight,Alert,AsyncStorage,RefreshControl } from 'react-native';
+    TouchableHighlight,Alert,AsyncStorage,RefreshControl,Platform } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import renderif from '../utility/renderif';
@@ -13,7 +13,7 @@ const htmlStyles=htmlLight;
 export default class PostsScreen extends React.Component{
     static navigationOptions=({navigation})=>({
         title:navigation.state.params.data.name,
-        
+        headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
     });
     constructor(props){
         super(props);

@@ -24,7 +24,8 @@
         },
         "packagerOpts": {
             "assetExts": ["ttf"]
-        }
+        }       
     },
     "facebookScheme": "fb226125624536427"
+ 
 }

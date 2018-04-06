@@ -110,3 +110,7 @@ module.exports = StyleSheet.create({
     alignSelf: 'center',
   },
 });
+/*
+    "react-native-fs": "^2.3.3",
+    "react-native-media-player": "^0.3.4",
+*/

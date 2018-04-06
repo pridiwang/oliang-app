@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated,Dimensions,Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput, View,
-    TouchableHighlight,Alert,AsyncStorage,WebView,TouchableOpacity,Button,Share } from 'react-native';
+    TouchableHighlight,Alert,AsyncStorage,WebView,TouchableOpacity,Button,Share,Platform } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
 import Expo,{Video} from 'expo';
@@ -15,6 +15,8 @@ export default class DetailScreen extends React.Component{
 
     static navigationOptions=({navigation})=>({
         title:navigation.state.params.data.name,
+        headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
+        style:{height:30},
     });
     constructor(props) {
         super(props);
