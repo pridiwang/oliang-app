@@ -25,10 +25,16 @@ export default class PostsScreen extends React.Component{
         }
         AsyncStorage.getItem('theme',(err,result)=>{
             console.log('stored '+result);
-            if(result=='Light') styles=themeLight;
-            if(result=='Dark') styles=themeDark;
-            if(result=='Light') htmlStyles=htmlLight;
-            if(result=='Dark') htmlStyles=htmlDark;
+            if(result=='Light'){
+                styles=themeLight;
+                htmlStyles=htmlLight;
+                
+            } 
+            if(result=='Dark'){
+                styles=themeDark;
+                htmlStyles=htmlDark;
+            } 
+            this.setState({theme:result});
         });
         
     }

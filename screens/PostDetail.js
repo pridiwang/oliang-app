@@ -29,16 +29,17 @@ export default class DetailScreen extends React.Component{
                 styles=themeLight;
                 htmlstyles=htmlLight;
                 //txtStyles=txtLight;
-                console.log('using themeLight htmlLight ');
+                console.log('contruct using themeLight htmlLight ');
             } 
             if(result=='Dark'){
                 styles=themeDark;
                 htmlstyles=htmlDark;
                 //txtStyles=txtDark;
-                console.log('using themeDark htmlDark ');
+                console.log('construct using themeDark htmlDark ');
             } 
+            this.setState({theme:result});
         });
-      }
+      } 
       onCancel() {
         console.log("CANCEL")
         this.setState({visible:false});
@@ -66,7 +67,9 @@ export default class DetailScreen extends React.Component{
         
         
     }
+    
     render(){
+        /*
         AsyncStorage.getItem('theme',(err,result)=>{
             console.log('stored '+result);
             if(result=='Light'){
@@ -82,9 +85,12 @@ export default class DetailScreen extends React.Component{
                 console.log('using themeDark htmlDark ');
             } 
         });
+        */
+
         this.MarkRead();
         const {params} = this.props.navigation.state;
-        let contentURL="http://oliang.itban.com/content/"+params.data.id;
+        let contentURL="http://oliang.itban.com/content/"+this.state.theme+"/"+params.data.id;
+        console.log('content url '+contentURL);
         let shareOptions = {
             title: params.data.title,
             message: params.data.content,
@@ -103,38 +109,40 @@ export default class DetailScreen extends React.Component{
               title: params.data.title,
               url:contentURL,
           }
+        
         if(params.data.mp4!==""){
             let clip_url=params.data.mp4.replace('.com/media/','.com:8081/vod/oliang/')+'/playlist.m3u8';
             console.log('vdo content');
             
             return (
                 <View style={{flex:1,backgroundColor:'#000',alignContent:'center',alignItems:'center',justifyContent:'center'}} >
+                    <MyWebView hasZoom='true' source={{uri:contentURL,method:'GET'}} 
+                        style={{marginTop:10,marginRight:10,height:800,flex:0.9,backgroundColor:'rgba(0,0,0,0)' }} 
+                        scrollEnabled={true}
+                    /> 
                 
-                <Expo.Video source={{uri:clip_url}} style={styles.img}
-                    resizeMode="contain" 
-                    shouldPlay={true}
-                    hls={true}                    
-                    />
                 </View>
             )
         }else{
+        
 
+//<Expo.Video source={{uri:clip_url}} style={styles.img}                    resizeMode="contain"                     shouldPlay={true}                    hls={true}                                        />
 //<HTMLView style={styles.content} value={params.data.content} /><HTMLView hasZoom='true' stylesheet={htmlStyles}  value={params.data.content}   />
 //<WebView hasZoom='true' source={{uri:'http://oliang.itban.com/content/'+params.data.id}} style={{marginTop:20}} />
           return(
               <ScrollView style={styles.container}>
-                  <View style={{flex:1,height:300,position:'relative'}}>
-                  <Image resizeMode="cover" source={{uri:params.data.img}} style={styles.img}/>
-                  </View>
-              <View style={{padding:10}} >
-              <Text style={styles.title}>{params.data.title}</Text>
-              <MyWebView hasZoom='true' source={{uri:'http://oliang.itban.com/content/'+params.data.id,method:'GET'}} 
-      style={{marginTop:20,height:800,flex:1,backgroundColor:'rgba(0,0,0,0)', }} 
-      scrollEnabled={true}
-      /> 
+                <View style={{flex:1,height:300,position:'relative'}}>
+                    <Image resizeMode="cover" source={{uri:params.data.img}} style={styles.img}/>
+                </View>
+                <View style={{padding:10}} >
+                    <Text style={styles.title}>{params.data.title}</Text>
+                    <MyWebView hasZoom='true' source={{uri:contentURL,method:'GET'}} 
+                        style={{marginTop:10,marginRight:10,height:800,flex:0.9,backgroundColor:'rgba(0,0,0,0)' }} 
+                        scrollEnabled={true}
+                    /> 
               
-              </View>         
-      <Button onPress={()=>{Share.share(shareContent)}} title="Share" style={styles.btn} ></Button>
+                </View>         
+                <Button onPress={()=>{Share.share(shareContent)}} title="Share" style={styles.btn} ></Button>
               </ScrollView>
           )
         }
