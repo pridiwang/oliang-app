@@ -164,7 +164,7 @@ export class CategoryScreen extends React.Component{
           </ScrollView>          
 flex:1,flexDirection:'row',justifyContent:'flex-end'
 */
-
+const topage='Posts';
 return (
   <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
     <Image 
@@ -187,11 +187,11 @@ return (
         <Image source={require ('../img/oliang-text.png')} style={{flex:0.15,resizeMode:'contain'}} />
         <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.15,resizeMode:'contain'}} />
         <ListView style={{flex:8,marginTop:20,width:260,bottom:0}} dataSource={this.state.dataSource}
-            renderRow={ (dr) =>
+            renderRow={ (dr) =>              
             <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
             <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
             </TouchableHighlight>
-            }
+          }
           />
     </Image>  
 
@@ -227,5 +227,5 @@ export default DrawNavigator = DrawerNavigator({
   About:{    screen: AboutScreen,  },
   Logout:{    screen: Logout, }
 },{
-  headerMode:'null',
+  headerMode:'none',
 });

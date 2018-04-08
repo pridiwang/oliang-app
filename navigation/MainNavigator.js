@@ -16,6 +16,7 @@ import AboutScreen from '../screens/About';
 import Logout from '../screens/Logout';
 import PostNew from '../screens/PostNew';
 import PostCamera from '../screens/PostCamera';
+import WebScreen from '../screens/Web';
 //import Noti from '../screens/Noti';
 
 export default MainNavigator = StackNavigator({
@@ -33,6 +34,7 @@ export default MainNavigator = StackNavigator({
     Player: { screen: PlayerScreen },
     AppUni: { screen: AppUniverse },
     About: { screen: AboutScreen },
+    Web: { screen: WebScreen },
     
     
 }, {

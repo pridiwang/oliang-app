@@ -52,6 +52,13 @@ export default class PostsScreen extends React.Component{
         
         
         console.log(at);
+        console.log(params.data);
+        if(params.data.type=='link'){
+            console.log(params.data);
+            this.props.navigation.navigate('Web',{data:params.data})
+            return;
+        }
+        
         cat=params.data.id;
         if(cat>0) {
             url='https://oliang.itban.com/catposts/'+cat;
