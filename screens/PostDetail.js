@@ -90,6 +90,7 @@ export default class DetailScreen extends React.Component{
         this.MarkRead();
         const {params} = this.props.navigation.state;
         let contentURL="http://oliang.itban.com/content/"+this.state.theme+"/"+params.data.id;
+        let fullcontentURL="http://oliang.itban.com/fullcontent/"+params.data.id;
         console.log('content url '+contentURL);
         let shareOptions = {
             title: params.data.title,
@@ -105,9 +106,10 @@ export default class DetailScreen extends React.Component{
             subject: "Share from Oliang NBTC" //  for email 
           };
           let shareContent={
-              message: params.data.title+': '+params.data.content,
+              // +'\r\n'+ params.data.text
+              message: params.data.title + '\r\n'+ fullcontentURL, 
               title: params.data.title,
-              url:contentURL,
+              url:fullcontentURL,
           }
         
         if(params.data.mp4!==""){
