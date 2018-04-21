@@ -23,8 +23,12 @@ export default class DetailScreen extends React.Component{
         this.state = {
           visible: false
         }
+        AsyncStorage.getItem('at',(err,result)=>{
+            this.setState({at:result});
+            this.MarkRead();
+        });
         AsyncStorage.getItem('theme',(err,result)=>{
-            console.log('stored '+result);
+            console.log('theme stored '+result);
             if(result=='Light'){
                 styles=themeLight;
                 htmlstyles=htmlLight;
@@ -39,6 +43,9 @@ export default class DetailScreen extends React.Component{
             } 
             this.setState({theme:result});
         });
+      }
+      componentDidMount(){
+          
       } 
       onCancel() {
         console.log("CANCEL")
@@ -49,10 +56,11 @@ export default class DetailScreen extends React.Component{
         this.setState({visible:true});
       }
 
-    async MarkRead(){
+    MarkRead(){
         const {params} = this.props.navigation.state;
-        const at = await AsyncStorage.getItem('@FB:at');
-        
+        //const at = await AsyncStorage.getItem('@FB:at');
+        //const at = await AsyncStorage.getItem('at');
+        at=this.state.at;
         console.log('marking read ');
         const id=params.data.id;
         console.log('id:'+id+' at:'+at);
@@ -63,7 +71,7 @@ export default class DetailScreen extends React.Component{
             headers:{
                 'Authorization':'Basic '+at
             }
-        })
+        });
         
         
     }
@@ -87,7 +95,7 @@ export default class DetailScreen extends React.Component{
         });
         */
 
-        this.MarkRead();
+        //this.MarkRead();
         const {params} = this.props.navigation.state;
         let contentURL="http://oliang.itban.com/content/"+this.state.theme+"/"+params.data.id;
         let fullcontentURL="http://oliang.itban.com/fullcontent/"+params.data.id;

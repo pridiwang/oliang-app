@@ -23,6 +23,9 @@ export default class PostsScreen extends React.Component{
             refreshing:false,
             theme:'Light',
         }
+        AsyncStorage.getItem('at',(err,at)=>{
+            console.log('getitem at:  '+at);
+        });
         AsyncStorage.getItem('theme',(err,result)=>{
             console.log('stored '+result);
             if(result=='Light'){
@@ -48,8 +51,8 @@ export default class PostsScreen extends React.Component{
     async componentDidMount() { 
         const {params} = this.props.navigation.state;
         console.log('checking at');
-        const at = await AsyncStorage.getItem('@FB:at');
-        
+        //const at = await AsyncStorage.getItem('@FB:at');
+        const at = await AsyncStorage.getItem('at');
         
         console.log(at);
         console.log(params.data);
