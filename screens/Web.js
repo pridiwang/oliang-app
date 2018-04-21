@@ -1,11 +1,13 @@
 import React  from 'react';
-import {View,Text,Image,StyleSheet,TouchableHighlight}  from 'react-native';
+import {View,Text,Image,StyleSheet,TouchableHighlight,Button,Platform}  from 'react-native';
 import Loginscreen from './Login';
 import MyWebView from 'react-native-webview-autoheight';
 export default class Web extends React.Component{
-    static navigationOptions={
-        header:null,
-    }
+    static navigationOptions=({navigation})=>({
+        title:navigation.state.params.data.name,
+        headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
+        headerRight:<Button title='Home' onPress={()=>navigation.navigate('Category',)}/>,
+    });
     async componentDidMount() { 
         const {params} = this.props.navigation.state;
         console.log('web');

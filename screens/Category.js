@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
 import{ DrawerNavigator } from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
+import util from 'react-native-util';
 import Expo from 'expo';
 import { Permissions, Notifications } from 'expo';
 import Profile from './Profile';
@@ -12,7 +13,7 @@ import PostNew from './PostNew';
 const PUSH_ENDPOINT = 'https://oliang.itban.com/users/push-token';
 
 async function registerForPushNotificationsAsync(at) {
-  console.log('registerForPushNotificationsAsync');
+  //console.log('registerForPushNotificationsAsync');
   const { status: existingStatus } = await Permissions.getAsync(
     Permissions.NOTIFICATIONS
   );
@@ -47,7 +48,7 @@ async function registerForPushNotificationsAsync(at) {
   })
   .then((response)=>response.json())
   .then((responseJson)=>{
-    console.log(responseJson)
+    //console.log(responseJson)
   });
   
   
@@ -60,7 +61,6 @@ export class CategoryScreen extends React.Component{
   }
   constructor(props){
     super(props);
-    console.log('constructor ');
     this.state={isLoading:true};
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
     
@@ -70,7 +70,7 @@ export class CategoryScreen extends React.Component{
     
 
     AsyncStorage.getItem('at',(err,at)=>{
-      console.log(' stored at:'+at+' error '+err);
+      //console.log(' stored at:'+at+' error '+err);
       //navigate('Category');
       url='https://oliang.itban.com/catlist';
       //console.log('url:'+url);
@@ -79,11 +79,11 @@ export class CategoryScreen extends React.Component{
       return fetch(url,{method:'GET',headers:{'Authorization':at}})
       .then((response)=>response.json())
       .then((responseJson)=>{
-        console.log('fetch ok');
+        //console.log('fetch ok');
         let ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>1 !== r2});
         this.setState({ isLoading: false, dataSource: ds.cloneWithRows(responseJson.data),},
           function(err){
-              console.log('err:'+err);
+              //console.log('err:'+err);
           });
       })
       .catch((error) => {
@@ -104,9 +104,13 @@ export class CategoryScreen extends React.Component{
     console.log('searching id'+dr.id+' keyword'+search);
     this.props.navigation.navigate('Posts',{data:dr});
   }
+  
+
+
+  
   render(){
     AsyncStorage.getItem('theme',(err,result)=>{
-      console.log('set to:'+result);
+     //console.log('set to:'+result);
     });
     if(this.state.isLoading==true){
       return (
@@ -175,10 +179,11 @@ return (
         <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
               <Image source={require('../img/menu-icon.png')} style={styles.icon} />
             </TouchableHighlight>
-
+         
             <TextInput placeholder="..ค้นหา.." underlineColorAndroid="rgba(0,0,0,0)"
             style={{flex:8,height:30,width:200,color:'#ffffff',fontSize:20,backgroundColor:'rgba(255,255,255,0.3)',padding:3,borderRadius:5}}
             onChangeText={(text) => this.setState({text})}
+            onEndEditing={(e)=>{this.searchPost()}}
             />
             <TouchableHighlight onPress={()=>{this.searchPost()}} >
             <Image source={require ("../img/search-icon.png")} style={styles.icon} />
@@ -204,9 +209,9 @@ return (
   //<Text style={{flex:1,backgroundColor:'rgba(0,0,0,0)',color:'#a00',fontSize:48}}>โอเลี้ยง กสทช</Text>
   UserLogout(){
     const { navigate } = this.props.navigation;
-    console.log('loging out');
+    //console.log('loging out');
     AsyncStorage.clear(()=>{
-      console.log('async storage cleared ');
+      //console.log('async storage cleared ');
       navigate('Login');
     });
 

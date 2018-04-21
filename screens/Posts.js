@@ -14,20 +14,21 @@ export default class PostsScreen extends React.Component{
     static navigationOptions=({navigation})=>({
         title:navigation.state.params.data.name,
         headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
+        headerRight:<Button title='Home' onPress={()=>navigation.navigate('Category',)}/>,
     });
     constructor(props){
         super(props);
-        console.log('constructor');
+        
         this.state={
             isLoading:true,
             refreshing:false,
             theme:'Light',
         }
         AsyncStorage.getItem('at',(err,at)=>{
-            console.log('getitem at:  '+at);
+            //console.log('getitem at:  '+at);
         });
         AsyncStorage.getItem('theme',(err,result)=>{
-            console.log('stored '+result);
+            //console.log('stored '+result);
             if(result=='Light'){
                 styles=themeLight;
                 htmlStyles=htmlLight;
@@ -50,14 +51,14 @@ export default class PostsScreen extends React.Component{
     }
     async componentDidMount() { 
         const {params} = this.props.navigation.state;
-        console.log('checking at');
+        //console.log('checking at');
         //const at = await AsyncStorage.getItem('@FB:at');
         const at = await AsyncStorage.getItem('at');
         
-        console.log(at);
-        console.log(params.data);
+       // console.log(at);
+        //console.log(params.data);
         if(params.data.type=='link'){
-            console.log(params.data);
+            //console.log(params.data);
             this.props.navigation.navigate('Web',{data:params.data})
             return;
         }
@@ -68,7 +69,7 @@ export default class PostsScreen extends React.Component{
         }else{
             url='https://oliang.itban.com/searchposts/'+params.data.name;
         }
-        console.log('url:'+url);
+        //console.log('url:'+url);
         return fetch(url,{
             method:'get',
             headers:{
@@ -91,7 +92,7 @@ export default class PostsScreen extends React.Component{
     } 
     render(){
         AsyncStorage.getItem('theme',(err,result)=>{
-            console.log(result);
+            //console.log(result);
 
           });
         //Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);

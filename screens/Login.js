@@ -41,14 +41,14 @@ export default class LoginScreen extends React.Component {
     .then((response)=>response.json())
     .then((json)=>{
       token=json.access_token;
-      console.log(json)
+      //console.log(json)
       if(token==null) {this.LoginFail(); return;};
       if(token=='') {this.LoginFail(); return;};
       try{
-          console.log('token:'+token);
+          //console.log('token:'+token);
           AsyncStorage.setItem('at',token,()=>{
             AsyncStorage.getItem('at',(err,at1)=>{
-              console.log('token '+token+ ' stored at:'+at1);
+              //console.log('token '+token+ ' stored at:'+at1);
               navigate('Category');
 
             });
@@ -116,9 +116,9 @@ export default class LoginScreen extends React.Component {
 
   chkToken(){
     const { navigate } = this.props.navigation;
-    console.log('checking token');
+    //console.log('checking token');
     AsyncStorage.getItem('at',(err,at)=>{
-      console.log('at:'+at);
+      //console.log('at:'+at);
       if(at!==null){
         navigate('Category');
         //navigate('Noti');
@@ -169,7 +169,7 @@ export default class LoginScreen extends React.Component {
     
   }
   async componentDidMount(){
-    console.log('component did mount');
+    //console.log('component did mount');
     this.chkToken(); 
   }
   //<Text style={{fontSize:36,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>

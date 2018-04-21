@@ -17,6 +17,7 @@ export default class DetailScreen extends React.Component{
         title:navigation.state.params.data.name,
         headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
         style:{height:30},
+        headerRight:<Button title='Home' onPress={()=>navigation.navigate('Category',)}/>,
     });
     constructor(props) {
         super(props);
@@ -28,18 +29,18 @@ export default class DetailScreen extends React.Component{
             this.MarkRead();
         });
         AsyncStorage.getItem('theme',(err,result)=>{
-            console.log('theme stored '+result);
+            //console.log('theme stored '+result);
             if(result=='Light'){
                 styles=themeLight;
                 htmlstyles=htmlLight;
                 //txtStyles=txtLight;
-                console.log('contruct using themeLight htmlLight ');
+                //console.loglog('contruct using themeLight htmlLight ');
             } 
             if(result=='Dark'){
                 styles=themeDark;
                 htmlstyles=htmlDark;
                 //txtStyles=txtDark;
-                console.log('construct using themeDark htmlDark ');
+                //console.loglog('construct using themeDark htmlDark ');
             } 
             this.setState({theme:result});
         });
@@ -48,11 +49,11 @@ export default class DetailScreen extends React.Component{
           
       } 
       onCancel() {
-        console.log("CANCEL")
+        //console.loglog("CANCEL")
         this.setState({visible:false});
       }
       onOpen() {
-        console.log("OPEN")
+        //console.loglog("OPEN")
         this.setState({visible:true});
       }
 
@@ -61,11 +62,11 @@ export default class DetailScreen extends React.Component{
         //const at = await AsyncStorage.getItem('@FB:at');
         //const at = await AsyncStorage.getItem('at');
         at=this.state.at;
-        console.log('marking read ');
+        //console.loglog('marking read ');
         const id=params.data.id;
-        console.log('id:'+id+' at:'+at);
+        //console.loglog('id:'+id+' at:'+at);
         url='http://oliang.itban.com/readpost/'+id;
-        console.log('url:'+url+' at:'+at);
+        //console.loglog('url:'+url+' at:'+at);
         return fetch(url,{
             method:'get',
             headers:{
@@ -84,13 +85,13 @@ export default class DetailScreen extends React.Component{
                 styles=themeLight;
                 htmlstyles=htmlLight;
                 //txtStyles=txtLight;
-                console.log('using themeLight htmlLight ');
+                //console.loglog('using themeLight htmlLight ');
             } 
             if(result=='Dark'){
                 styles=themeDark;
                 htmlstyles=htmlDark;
                 //txtStyles=txtDark;
-                console.log('using themeDark htmlDark ');
+                //console.loglog('using themeDark htmlDark ');
             } 
         });
         */
@@ -99,7 +100,7 @@ export default class DetailScreen extends React.Component{
         const {params} = this.props.navigation.state;
         let contentURL="http://oliang.itban.com/content/"+this.state.theme+"/"+params.data.id;
         let fullcontentURL="http://oliang.itban.com/fullcontent/"+params.data.id;
-        console.log('content url '+contentURL);
+        //console.loglog('content url '+contentURL);
         let shareOptions = {
             title: params.data.title,
             message: params.data.content,
@@ -122,7 +123,7 @@ export default class DetailScreen extends React.Component{
         
         if(params.data.mp4!==""){
             let clip_url=params.data.mp4.replace('.com/media/','.com:8081/vod/oliang/')+'/playlist.m3u8';
-            console.log('vdo content');
+            //console.loglog('vdo content');
             
             return (
                 <View style={{flex:1,backgroundColor:'#000',alignContent:'center',alignItems:'center',justifyContent:'center'}} >

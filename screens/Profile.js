@@ -4,6 +4,7 @@ import RadioButton from 'radio-button-react-native';
 import MainNavigator from '../navigation/MainNavigator';
 
 export default class Profile extends React.Component{
+  state={isLoading:true};
   constructor (props){
     super(props)
     
@@ -11,9 +12,10 @@ export default class Profile extends React.Component{
     AsyncStorage.getItem('theme',(err,result)=>{
       
       if(result){
-        console.log('got theme at construct :'+result);
+        //console.loglog('got theme at construct :'+result);
         this.state.theme=result;
-        console.log('get state theme:'+this.state.theme);
+        //console.loglog('get state theme:'+this.state.theme);
+        this.setState({isLoading:false});
       }else{
 
       }
@@ -34,36 +36,17 @@ export default class Profile extends React.Component{
     this.setState({theme:value},()=>{
       AsyncStorage.setItem('theme',value,()=>{
         AsyncStorage.getItem('theme',(err,result)=>{
-          console.log('set to:'+result);
+          //console.loglog('set to:'+result);
         });
       });
     });
     
-}
-componentWillMount(){
-  AsyncStorage.getItem('theme',(err,result)=>{
-    if(result){
-      console.log('will mount got theme at render :'+result);
-      this.state.theme=result;
-    }else{
-
-    }
-  });
-}
-    render(){
-      AsyncStorage.getItem('theme',(err,result)=>{
-        
-        if(result){
-          console.log('got theme at render :'+result);
-          this.state.theme=result;
-        }else{
-  
+  }
+  render(){
+        if(this.state.isLoading){
+          return (<View></View>);
         }
-      });
-      /*<TextInput style={styles.txtInput} placeholder="Email" />
-          <TextInput style={styles.txtInput} placeholder="Password" />
-           */
-        console.log('rederging state.theme:'+this.state.theme);
+        //console.loglog('rendering state.theme:'+this.state.theme);
         return(
             <View style={styles.container} >
                 <Text>Settings</Text>
@@ -88,7 +71,7 @@ componentWillMount(){
                 </View>
         )
 
-    }
+  }
 }
 
 const styles = StyleSheet.create({
