@@ -2,19 +2,21 @@ import React from 'react';
 import { Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput, View,Button,
     TouchableHighlight,Alert,AsyncStorage,RefreshControl,Platform } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
-import { Ionicons } from '@expo/vector-icons';
+//import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import renderif from '../utility/renderif';
 import {themeLight,themeDark,htmlLight,htmlDark} from './Styles';
 
 const styles=themeLight;
 const htmlStyles=htmlLight;
 
-
+//headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Text style={styles.topbtn} > Home </Text></TouchableHighlight>,
 export default class PostsScreen extends React.Component{
     static navigationOptions=({navigation})=>({
         title:navigation.state.params.data.name,
         headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
-        headerRight:<Button title='Home' onPress={()=>navigation.navigate('Category',)}/>,
+        headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
+        headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-home" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
     });
     constructor(props){
         super(props);

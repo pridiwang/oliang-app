@@ -18,6 +18,7 @@ export const themeLight= StyleSheet.create({
     postRead:{ flex:1,position:'absolute',bottom:10,right:0,},
     icon:{width:20,height:20},
     htmlview:{color:'#222222'},
+    topbtn:{backgroundColor:'rgba(100,100,100,0)',color:'#444444',margin:3},
 });
 
 export const themeDark=StyleSheet.create({
@@ -37,6 +38,7 @@ export const themeDark=StyleSheet.create({
     icon:{width:20,height:20},
     btn:{backgroundColor:'#FFFFFF'},
     htmlview:{color:'#FFFFFF'},
+    topbtn:{backgroundColor:'rgba(100,100,100,0)',color:'#aaaaaa'},
 });
 export const htmlLight=StyleSheet.create({
     body:{color:'#888888'},

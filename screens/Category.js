@@ -9,7 +9,8 @@ import Profile from './Profile';
 import AboutScreen from './About';
 import Logout from './Logout';
 import PostNew from './PostNew';
-
+import Appuni from './AppUniverse';
+import PostsScreen from './Posts';
 const PUSH_ENDPOINT = 'https://oliang.itban.com/users/push-token';
 
 async function registerForPushNotificationsAsync(at) {
@@ -67,8 +68,6 @@ export class CategoryScreen extends React.Component{
   }
   
   componentDidMount() { 
-    
-
     AsyncStorage.getItem('at',(err,at)=>{
       //console.log(' stored at:'+at+' error '+err);
       //navigate('Category');
@@ -89,9 +88,21 @@ export class CategoryScreen extends React.Component{
       .catch((error) => {
         console.error(error);
       });
-    });
+
+      url='https://oliang.itban.com/appuni';
+      //console.log('url:'+url);
+      //console.log('at:'+at);
+      registerForPushNotificationsAsync(at);
+      return fetch(url,{method:'GET',headers:{'Authorization':at}})
+      .then((response)=>response.json())
+      .then((responseJson)=>{
+        //console.log('fetch ok');
+        let dr=responseJson.data[0];
+      });
     
+    });
   }
+
   searchPost(){
     search=this.state.text;
     if(search==undefined){
@@ -229,6 +240,7 @@ export default DrawNavigator = DrawerNavigator({
   Back:{    screen: CategoryScreen,  },
   Post:{    screen: PostNew,  },
   Profile:{    screen: Profile,  },
+  Appuni:{    screen: Appuni,  },
   About:{    screen: AboutScreen,  },
   Logout:{    screen: Logout, }
 },{

@@ -109,6 +109,10 @@ module.exports = StyleSheet.create({
     marginLeft:20,
     alignSelf: 'center',
   },
+  topbtn:{
+    backgroundColor:'rgba(100,100,100,0)',
+    
+  }
 });
 /*
     "react-native-fs": "^2.3.3",

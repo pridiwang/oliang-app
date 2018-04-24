@@ -7,6 +7,7 @@ import Expo,{Video} from 'expo';
 //import Share, {ShareSheet, Button} from 'react-native-share';
 import {themeDark,themeLight,htmlDark,htmlLight,txtLight,txtDark} from './Styles';
 import MyWebView from 'react-native-webview-autoheight';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const styles=themeLight;
 const htmlStyles=htmlLight;
 const txtStyles=txtLight;
@@ -17,7 +18,7 @@ export default class DetailScreen extends React.Component{
         title:navigation.state.params.data.name,
         headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
         style:{height:30},
-        headerRight:<Button title='Home' onPress={()=>navigation.navigate('Category',)}/>,
+        headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-home" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
     });
     constructor(props) {
         super(props);
@@ -116,7 +117,7 @@ export default class DetailScreen extends React.Component{
           };
           let shareContent={
               // +'\r\n'+ params.data.text
-              message: params.data.title + '\r\n'+ fullcontentURL, 
+              message: params.data.title + ' / '+ params.data.author, //+ '\r\n'+ fullcontentURL, 
               title: params.data.title,
               url:fullcontentURL,
           }
