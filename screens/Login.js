@@ -16,7 +16,7 @@ export default class LoginScreen extends React.Component {
   }
   EmailLogin(){
     const { navigate } = this.props.navigation;
-    console.log('call email login');
+    //console.log('call email login');
     if(this.state==null){Alert.alert('กรุณากรอก NBTC account'); return;}
     var email=this.state.email;
     if(email==null) {Alert.alert('กรุณากรอก NBTC account'); return;}
