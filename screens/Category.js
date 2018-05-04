@@ -84,6 +84,7 @@ export class CategoryScreen extends React.Component{
           function(err){
               //console.log('err:'+err);
           });
+          AsyncStorage.setItem('userjson',JSON.stringify(responseJson.user));
       })
       .catch((error) => {
         console.error(error);
@@ -235,11 +236,12 @@ const styles = StyleSheet.create({
   btn:{margin:5,width:100,backgroundColor:'rgba(0,0,0,0)'},
   icon:{resizeMode:'contain',height:30,width:30,margin:3}
 });
-
+//Post:{    screen: PostNew,  },
 export default DrawNavigator = DrawerNavigator({
+  
   Back:{    screen: CategoryScreen,  },
-  Post:{    screen: PostNew,  },
-  Profile:{    screen: Profile,  },
+  
+  Profile:{    screen: Profile,headerMode:'screen'  },
   Appuni:{    screen: Appuni,  },
   About:{    screen: AboutScreen,  },
   Logout:{    screen: Logout, }

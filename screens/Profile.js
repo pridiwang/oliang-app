@@ -1,28 +1,17 @@
 import React from 'react';
 import { StatusBar,Platform,ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
+import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import RadioButton from 'radio-button-react-native';
 import MainNavigator from '../navigation/MainNavigator';
 
+import {themeDark,themeLight,htmlDark,htmlLight,txtLight,txtDark} from './Styles';
+import MyWebView from 'react-native-webview-autoheight';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+const styles=themeLight;
+const htmlStyles=htmlLight;
+const txtStyles=txtLight;
 export default class Profile extends React.Component{
-  state={isLoading:true};
-  constructor (props){
-    super(props)
-    
-    this.state = {theme: 'Light'};
-    AsyncStorage.getItem('theme',(err,result)=>{
-      
-      if(result){
-        //console.loglog('got theme at construct :'+result);
-        this.state.theme=result;
-        //console.loglog('get state theme:'+this.state.theme);
-        this.setState({isLoading:false});
-      }else{
-
-      }
-    });
-    
-}
- static navigationOptions = {
+  static navigationOptions=({navigation})=>({
     drawerLabel: 'ตั้งค่า',
     drawerIcon: ({ tintColor }) => (
       <Image
@@ -30,8 +19,54 @@ export default class Profile extends React.Component{
         style={[styles.icon, {tintColor: tintColor}]}
       />
     ),
-    header:null,
-  };
+    title:'Settings',
+    headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
+    headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
+    headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-home" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
+  });
+  constructor (props){
+    super(props)
+
+    this.state = {
+      isLoading:true,
+      theme:'Light',
+      user:{
+        username:'User',
+        type:'admin',
+      },
+      canPost:false,
+    };
+    console.log('loading '+this.state.isLoading);
+    console.log('theme '+this.state.theme);
+    AsyncStorage.getItem('theme',(err,result)=>{
+      
+      if(result){
+        console.log('usrename');
+        console.log(this.state.user);
+        //console.loglog('got theme at construct :'+result);
+        this.state.theme=result;
+        //console.loglog('get state theme:'+this.state.theme);
+        //this.setState({isLoading:false});
+   
+      }
+    });
+    AsyncStorage.getItem('userjson',(err,result1)=>{
+      if(result1){
+        
+        //console.log('usrjson');
+        //console.log(result1);
+        var userinfo=JSON.parse(result1);
+        console.log(userinfo);
+        this.setState({user:userinfo});
+        console.log(this.state.user.username);
+        if((this.state.user.type=='admin')||(this.state.user.type=='author')){
+          this.setState({'canPost':true});
+        }
+        this.setState({isLoading:false});
+      }
+    });
+}
+
   handleOnPress(value){
     this.setState({theme:value},()=>{
       AsyncStorage.setItem('theme',value,()=>{
@@ -42,21 +77,44 @@ export default class Profile extends React.Component{
     });
     
   }
+  componentDidMount(){
+    console.log('did mount');
+    //console.log(this.state.user.user_level);
+  }
   render(){
+    
+        console.log('rendering  ')
+        console.log(this.state);
         if(this.state.isLoading){
           return (<View></View>);
         }
         //console.loglog('rendering state.theme:'+this.state.theme);
+        if(this.state.isLoading===false){
         return(
-            <View style={styles.container} >
-                <Text>Settings</Text>
-                <Button title="Back" onPress={()=>this.props.navigation.navigate('Category')} />
-                
+            <View style={styles1.container} >
+                {this.state.canPost &&
                 <Button title="เขียนบทความ" onPress={()=>this.props.navigation.navigate('PostNew')} />
+                }
           <Image source={require('../img/user-icon.png')} style={{width:100,height:100}} />
-          
+          <View style={{flexDirection:'row',flex:1,}}>
+            <Text style={styles1.txtInfo}>ชื่อผู้ใช้:</Text>
+            <Text style={styles1.txtInfo}> {this.state.user.username}</Text>
+          </View>
+          <View style={{flexDirection:'row',flex:2,}}>
+            <Text style={styles1.txtInfo}>ตำแหน่ง:</Text>
+            <Text style={styles1.txtInfo}> {this.state.user.title}</Text>
+          </View>
+          <View style={{flexDirection:'row',flex:2,}}>
+            <Text style={styles1.txtInfo}>หน่วยงาน:</Text>
+            <Text style={styles1.txtInfo}> {this.state.user.department}</Text>
+          </View>
+          <View style={{flexDirection:'row',flex:3}}>
+            <Text style={styles1.txtInfo}>รายละเอียด:</Text>
+            <Text style={styles1.txtInfo}> {this.state.user.description}</Text>
+          </View>
           <View style={{flexDirection:'row',flex:1}}>
-          <Text style={{flex:1 }} >Theme: </Text>
+          
+          <Text style={styles1.txtInfo} >Theme: </Text>
           <RadioButton currentValue={this.state.theme} value={'Light'} onPress={this.handleOnPress.bind(this)}>
                 <Text> Light </Text>
                  </RadioButton>
@@ -70,11 +128,14 @@ export default class Profile extends React.Component{
 
                 </View>
         )
+        }else{
+          return (<View></View>)
+        }
 
   }
 }
 
-const styles = StyleSheet.create({
+const styles1 = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -83,6 +144,7 @@ const styles = StyleSheet.create({
     padding:30,    
     
   },
+  txtInfo:{flexDirection:'row',flex:1,fontSize:16},
   statusBarUnderlay: {
     height: 24,
     backgroundColor: 'rgba(0,0,0,0.2)',

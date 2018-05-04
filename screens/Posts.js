@@ -57,7 +57,7 @@ export default class PostsScreen extends React.Component{
         //const at = await AsyncStorage.getItem('@FB:at');
         const at = await AsyncStorage.getItem('at');
         
-       // console.log(at);
+       console.log('at '+at);
         //console.log(params.data);
         if(params.data.type=='link'){
             //console.log(params.data);
@@ -75,7 +75,7 @@ export default class PostsScreen extends React.Component{
         return fetch(url,{
             method:'get',
             headers:{
-                'Authorization':'Basic '+at
+                'Authorization':at
             }
         })        
         .then((response) => response.json())
@@ -87,12 +87,14 @@ export default class PostsScreen extends React.Component{
                 },function(){
 
                 });
+                console.log(responseJson.q);
             })
         .catch((error) => {
             console.error(error);
         });
     } 
     render(){
+        console.log('rendering ');
         AsyncStorage.getItem('theme',(err,result)=>{
             //console.log(result);
 
@@ -121,7 +123,8 @@ export default class PostsScreen extends React.Component{
                     renderRow={ (rowData)=>
                     <View style={{flex:1}}>
                     <TouchableHighlight onPress={()=>{
-                        rowData.unread=0;
+                        //rowData.unread=0;
+                        //console.log(rowData);
                         this.props.navigation.navigate('Detail',{data:rowData})
                    }}>
                         <View style={{flex:1,}}>
@@ -136,7 +139,7 @@ export default class PostsScreen extends React.Component{
                                     </View>
                                 </View>
                                 <View style={{flex:2}}>     
-                                    {renderif(rowData.unread=='0',
+                                    {renderif(rowData.unread==='0',
                                     <Ionicons style={styles.postRead} name="md-checkmark-circle" size={16} color="green" />
                                     
                                     )}

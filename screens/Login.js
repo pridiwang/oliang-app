@@ -80,7 +80,7 @@ export default class LoginScreen extends React.Component {
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('226125624536427',
     {
         permissions: ['public_profile','email'],
-        behavior:'web',
+        behavior: 'web',
       });
       console.log('type:'+type);
     if (type === 'success') {
@@ -92,18 +92,41 @@ export default class LoginScreen extends React.Component {
       fetch(url)
       .then((response)=>response.json())
       .then((json)=>{
+        console.log('fb return');
+        console.log(json);
         fbid=json.id;
         fbemail=json.email;
-        console.log('fbid '+fbid+' fbemail:'+fbemail);
+        fbname=json.name;
+        console.log('fbid '+fbid+' fbemail:'+fbemail+ ' fbname '+fbname);
         
+        //AsyncStorage.setItem('@FB:name',fbname);
+        //AsyncStorage.setItem('@FB:email',fbemail);
           AsyncStorage.setItem('@FB:id',fbid,()=>{
             AsyncStorage.getItem('@FB:id',(err,fbid1)=>{
               console.log('fbid1:'+fbid1);
-              navigate('Category'); 
+              var formData = new FormData();
+              formData.append('fbname',fbname);
+              formData.append('fbemail',fbemail);
+              fetch('http://oliang.itban.com/fblogin/'+fbid,{
+               method:'POST',
+               body: formData, 
+              },
+            
+              )
+              .then((response)=>response.json())
+              .then((responseJson)=>{
+              try{
+                AsyncStorage.setItem('at',responseJson.access_token);
+                navigate('Category');
+              }catch(err){
+                console.log('err:'+err);
+              }
+              })
+              
             });
           });
           
-          navigate('Category'); 
+          //navigate('Category'); 
         
       })
       

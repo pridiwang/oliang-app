@@ -67,11 +67,11 @@ export default class DetailScreen extends React.Component{
         const id=params.data.id;
         //console.loglog('id:'+id+' at:'+at);
         url='http://oliang.itban.com/readpost/'+id;
-        //console.loglog('url:'+url+' at:'+at);
+        console.log('url:'+url+' at:'+at);
         return fetch(url,{
             method:'get',
             headers:{
-                'Authorization':'Basic '+at
+                'Authorization':at
             }
         });
         
