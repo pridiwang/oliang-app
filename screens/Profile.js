@@ -33,6 +33,7 @@ export default class Profile extends React.Component{
       user:{
         username:'User',
         type:'admin',
+        img:'http://oliang.itban.com/img/user-icon.png',
       },
       canPost:false,
     };
@@ -95,34 +96,36 @@ export default class Profile extends React.Component{
                 {this.state.canPost &&
                 <Button title="เขียนบทความ" onPress={()=>this.props.navigation.navigate('PostNew')} />
                 }
-          <Image source={require('../img/user-icon.png')} style={{width:100,height:100}} />
+          <Image source={{uri:this.state.user.img}} style={{width:100,height:100}} />
           <View style={{flexDirection:'row',flex:1,}}>
-            <Text style={styles1.txtInfo}>ชื่อผู้ใช้:</Text>
+            <Text style={styles1.txtLabel}>ชื่อผู้ใช้:</Text>
             <Text style={styles1.txtInfo}> {this.state.user.username}</Text>
           </View>
           <View style={{flexDirection:'row',flex:2,}}>
-            <Text style={styles1.txtInfo}>ตำแหน่ง:</Text>
+            <Text style={styles1.txtLabel}>ตำแหน่ง:</Text>
             <Text style={styles1.txtInfo}> {this.state.user.title}</Text>
           </View>
           <View style={{flexDirection:'row',flex:2,}}>
-            <Text style={styles1.txtInfo}>หน่วยงาน:</Text>
-            <Text style={styles1.txtInfo}> {this.state.user.department}</Text>
+            <Text style={styles1.txtLabel}>หน่วยงาน:</Text>
+            <Text style={styles1.txtLabel}> {this.state.user.department}</Text>
           </View>
           <View style={{flexDirection:'row',flex:3}}>
-            <Text style={styles1.txtInfo}>รายละเอียด:</Text>
+            <Text style={styles1.txtLabel}>รายละเอียด:</Text>
             <Text style={styles1.txtInfo}> {this.state.user.description}</Text>
           </View>
           <View style={{flexDirection:'row',flex:1}}>
           
-          <Text style={styles1.txtInfo} >Theme: </Text>
-          <RadioButton currentValue={this.state.theme} value={'Light'} onPress={this.handleOnPress.bind(this)}>
-                <Text> Light </Text>
+          <Text style={styles1.txtLabel} >Theme: </Text>
+          <View style={{flex:2,flexDirection:'row'}} >
+          <RadioButton style={{flex:1}} currentValue={this.state.theme} value={'Light'} onPress={this.handleOnPress.bind(this)}>
+                <Text> Light  </Text>
                  </RadioButton>
-                      
+                <Text> / </Text>
                  <RadioButton currentValue={this.state.theme} value={'Dark'} onPress={this.handleOnPress.bind(this)}>
                  <Text> Dark </Text>
                  </RadioButton>
-                 
+                 </View>
+          
 </View>
 <Button title="Save" onPress={()=>this.props.navigation.navigate('Category')} />
 
@@ -144,7 +147,8 @@ const styles1 = StyleSheet.create({
     padding:30,    
     
   },
-  txtInfo:{flexDirection:'row',flex:1,fontSize:16},
+  txtLabel:{flex:1,fontSize:16},
+  txtInfo:{flex:2,fontSize:16},
   statusBarUnderlay: {
     height: 24,
     backgroundColor: 'rgba(0,0,0,0.2)',
