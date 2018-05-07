@@ -11,11 +11,11 @@ const styles=themeLight;
 const htmlStyles=htmlLight;
 
 //headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Text style={styles.topbtn} > Home </Text></TouchableHighlight>,
-export default class PostsScreen extends React.Component{
+export default class AllPosts extends React.Component{
     static navigationOptions=({navigation})=>({
         title:navigation.state.params.data.name,
         headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
-        headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
+        headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Posts',{data:navigation.state.params.data})}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
         headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-home" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
     });
     constructor(props){
@@ -67,7 +67,7 @@ export default class PostsScreen extends React.Component{
         
         cat=params.data.id;
         if(cat>0) {
-            url='https://oliang.itban.com/catposts/'+cat;
+            url='https://oliang.itban.com/allposts/'+cat;
         }else{
             url='https://oliang.itban.com/searchposts/'+params.data.name;
         }
@@ -94,7 +94,6 @@ export default class PostsScreen extends React.Component{
         });
     } 
     render(){
-        const {params} = this.props.navigation.state;
         console.log('rendering ');
         AsyncStorage.getItem('theme',(err,result)=>{
             //console.log(result);
@@ -108,9 +107,7 @@ export default class PostsScreen extends React.Component{
                 </View>
             )
         }else{
-/*
-
-*/            
+            
             
             return(
                 <View style={styles.postView} >
@@ -131,45 +128,32 @@ export default class PostsScreen extends React.Component{
                         this.props.navigation.navigate('Detail',{data:rowData})
                    }}>
                         <View style={{flex:1,}}>
-                               {renderif(rowData.status=='draft',
-                                    <View style={styles.postItem}>
-                                        <View style={styles.postText} >
-                                            <Text style={styles.postTitle}>{rowData.thai_date} : {rowData.title} </Text>
-                                            <Text style={styles.postAuthor}>{rowData.author} </Text>
-                                            
-                                        </View>
-                                        <View style={{}}>     
-                                    {renderif(rowData.unread==='0',<Ionicons style={styles.postRead} name="md-checkmark-circle" size={16} color="green" />
-                                    )}
-                                        </View>
-                                    </View>    
-                                    )}
-                                    {renderif(rowData.status=='publish',
-                                        <View style={styles.postItem}>
-                                            <Image source={{uri:rowData.img}} style={styles.postImg} resizeMode="cover" ></Image>
-                                            <View style={styles.postText} >
-                                                <View style={{flex:3}}>
-                                                    <Text style={styles.postTitle}>{rowData.title} </Text>
-                                                    <Text style={styles.postDate}>{rowData.thai_date} </Text>
-                                                </View>
-                                                <Text style={styles.postAuthor}>{rowData.author} </Text>
-                                                <View style={{flex:2}}>     
-                                                {renderif(rowData.unread==='0',<Ionicons style={styles.postRead} name="md-checkmark-circle" size={16} color="green" />
-                                    )}
-                                            </View>
-                                            </View>    
-                                            
-                                        </View>
-                                    )}
+                            
+                                <View style={styles.postItem}>
                                     
+                                        <Image source={{uri:rowData.img}} style={styles.postImg} resizeMode="cover" />
+                                    
+                                    <View style={styles.postText} >
+                                        <View style={{flex:3}}>
+                                        <Text style={styles.postTitle}>{rowData.title} </Text>
+                                        <Text style={styles.postDate}>{rowData.thai_date} </Text>
+                                        </View>
+                                        <Text style={styles.postAuthor}>{rowData.author} </Text>
+                                    </View>
                                 </View>
-                                
+                                <View style={{flex:2}}>     
+                                    {renderif(rowData.unread==='0',
+                                    <Ionicons style={styles.postRead} name="md-checkmark-circle" size={16} color="green" />
+                                    
+                                    )}
+                                </View>
+                            
+                        </View>
 
                     </TouchableHighlight>
                     </View>
                     }
                     />
-                <Button title="ดูบทความทั้งหมด" onPress={()=>{this.props.navigation.navigate('AllPosts',{data:params.data})}}></Button>                
                 </View>
             )
         

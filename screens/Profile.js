@@ -94,7 +94,7 @@ export default class Profile extends React.Component{
         return(
             <View style={styles1.container} >
                 {this.state.canPost &&
-                <Button title="เขียนบทความ" onPress={()=>this.props.navigation.navigate('PostNew')} />
+                <Button title="เขียนบทความใหม่" onPress={()=>this.props.navigation.navigate('PostNew')} />
                 }
           <Image source={{uri:this.state.user.img}} style={{width:100,height:100}} />
           <View style={{flexDirection:'row',flex:1,}}>

@@ -6,6 +6,7 @@ import LoginScreen from '../screens/Login';
 
 import CategoryScreen from '../screens/Category';
 import PostsScreen from '../screens/Posts';
+import AllPosts from '../screens/AllPosts';
 import DetailScreen from '../screens/PostDetail';
 import PlayerScreen from '../screens/PostPlayer';
 import AppUniverse from '../screens/AppUniverse';
@@ -30,6 +31,7 @@ export default MainNavigator = StackNavigator({
     
     Category: { screen: CategoryScreen },  
     Posts: { screen: PostsScreen },
+    AllPosts: { screen: AllPosts },
     Detail: { screen: DetailScreen },
     Player: { screen: PlayerScreen },
     AppUni: { screen: AppUniverse },

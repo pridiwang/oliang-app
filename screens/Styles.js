@@ -14,6 +14,7 @@ export const themeLight= StyleSheet.create({
     postText:{flex:4,flexDirection:'column',  justifyContent: 'space-between'},
     postTitle:{ fontSize:14,position:'relative',color:'#000000',padding:3,},
     postAuthor:{fontSize:12,position:'relative',color:'#442222',padding:3,},
+    postDate:{fontSize:10,color:'#222244',fontStyle:'italic',padding:3,},
     
     postRead:{ flex:1,position:'absolute',bottom:10,right:0,},
     icon:{width:20,height:20},
@@ -32,8 +33,10 @@ export const themeDark=StyleSheet.create({
     postItem:{flex:1,flexDirection:'row',padding:3,borderBottomWidth:1,borderColor:'#cccccc',backgroundColor:'#222222',},
     postImg:{ height:150,flex:5,},
     postText:{flex:4,flexDirection:'column',  justifyContent: 'space-between'},
-    postTitle:{ padding:3,fontSize:14,position:'relative',color:'#ffffff',},
+    postTitle:{padding:3,fontSize:14,position:'relative',color:'#ffffff',},
+    postDate:{fontSize:10,color:'#aaaaff',fontStyle:'italic',padding:3},
     postAuthor:{padding:3,fontSize:12,position:'relative',color:'#ffdddd',},
+    
     postRead:{ flex:1,position:'absolute',bottom:10,right:0,},
     icon:{width:20,height:20},
     btn:{backgroundColor:'#FFFFFF'},
