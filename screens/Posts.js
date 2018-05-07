@@ -153,12 +153,12 @@ export default class PostsScreen extends React.Component{
                                                     <Text style={styles.postDate}>{rowData.thai_date} </Text>
                                                 </View>
                                                 <Text style={styles.postAuthor}>{rowData.author} </Text>
-                                                <View style={{flex:2}}>     
+                                                
+                                            </View>    
+                                            <View style={{}}>     
                                                 {renderif(rowData.unread==='0',<Ionicons style={styles.postRead} name="md-checkmark-circle" size={16} color="green" />
                                     )}
                                             </View>
-                                            </View>    
-                                            
                                         </View>
                                     )}
                                     
