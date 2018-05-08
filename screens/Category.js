@@ -205,7 +205,7 @@ return (
         <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.15,resizeMode:'contain'}} />
         <ListView style={{flex:8,marginTop:20,width:260,bottom:0}} dataSource={this.state.dataSource}
             renderRow={ (dr) =>              
-            <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
+            <TouchableHighlight  onPress={()=>{this.props.navigation.navigate( dr.id==8 ? 'Posts' : 'AllPosts' ,{data:dr})}}>
             <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
             </TouchableHighlight>
           }

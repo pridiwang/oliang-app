@@ -15,7 +15,7 @@ export default class AllPosts extends React.Component{
     static navigationOptions=({navigation})=>({
         title:navigation.state.params.data.name,
         headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
-        headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Posts',{data:navigation.state.params.data})}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
+        headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Category',{data:navigation.state.params.data})}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
         headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-home" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
     });
     constructor(props){
@@ -63,7 +63,7 @@ export default class AllPosts extends React.Component{
         ? this.state.page
         : 1;
         cat=params.data.id;
-        url='https://oliang.itban.com/allposts/8/'+page;
+        url='https://oliang.itban.com/allposts/'+cat+'/'+page;
         console.log('url '+url+ ' at '+at);
         fetch(url,{
             method:'get',
