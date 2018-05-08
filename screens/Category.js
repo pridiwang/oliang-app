@@ -87,7 +87,7 @@ export class CategoryScreen extends React.Component{
           AsyncStorage.setItem('userjson',JSON.stringify(responseJson.user));
       })
       .catch((error) => {
-        console.error(error);
+       //console.error(error);
       });
 
       url='https://oliang.itban.com/appuni';
@@ -113,7 +113,7 @@ export class CategoryScreen extends React.Component{
       "id":"0",
       "name":search,
     }
-    console.log('searching id'+dr.id+' keyword'+search);
+   //console.log('searching id'+dr.id+' keyword'+search);
     this.props.navigation.navigate('Posts',{data:dr});
   }
   

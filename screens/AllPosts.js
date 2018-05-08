@@ -23,8 +23,13 @@ export default class AllPosts extends React.Component{
         
         this.state={
             isLoading:true,
+            isLoadingMore:false,
             refreshing:false,
             theme:'Light',
+            page:1,
+            dataSource:null,
+            _data:null,
+            _dataAfter:'',
         }
         AsyncStorage.getItem('at',(err,at)=>{
             //console.log('getitem at:  '+at);
@@ -51,46 +56,56 @@ export default class AllPosts extends React.Component{
         });
         
     }
-    async componentDidMount() { 
-        const {params} = this.props.navigation.state;
-        //console.log('checking at');
-        //const at = await AsyncStorage.getItem('@FB:at');
+    async fetchData(callback){
         const at = await AsyncStorage.getItem('at');
-        
-       console.log('at '+at);
-        //console.log(params.data);
-        if(params.data.type=='link'){
-            //console.log(params.data);
-            this.props.navigation.navigate('Web',{data:params.data})
-            return;
-        }
-        
+        const {params} = this.props.navigation.state;
+        const page = this.state.page !== ""
+        ? this.state.page
+        : 1;
         cat=params.data.id;
-        if(cat>0) {
-            url='https://oliang.itban.com/allposts/'+cat;
-        }else{
-            url='https://oliang.itban.com/searchposts/'+params.data.name;
-        }
-        //console.log('url:'+url);
-        return fetch(url,{
+        url='https://oliang.itban.com/allposts/8/'+page;
+        console.log('url '+url+ ' at '+at);
+        fetch(url,{
             method:'get',
             headers:{
                 'Authorization':at
             }
         })        
         .then((response) => response.json())
-        .then((responseJson) => {
-                let ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>1 !== r2});
-                this.setState({
-                    isLoading: false,
-                    dataSource: ds.cloneWithRows(responseJson.data),
-                },function(){
-
-                });
-                console.log(responseJson.q);
+        .then(callback)
+        .catch(error => {
+            console.error(error)
+        });
+    }
+    fetchMore(){
+        const page =this.state.page + 1;
+        this.setState({page:page});
+        this.fetchData(responseJson=>{
+            if(responseJson.data===null) return;
+            var count = Object.keys(responseJson.data).length;
+            if(count==0) return;
+            const data2=responseJson.data;
+            
+            const data =this.state._data.concat(responseJson.data);
+            
+            this.setState({
+                dataSource:this.state.dataSource.cloneWithRows(data),
+                isLoadingMore:false,
+                _data:data,
             })
-        .catch((error) => {
-            console.error(error);
+        })
+    }
+    async componentDidMount() { 
+        this.fetchData(responseJson => {
+                let ds = new ListView.DataSource({
+                    rowHasChanged:(r1,r2)=>1 !== r2
+                });
+                const data = responseJson.data;
+                this.setState({
+                    isLoading: false,                        
+                    dataSource: ds.cloneWithRows(data),
+                    _data: data,
+                });
         });
     } 
     render(){
@@ -113,12 +128,7 @@ export default class AllPosts extends React.Component{
                 <View style={styles.postView} >
                     
                     <ListView style={{flex:5}}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={this.state.refreshing}
-                                onRefresh={this._onRefresh.bind(this)}
-                            />
-                        }
+                       
                     dataSource={this.state.dataSource}
                     renderRow={ (rowData)=>
                     <View style={{flex:1}}>
@@ -153,6 +163,17 @@ export default class AllPosts extends React.Component{
                     </TouchableHighlight>
                     </View>
                     }
+                    onEndReached={()=>
+                    this.setState({isLoadingMore:true}, ()=>this.fetchMore())}
+                    renderFooter={()=>{
+                        console.log('rendering footer for page '+this.state.page);
+                        return (
+                            this.state.isLoadingMore && 
+                            <View style={{flex:1}}>
+                            <ActivityIndicator size="small" />
+                            </View>
+                        );
+                    }}
                     />
                 </View>
             )

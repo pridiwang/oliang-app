@@ -27,7 +27,9 @@ export default class LoginScreen extends React.Component {
       "user": this.state.email,
       "password": this.state.password
     }   
-    console.log('state email:'+email+ ' password:'+password);
+   //console.log('state email:'+email+ ' password:'+password);
+   //console.log('data');
+   //console.log(data);
     url='https://oliang.itban.com/emaillogin/';
     var headers={Authorization: 'EM '+email+'|'+password,
     'Accept': 'application/json,text/plain,*/*',
@@ -41,30 +43,30 @@ export default class LoginScreen extends React.Component {
     .then((response)=>response.json())
     .then((json)=>{
       token=json.access_token;
-      //console.log(json)
+     //console.log(json)
       if(token==null) {this.LoginFail(); return;};
       if(token=='') {this.LoginFail(); return;};
       try{
-          //console.log('token:'+token);
+         //console.log('token:'+token);
           AsyncStorage.setItem('at',token,()=>{
             AsyncStorage.getItem('at',(err,at1)=>{
-              //console.log('token '+token+ ' stored at:'+at1);
+             //console.log('token '+token+ ' stored at:'+at1);
               navigate('Category');
 
             });
           });
           
       }catch(err){
-          console.log('err:'+err);
+         //console.log('err:'+err);
       }
     })
     .catch((error)=>{
-      console.error(error)
+     //console.error(error)
     });
   }
   logIn() {
     const { navigate } = this.props.navigation;
-    console.log('call login');
+   //console.log('call login');
     
     if(this.chkFB()){
       navigate('Catgegory');
@@ -75,35 +77,35 @@ export default class LoginScreen extends React.Component {
   }
   async fbLogin(){
     const { navigate } = this.props.navigation;
-    console.log(' calling fblogin');
+   //console.log(' calling fblogin');
     
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('226125624536427',
     {
         permissions: ['public_profile','email'],
         behavior: 'web',
       });
-      console.log('type:'+type);
+     //console.log('type:'+type);
     if (type === 'success') {
-      console.log(' login success token:'+token);
+     //console.log(' login success token:'+token);
       
       // Get the user's name using Facebook's Graph API //,{parameters:{fields:{public_profile,email},access_token:token}}
       url='https://graph.facebook.com/me?access_token='+token //+'&fields=id,email';
-      console.log('url:'+url);
+     //console.log('url:'+url);
       fetch(url)
       .then((response)=>response.json())
       .then((json)=>{
-        console.log('fb return');
-        console.log(json);
+       //console.log('fb return');
+       //console.log(json);
         fbid=json.id;
         fbemail=json.email;
         fbname=json.name;
-        console.log('fbid '+fbid+' fbemail:'+fbemail+ ' fbname '+fbname);
+       //console.log('fbid '+fbid+' fbemail:'+fbemail+ ' fbname '+fbname);
         
         //AsyncStorage.setItem('@FB:name',fbname);
         //AsyncStorage.setItem('@FB:email',fbemail);
           AsyncStorage.setItem('@FB:id',fbid,()=>{
             AsyncStorage.getItem('@FB:id',(err,fbid1)=>{
-              console.log('fbid1:'+fbid1);
+             //console.log('fbid1:'+fbid1);
               var formData = new FormData();
               formData.append('fbname',fbname);
               formData.append('fbemail',fbemail);
@@ -119,7 +121,7 @@ export default class LoginScreen extends React.Component {
                 AsyncStorage.setItem('at',responseJson.access_token);
                 navigate('Category');
               }catch(err){
-                console.log('err:'+err);
+               //console.log('err:'+err);
               }
               })
               
@@ -155,34 +157,34 @@ export default class LoginScreen extends React.Component {
   }
   chkFB(){
     const { navigate } = this.props.navigation;
-    console.log('checking fB');
+   //console.log('checking fB');
     AsyncStorage.getItem('@FB:id',(err,fbid)=>{
-      console.log('fbid:'+fbid);
+     //console.log('fbid:'+fbid);
       if(fbid !== null){
         url='https://oliang.itban.com/fblogin/'+fbid;
-        console.log(url);
+       //console.log(url);
         return fetch(url)
         .then((response)=>response.json())
         .then((responseJson)=>{
-          console.log(responseJson);
+         //console.log(responseJson);
           //this.setState('access_token',responseJson.access_token);
-          console.log('storing at:'+responseJson.access_token);
+         //console.log('storing at:'+responseJson.access_token);
           try{
             AsyncStorage.setItem('at',responseJson.access_token);
             //navigate('Category');
           }catch(err){
-            console.log('err:'+err);
+           //console.log('err:'+err);
           }
         },function(){
 
         }); 
 
-          console.log('authorzied ');
-          console.log(fbid);
+         //console.log('authorzied ');
+         //console.log(fbid);
           //navigate('Category');
           return true;
       }else{
-        console.log('not authorized yet');
+       //console.log('not authorized yet');
         //this.fbLogin(); 
         return false;
       }
@@ -217,7 +219,7 @@ export default class LoginScreen extends React.Component {
 <TextInput editable={true} keyboardType='default' placeholder='Password' secureTextEntry={true} placeholderTextColor='#666666'
         style={{height:40,width:240,color:'#000000'}}
         onChangeText={(password)=>{
-            console.log('fill in password:'+password)
+           //console.log('fill in password:'+password)
             this.setState({password:password})
             }
 

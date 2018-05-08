@@ -133,9 +133,10 @@ export default class PostsScreen extends React.Component{
                         <View style={{flex:1,}}>
                                {renderif(rowData.status=='draft',
                                     <View style={styles.postItem}>
+                                        <Image source={{uri:rowData.img}} style={styles.postImgSmall} resizeMode="cover" ></Image>
                                         <View style={styles.postText} >
-                                            <Text style={styles.postTitle}>{rowData.thai_date} : {rowData.title} </Text>
-                                            <Text style={styles.postAuthor}>{rowData.author} </Text>
+                                            <Text style={styles.postTitle}>{rowData.title} </Text>
+                                            <Text style={styles.postAuthor}>{rowData.thai_date} : {rowData.author} </Text>
                                             
                                         </View>
                                         <View style={{}}>     
@@ -169,7 +170,7 @@ export default class PostsScreen extends React.Component{
                     </View>
                     }
                     />
-                <Button title="ดูบทความทั้งหมด" onPress={()=>{this.props.navigation.navigate('AllPosts',{data:params.data})}}></Button>                
+                <Button title="ดูบทความย้อนหลัง" onPress={()=>{this.props.navigation.navigate('AllPosts',{data:params.data})}}></Button>                
                 </View>
             )
         

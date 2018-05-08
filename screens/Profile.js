@@ -99,19 +99,19 @@ export default class Profile extends React.Component{
           <Image source={{uri:this.state.user.img}} style={{width:100,height:100}} />
           <View style={{flexDirection:'row',flex:1,}}>
             <Text style={styles1.txtLabel}>ชื่อผู้ใช้:</Text>
-            <Text style={styles1.txtInfo}> {this.state.user.username}</Text>
+            <Text style={styles1.txtInfo}>{this.state.user.username}</Text>
           </View>
           <View style={{flexDirection:'row',flex:2,}}>
             <Text style={styles1.txtLabel}>ตำแหน่ง:</Text>
-            <Text style={styles1.txtInfo}> {this.state.user.title}</Text>
+            <Text style={styles1.txtInfo}>{this.state.user.title}</Text>
           </View>
           <View style={{flexDirection:'row',flex:2,}}>
             <Text style={styles1.txtLabel}>หน่วยงาน:</Text>
-            <Text style={styles1.txtLabel}> {this.state.user.department}</Text>
+            <Text style={styles1.txtInfo}>{this.state.user.department}</Text>
           </View>
           <View style={{flexDirection:'row',flex:3}}>
             <Text style={styles1.txtLabel}>รายละเอียด:</Text>
-            <Text style={styles1.txtInfo}> {this.state.user.description}</Text>
+            <Text style={styles1.txtInfo}>{this.state.user.description}</Text>
           </View>
           <View style={{flexDirection:'row',flex:1}}>
           
