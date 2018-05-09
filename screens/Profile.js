@@ -103,7 +103,7 @@ export default class Profile extends React.Component{
           <Image source={{uri:this.state.user.img}} style={{width:100,height:100}} />
           <View style={{flexDirection:'row',flex:1,}}>
             <Text style={styles1.txtLabel}>ชื่อผู้ใช้:</Text>
-            <Text style={styles1.txtInfo}>{this.state.user.username}</Text>
+            <Text style={styles1.txtInfo}>{this.state.user.fullname}</Text>
           </View>
           <View style={{flexDirection:'row',flex:2,}}>
             <Text style={styles1.txtLabel}>ตำแหน่ง:</Text>
