@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
+import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image, Keyboard } from 'react-native';
 import{ DrawerNavigator } from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
 import util from 'react-native-util';
@@ -64,6 +64,7 @@ export class CategoryScreen extends React.Component{
     super(props);
     this.state={isLoading:true};
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
+    Keyboard.dismiss();
     
   }
   
@@ -71,11 +72,18 @@ export class CategoryScreen extends React.Component{
     AsyncStorage.getItem('at',(err,at)=>{
       //console.log(' stored at:'+at+' error '+err);
       //navigate('Category');
+      registerForPushNotificationsAsync(at);
       url='https://oliang.itban.com/catlist';
       //console.log('url:'+url);
-      //console.log('at:'+at);
-      registerForPushNotificationsAsync(at);
-      return fetch(url,{method:'GET',headers:{'Authorization':at}})
+      console.log('category did mount at:'+at);
+      
+      return fetch(url,{
+        method:'get',
+        headers:{
+            'Authorization':at
+        }
+      }
+    ) 
       .then((response)=>response.json())
       .then((responseJson)=>{
         //console.log('fetch ok');
@@ -84,6 +92,8 @@ export class CategoryScreen extends React.Component{
           function(err){
               //console.log('err:'+err);
           });
+          console.log('responseJson');
+          console.log(responseJson);
           AsyncStorage.setItem('userjson',JSON.stringify(responseJson.user));
       })
       .catch((error) => {
@@ -102,6 +112,7 @@ export class CategoryScreen extends React.Component{
       });
     
     });
+    
   }
 
   searchPost(){

@@ -57,7 +57,7 @@ export default class PostsScreen extends React.Component{
         //const at = await AsyncStorage.getItem('@FB:at');
         const at = await AsyncStorage.getItem('at');
         
-       console.log('at '+at);
+      //console.log('at '+at);
         //console.log(params.data);
         if(params.data.type=='link'){
             //console.log(params.data);
@@ -87,15 +87,15 @@ export default class PostsScreen extends React.Component{
                 },function(){
 
                 });
-                console.log(responseJson.q);
+               //console.log(responseJson.q);
             })
         .catch((error) => {
-            console.error(error);
+           //console.error(error);
         });
     } 
     render(){
         const {params} = this.props.navigation.state;
-        console.log('rendering ');
+       //console.log('rendering ');
         AsyncStorage.getItem('theme',(err,result)=>{
             //console.log(result);
 

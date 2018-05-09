@@ -13,12 +13,12 @@
         "ios": {
             "bundleIdentifier": "th.go.nbtc.oliang",
             "icon": "./img/appicon4_1024.png",
-            "buildNumber":"24",
+            "buildNumber":"25",
             "supportsTablet":true
         },
         "android": {
             "package": "th.go.nbtc.oliang.staging",
-            "versionCode":24,
+            "versionCode":25,
         "icon": "./img/appicon4_1024.png"
         
         },

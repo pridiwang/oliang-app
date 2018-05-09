@@ -1,6 +1,29 @@
 import React from 'react';
 import {StyleSheet,AsyncStorage} from 'react-native';
 
+export const themeBase= StyleSheet.create({
+    container:{flex:1,position:'relative'},
+    img:{position:'absolute',top:0,left:0,bottom:0,right:0},
+    vdo:{width:320,height:240},
+    title:{fontSize:28,padding:3},
+    content:{padding:10,},
+    instructions: { marginTop: 20,marginBottom: 20,},
+    postView:{flex:4,padding:5,backgroundColor:'#ffffff'},
+    postItem:{        flex:1,flexDirection:'row',padding:3,borderBottomWidth:1,borderColor:'#cccccc',backgroundColor:'#ffffff',},
+    postImg:{ height:150,flex:4,margin:2},
+    postImgSmall:{ height:80,flex:1.5,margin:2},
+    postText:{flex:4,flexDirection:'column',  justifyContent: 'space-between'},
+    postTitle:{ fontSize:14,position:'relative',color:'#000000',padding:3,},
+    postAuthor:{fontSize:12,position:'relative',color:'#442222',padding:3,},
+    postDate:{fontSize:10,color:'#222244',fontStyle:'italic',padding:3,},
+    
+    postRead:{ flex:1,position:'absolute',bottom:10,right:0,},
+    icon:{width:20,height:20},
+    htmlview:{color:'#222222'},
+    topbtn:{backgroundColor:'rgba(100,100,100,0)',color:'#444444',margin:3},
+});
+
+
 export const themeLight= StyleSheet.create({
     container:{flex:1,position:'relative'},
     img:{position:'absolute',top:0,left:0,bottom:0,right:0},

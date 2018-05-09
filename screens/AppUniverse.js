@@ -32,7 +32,7 @@ export default class AppUniverse extends React.Component{
                 console.log('dr');
                 console.log(dr);
     //            navigate('category',dr);
-                this.props.navigation.navigate('Posts',{data:dr});
+                this.props.navigation.navigate('AllPosts',{data:dr});
             });
 
         });

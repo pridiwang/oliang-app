@@ -51,21 +51,7 @@ export default class Profile extends React.Component{
    
       }
     });
-    AsyncStorage.getItem('userjson',(err,result1)=>{
-      if(result1){
-        
-        //console.log('usrjson');
-        //console.log(result1);
-        var userinfo=JSON.parse(result1);
-        console.log(userinfo);
-        this.setState({user:userinfo});
-        console.log(this.state.user.username);
-        if((this.state.user.type=='admin')||(this.state.user.type=='author')){
-          this.setState({'canPost':true});
-        }
-        this.setState({isLoading:false});
-      }
-    });
+    
 }
 
   handleOnPress(value){
@@ -78,13 +64,31 @@ export default class Profile extends React.Component{
     });
     
   }
-  componentDidMount(){
-    console.log('did mount');
+  async componentDidMount(){
+    console.log('profile did mount');
     //console.log(this.state.user.user_level);
+    await AsyncStorage.getItem('userjson',(err,result1)=>{
+      if(result1){
+       console.log('yes result1 '); 
+        console.log('usrjson');
+        console.log(result1);
+        var userinfo=JSON.parse(result1);
+        console.log(userinfo);
+        this.setState({user:userinfo});
+        console.log(this.state.user.username);
+        if((this.state.user.type=='admin')||(this.state.user.type=='author')){
+          this.setState({'canPost':true});
+        }
+        this.setState({isLoading:false});
+        this.render();
+      }else{
+        console.log(' no result1 ');
+      }
+    });
   }
   render(){
     
-        console.log('rendering  ')
+        console.log('profile rendering  ');
         console.log(this.state);
         if(this.state.isLoading){
           return (<View></View>);

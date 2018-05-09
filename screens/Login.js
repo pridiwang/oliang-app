@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image,Platform } from 'react-native';
+import {ScrollView, StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image,Platform,Keyboard } from 'react-native';
 import Expo from 'expo';
 import {Facebook} from 'expo';
 import {StackNavigator,DrawerNavigator,TabNavigator} from 'react-navigation';
@@ -222,8 +222,10 @@ export default class LoginScreen extends React.Component {
            //console.log('fill in password:'+password)
             this.setState({password:password})
             }
-
-        }/>
+            
+        }
+        onSubmitEditing={Keyboard.dismiss}
+        />
         <TouchableHighlight  onPress={()=>this.logIn()} ><View>
          <Text onPress={()=>this.EmailLogin()} style={styles.loginbutton} >NBTC Login</Text>
         </View>
