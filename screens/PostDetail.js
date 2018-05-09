@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated,Dimensions,Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput, View,
-    TouchableHighlight,Alert,AsyncStorage,WebView,TouchableOpacity,Button,Share,Platform } from 'react-native';
+    TouchableHighlight,Alert,AsyncStorage,WebView,TouchableOpacity,Button,Share,Platform,Linking } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
 import Expo,{Video} from 'expo';
@@ -23,7 +23,9 @@ export default class DetailScreen extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-          visible: false
+          visible: false,
+          at:'',
+          openBrowser:false,
         }
         AsyncStorage.getItem('at',(err,result)=>{
             this.setState({at:result});
@@ -131,6 +133,7 @@ export default class DetailScreen extends React.Component{
                     <MyWebView hasZoom='true' source={{uri:contentURL,method:'GET'}} 
                         style={{marginTop:10,marginRight:10,height:800,flex:0.9,backgroundColor:'rgba(0,0,0,0)' }} 
                         scrollEnabled={true}
+                        allowsInlineMediaPlayback={true}
                     /> 
                 
                 </View>
@@ -150,7 +153,42 @@ export default class DetailScreen extends React.Component{
                     <Text style={styles.title}>{params.data.title}</Text>
                     <MyWebView hasZoom='true' source={{uri:contentURL,method:'GET'}} 
                         style={{marginTop:10,marginRight:10,height:800,flex:0.9,backgroundColor:'rgba(0,0,0,0)' }} 
-                        scrollEnabled={true}
+                        scrollEnabled={false}
+                        
+                        onShouldStartLoadWithRequest={(event)=>{
+                            console.log('should start load with request ');
+                            console.log(event);
+                            if(event.url.indexOf('oliang.itban.com')!==-1){
+                                return true;
+                            }else{
+                                Linking.openURL(event.url);
+                                return false;
+                            }
+                            
+                        }}
+                        /*
+                        onNavigationStateChange={(event)=>{
+                            console.log('navication state change ');
+                            console.log(event);
+                            return false;
+                        }}
+                       
+                        onNavigationStateChange={(event)=>{
+                            if(event.canGoBack) return false;
+                            console.log('navication state change ');
+                            
+                            console.log(event);
+                            
+                            if( (event.url.indexOf('oliang.itban.com')!==-1) ) {
+                                return true;
+                            }
+                            if( (event.url.indexOf('-js-navigation://')!==-1) ) {
+                                return true;
+                            }
+                            Linking.openURL(event.url);
+                            return false;
+                            
+                        }}*/
                     /> 
               
                 </View>         

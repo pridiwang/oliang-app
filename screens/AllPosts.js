@@ -59,9 +59,15 @@ export default class AllPosts extends React.Component{
     async fetchData(callback){
         const at = await AsyncStorage.getItem('at');
         const {params} = this.props.navigation.state;
+
+
+
         const page = this.state.page !== ""
         ? this.state.page
         : 1;
+
+
+
         cat=params.data.id;
         url='https://oliang.itban.com/allposts/'+cat+'/'+page;
         console.log('url '+url+ ' at '+at);
@@ -95,7 +101,14 @@ export default class AllPosts extends React.Component{
             })
         })
     }
-    async componentDidMount() { 
+    async componentDidMount() {
+        const {params} = this.props.navigation.state;
+        if(params.data.type=='link'){
+            //console.log(params.data);
+            this.props.navigation.navigate('Web',{data:params.data})
+            return;
+        }
+
         this.fetchData(responseJson => {
                 let ds = new ListView.DataSource({
                     rowHasChanged:(r1,r2)=>1 !== r2
