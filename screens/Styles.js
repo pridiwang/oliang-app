@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet,AsyncStorage} from 'react-native';
 
 export const themeBase= StyleSheet.create({

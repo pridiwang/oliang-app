@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Animated,Dimensions,Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput, View,Button,
     TouchableHighlight,Alert,AsyncStorage,WebView } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
@@ -13,7 +14,7 @@ export default class PlayerScreen extends React.Component{
         
         if(params.data.mp4!==""){
             let clip_url=params.data.mp4.replace('.com/media/','.com:8081/vod/oliang/')+'/playlist.m3u8';
-            console.log('vdo content');
+           //console.log('vdo content');
             
             return (
                 <View style={{flex:1,backgroundColor:'#000',alignContent:'center',alignItems:'center',justifyContent:'center'}} >

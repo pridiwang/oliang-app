@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Animated,Dimensions,Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput, View,
     TouchableHighlight,Alert,AsyncStorage,WebView,TouchableOpacity,Button,Share,Platform,Linking } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';

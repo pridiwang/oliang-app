@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
 import {StackNavigator,TabNavigator} from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
@@ -27,10 +28,10 @@ export default class AppUniverse extends React.Component{
             return fetch(url,{method:'GET',headers:{'Authorization':at}})
             .then((response)=>response.json())
             .then((responseJson)=>{
-                console.log('fetch ok');
+               //console.log('fetch ok');
                 const dr= responseJson.data[0];
-                console.log('dr');
-                console.log(dr);
+               //console.log('dr');
+               //console.log(dr);
     //            navigate('category',dr);
                 this.props.navigation.navigate('AllPosts',{data:dr});
             });

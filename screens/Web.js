@@ -1,4 +1,5 @@
 import React  from 'react';
+import PropTypes from 'prop-types';
 import {View,Text,Image,StyleSheet,TouchableHighlight,Button,Platform}  from 'react-native';
 import Loginscreen from './Login';
 import MyWebView from 'react-native-webview-autoheight';
@@ -10,16 +11,16 @@ export default class Web extends React.Component{
     });
     async componentDidMount() { 
         const {params} = this.props.navigation.state;
-        console.log('web');
-        console.log(params.data);
+       //console.log('web');
+       //console.log(params.data);
         const url=params.data.link;
-        console.log('url:'+url);
+       //console.log('url:'+url);
 
     }
     render(){
         const {params} = this.props.navigation.state;
         const url=params.data.link;
-        console.log('url:'+url);
+       //console.log('url:'+url);
         return(
             <View style={{flex:1}}>
                <MyWebView hasZoom='true' source={{uri:url,method:'GET'}} 

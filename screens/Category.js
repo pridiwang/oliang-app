@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image, Keyboard } from 'react-native';
 import{ DrawerNavigator } from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';

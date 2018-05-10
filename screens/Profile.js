@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StatusBar,Platform,ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import RadioButton from 'radio-button-react-native';

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import App from './App';
 
 import renderer from 'react-test-renderer';

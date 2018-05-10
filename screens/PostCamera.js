@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera, Permissions } from 'expo';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {ScrollView, StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image,Platform,Keyboard } from 'react-native';
 import Expo from 'expo';
 import {Facebook} from 'expo';

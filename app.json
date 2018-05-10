@@ -3,7 +3,7 @@
         "sdkVersion": "21.0.0",
         "privacy": "public",
         "facebookScheme": "fb226125624536427",
-        "name": "โอเลี้ยง กสทช",
+        "name": "โอเลี้ยง กสทช.",
         "icon": "./img/appicon4_1024.png",
         "loading":{
             "backgroundImage": "./img/nbtc-telecom.png"
@@ -13,12 +13,12 @@
         "ios": {
             "bundleIdentifier": "th.go.nbtc.oliang",
             "icon": "./img/appicon4_1024.png",
-            "buildNumber":"26",
+            "buildNumber":"27",
             "supportsTablet":true
         },
         "android": {
             "package": "th.go.nbtc.oliang.staging",
-            "versionCode":26,
+            "versionCode":27,
         "icon": "./img/appicon4_1024.png"
         
         },
