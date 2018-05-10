@@ -70,7 +70,7 @@ export default class AllPosts extends React.Component{
 
         cat=params.data.id;
         url='https://oliang.itban.com/allposts/'+cat+'/'+page;
-        console.log('url '+url+ ' at '+at);
+       //console.log('url '+url+ ' at '+at);
         fetch(url,{
             method:'get',
             headers:{
@@ -122,7 +122,7 @@ export default class AllPosts extends React.Component{
         });
     } 
     render(){
-        console.log('rendering ');
+       //console.log('rendering ');
         AsyncStorage.getItem('theme',(err,result)=>{
             //console.log(result);
 
@@ -179,7 +179,7 @@ export default class AllPosts extends React.Component{
                     onEndReached={()=>
                     this.setState({isLoadingMore:true}, ()=>this.fetchMore())}
                     renderFooter={()=>{
-                        console.log('rendering footer for page '+this.state.page);
+                       //console.log('rendering footer for page '+this.state.page);
                         return (
                             this.state.isLoadingMore && 
                             <View style={{flex:1}}>

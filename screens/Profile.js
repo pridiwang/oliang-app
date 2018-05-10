@@ -37,13 +37,13 @@ export default class Profile extends React.Component{
       },
       canPost:false,
     };
-    console.log('loading '+this.state.isLoading);
-    console.log('theme '+this.state.theme);
+   //console.log('loading '+this.state.isLoading);
+   //console.log('theme '+this.state.theme);
     AsyncStorage.getItem('theme',(err,result)=>{
       
       if(result){
-        console.log('usrename');
-        console.log(this.state.user);
+       //console.log('usrename');
+       //console.log(this.state.user);
         //console.loglog('got theme at construct :'+result);
         this.state.theme=result;
         //console.loglog('get state theme:'+this.state.theme);
@@ -65,31 +65,31 @@ export default class Profile extends React.Component{
     
   }
   async componentDidMount(){
-    console.log('profile did mount');
+   //console.log('profile did mount');
     //console.log(this.state.user.user_level);
     await AsyncStorage.getItem('userjson',(err,result1)=>{
       if(result1){
-       console.log('yes result1 '); 
-        console.log('usrjson');
-        console.log(result1);
+      //console.log('yes result1 '); 
+       //console.log('usrjson');
+       //console.log(result1);
         var userinfo=JSON.parse(result1);
-        console.log(userinfo);
+       //console.log(userinfo);
         this.setState({user:userinfo});
-        console.log(this.state.user.username);
+       //console.log(this.state.user.username);
         if((this.state.user.type=='admin')||(this.state.user.type=='author')){
           this.setState({'canPost':true});
         }
         this.setState({isLoading:false});
         this.render();
       }else{
-        console.log(' no result1 ');
+       //console.log(' no result1 ');
       }
     });
   }
   render(){
     
-        console.log('profile rendering  ');
-        console.log(this.state);
+       //console.log('profile rendering  ');
+       //console.log(this.state);
         if(this.state.isLoading){
           return (<View></View>);
         }

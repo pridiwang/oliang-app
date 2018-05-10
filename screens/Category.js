@@ -75,7 +75,7 @@ export class CategoryScreen extends React.Component{
       registerForPushNotificationsAsync(at);
       url='https://oliang.itban.com/catlist';
       //console.log('url:'+url);
-      console.log('category did mount at:'+at);
+     //console.log('category did mount at:'+at);
       
       return fetch(url,{
         method:'get',
@@ -92,8 +92,8 @@ export class CategoryScreen extends React.Component{
           function(err){
               //console.log('err:'+err);
           });
-          console.log('responseJson');
-          console.log(responseJson);
+         //console.log('responseJson');
+         //console.log(responseJson);
           AsyncStorage.setItem('userjson',JSON.stringify(responseJson.user));
       })
       .catch((error) => {

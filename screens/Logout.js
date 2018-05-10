@@ -19,11 +19,11 @@ static navigationOptions = {
   componentDidMount() {
     const { navigate } = this.props.navigation;
     AsyncStorage.removeItem('at',()=>{
-      console.log('at cleared ');
-      navigate('Splash');
+     //console.log('at cleared ');
+      //navigate('Splash');
     });
     AsyncStorage.clear(()=>{
-      console.log('async storage cleared ');
+     //console.log('async storage cleared ');
       navigate('Splash');
     });
     

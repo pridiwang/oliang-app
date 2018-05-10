@@ -69,7 +69,7 @@ export default class DetailScreen extends React.Component{
         const id=params.data.id;
         //console.loglog('id:'+id+' at:'+at);
         url='http://oliang.itban.com/readpost/'+id;
-        console.log('url:'+url+' at:'+at);
+       //console.log('url:'+url+' at:'+at);
         return fetch(url,{
             method:'get',
             headers:{
@@ -156,8 +156,8 @@ export default class DetailScreen extends React.Component{
                         scrollEnabled={false}
                         
                         onShouldStartLoadWithRequest={(event)=>{
-                            console.log('should start load with request ');
-                            console.log(event);
+                            //console.log('should start load with request ');
+                            //console.log(event);
                             if(event.url.indexOf('oliang.itban.com')!==-1){
                                 return true;
                             }else{
@@ -168,16 +168,16 @@ export default class DetailScreen extends React.Component{
                         }}
                         /*
                         onNavigationStateChange={(event)=>{
-                            console.log('navication state change ');
-                            console.log(event);
+                           //console.log('navication state change ');
+                           //console.log(event);
                             return false;
                         }}
                        
                         onNavigationStateChange={(event)=>{
                             if(event.canGoBack) return false;
-                            console.log('navication state change ');
+                           //console.log('navication state change ');
                             
-                            console.log(event);
+                           //console.log(event);
                             
                             if( (event.url.indexOf('oliang.itban.com')!==-1) ) {
                                 return true;
