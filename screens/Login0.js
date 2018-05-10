@@ -20,22 +20,22 @@ export default class LoginScreen extends React.Component {
         permissions: ['public_profile','email'],
         behavior:'web',
       });
-      console.log('type:'+type);
+     //console.log('type:'+type);
     if (type === 'success') {
-      console.log(' login success token'+token);
+     //console.log(' login success token'+token);
       
       // Get the user's name using Facebook's Graph API
       const response = await fetch(
         `https://graph.facebook.com/me?access_token=${token}`);
       fbid=(await response.json()).id;
-      console.log('fbid '+fbid);
+     //console.log('fbid '+fbid);
       try{
         await AsyncStorage.setItem('@FB:id',fbid);
         const fbid1 = await AsyncStorage.getItem('@FB:id');
-        console.log(fbid1);
+       //console.log(fbid1);
         navigate('Posts'); 
       }catch (error){
-        console.log('error:'+error);
+       //console.log('error:'+error);
       }
       
     }
@@ -45,19 +45,19 @@ export default class LoginScreen extends React.Component {
   }
   async chkFB(){
     const { navigate } = this.props.navigation;
-    console.log('checking fB');
+   //console.log('checking fB');
     const fbid = await AsyncStorage.getItem('@FB:id');
-    console.log(fbid);
+   //console.log(fbid);
 
     if(fbid !== null){
 
-        console.log('authorzied ');
-        console.log(fbid);
+       //console.log('authorzied ');
+       //console.log(fbid);
         navigate('Posts');
         return true;
 
     }else{
-      console.log('null');
+     //console.log('null');
         return false;
     }
   }

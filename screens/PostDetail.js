@@ -4,7 +4,7 @@ import { Animated,Dimensions,Image,ScrollView,ActivityIndicator,StyleSheet, List
     TouchableHighlight,Alert,AsyncStorage,WebView,TouchableOpacity,Button,Share,Platform,Linking } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
-import Expo,{Video} from 'expo';
+import Expo,{Video,Permissions} from 'expo';
 //import Share, {ShareSheet, Button} from 'react-native-share';
 import {themeDark,themeLight,htmlDark,htmlLight,txtLight,txtDark} from './Styles';
 import MyWebView from 'react-native-webview-autoheight';
@@ -80,27 +80,13 @@ export default class DetailScreen extends React.Component{
         
         
     }
-    
+    async ChkPermission(){
+        const {status} = await Permissions.askAsync(Permissions.CAMERA);
+        console.log('status ');
+        console.log(status);
+    }
     render(){
-        /*
-        AsyncStorage.getItem('theme',(err,result)=>{
-            console.log('stored '+result);
-            if(result=='Light'){
-                styles=themeLight;
-                htmlstyles=htmlLight;
-                //txtStyles=txtLight;
-                //console.loglog('using themeLight htmlLight ');
-            } 
-            if(result=='Dark'){
-                styles=themeDark;
-                htmlstyles=htmlDark;
-                //txtStyles=txtDark;
-                //console.loglog('using themeDark htmlDark ');
-            } 
-        });
-        */
-
-        //this.MarkRead();
+        //this.ChkPermission();
         const {params} = this.props.navigation.state;
         let contentURL="http://oliang.itban.com/content/"+this.state.theme+"/"+params.data.id;
         let fullcontentURL="http://oliang.itban.com/fullcontent/"+params.data.id;
@@ -127,18 +113,44 @@ export default class DetailScreen extends React.Component{
         
         if(params.data.mp4!==""){
             let clip_url=params.data.mp4.replace('.com/media/','.com:8081/vod/oliang/')+'/playlist.m3u8';
-            //console.loglog('vdo content');
-            
+            console.log('vdo content '+clip_url);
+            console.log('content url '+contentURL);
+            console.log('platform OS '+ Platform.OS);
+            if (Platform.OS==='android') {
+                clip_url=params.data.mp4;
+            }
+            if((Platform.OS==='ios') || (Platform.OS==='android')  ) {
+                return (
+                <View style={{flex:1,position:'relative',backgroundColor:'#000'}}>
+                    <Expo.Video source={{uri:clip_url}}
+                
+                volume={1.0} useNativeControls={true}
+                 style={styles.vdo} resizeMode="contain" shouldPlay={true} hls={true}
+                 isMuted={false}
+                 height='auto'
+                ignoreSilentSwitch={'ignore'}
+                    hasZoom={true}
+                 />
+                 </View>
+                )
+            }else{
+                console.log(' platform os '+Platform.OS +' contentURL '+contentURL);
             return (
                 <View style={{flex:1,backgroundColor:'#000',alignContent:'center',alignItems:'center',justifyContent:'center'}} >
                     <MyWebView hasZoom='true' source={{uri:contentURL,method:'GET'}} 
                         style={{marginTop:10,marginRight:10,height:800,flex:0.9,backgroundColor:'rgba(0,0,0,0)' }} 
                         scrollEnabled={true}
                         allowsInlineMediaPlayback={true}
+                        javaScriptEnabled={true}
+                        scalePageToFit={true}
+                        allowUniversalAccessFromFileURLs={true}
+                        pause={false}
+                        mediaPlayBackRequiresUserAction={false}
                     /> 
                 
                 </View>
             )
+            }
         }else{
         
 

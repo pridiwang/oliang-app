@@ -28,7 +28,7 @@ export const themeBase= StyleSheet.create({
 export const themeLight= StyleSheet.create({
     container:{flex:1,position:'relative'},
     img:{position:'absolute',top:0,left:0,bottom:0,right:0},
-    vdo:{width:320,height:240},
+    vdo:{position:'absolute',top:0,left:0,bottom:0,right:0,flex:1},
     title:{fontSize:28,padding:3},
     content:{padding:10,},
     instructions: { marginTop: 20,marginBottom: 20,},
