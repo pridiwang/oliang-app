@@ -37,6 +37,7 @@ export default MainNavigator = StackNavigator({
     AppUni: { screen: AppUniverse },
     About: { screen: AboutScreen },
     Web: { screen: WebScreen },
+    PostPlayer : {screen: PlayerScreen},
     
     
 }, {

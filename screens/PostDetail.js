@@ -9,6 +9,7 @@ import Expo,{Video,Permissions} from 'expo';
 import {themeDark,themeLight,htmlDark,htmlLight,txtLight,txtDark} from './Styles';
 import MyWebView from 'react-native-webview-autoheight';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const styles=themeLight;
 const htmlStyles=htmlLight;
 const txtStyles=txtLight;
@@ -23,6 +24,7 @@ export default class DetailScreen extends React.Component{
     });
     constructor(props) {
         super(props);
+        
         this.state = {
           visible: false,
           at:'',
@@ -85,7 +87,9 @@ export default class DetailScreen extends React.Component{
         console.log('status ');
         console.log(status);
     }
+   
     render(){
+        Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
         //this.ChkPermission();
         const {params} = this.props.navigation.state;
         let contentURL="http://oliang.itban.com/content/"+this.state.theme+"/"+params.data.id;
@@ -110,7 +114,7 @@ export default class DetailScreen extends React.Component{
               title: params.data.title,
               url:fullcontentURL,
           }
-        
+        /*
         if(params.data.mp4!==""){
             let clip_url=params.data.mp4.replace('.com/media/','.com:8081/vod/oliang/')+'/playlist.m3u8';
             console.log('vdo content '+clip_url);
@@ -152,16 +156,27 @@ export default class DetailScreen extends React.Component{
             )
             }
         }else{
-        
-
+        }
+*/
 //<Expo.Video source={{uri:clip_url}} style={styles.img}                    resizeMode="contain"                     shouldPlay={true}                    hls={true}                                        />
 //<HTMLView style={styles.content} value={params.data.content} /><HTMLView hasZoom='true' stylesheet={htmlStyles}  value={params.data.content}   />
 //<WebView hasZoom='true' source={{uri:'http://oliang.itban.com/content/'+params.data.id}} style={{marginTop:20}} />
-          return(
+//<Image resizeMode="cover" source={{uri:params.data.img}} style={styles.img}/>
+            const TopImage = params.data.mp4=='' 
+            ? (<View style={{flex:1,height:300,position:'relative'}}><Image resizeMode="cover" source={{uri:params.data.img}} style={styles.img}/></View>) 
+            :(<TouchableHighlight onPress={()=>{
+                    if (params.data.mp4.indexOf('youtube')!==-1){
+                        //console.log('opening youtube ');
+                        Linking.openURL(params.data.mp4)
+                    }else{                    
+                        this.props.navigation.navigate('PostPlayer',{data:params.data})
+                    }
+
+            }}>
+            <View style={{flex:1,height:300,position:'relative',alignItems:'center'}}><Image resizeMode="cover" source={{uri:params.data.img}} style={styles.img}/><Ionicons name="ios-play" style={{backgroundColor:'rgba(100,100,100,0)',color:'rgba(255,255,255,0.8)',margin:100}} size={100} /></View></TouchableHighlight>);
+            return(
               <ScrollView style={styles.container}>
-                <View style={{flex:1,height:300,position:'relative'}}>
-                    <Image resizeMode="cover" source={{uri:params.data.img}} style={styles.img}/>
-                </View>
+                {TopImage}
                 <View style={{padding:10}} >
                     <Text style={styles.title}>{params.data.title}</Text>
                     <MyWebView hasZoom='true' source={{uri:contentURL,method:'GET'}} 
@@ -208,7 +223,7 @@ export default class DetailScreen extends React.Component{
                 <Button onPress={()=>{Share.share(shareContent)}} title="Share" style={styles.btn} ></Button>
               </ScrollView>
           )
-        }
+        
     }
 }
 //<HTMLView stylesheet={htmlstyles} value={params.data.content} style={styles.container}/>

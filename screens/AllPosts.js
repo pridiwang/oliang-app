@@ -69,8 +69,15 @@ export default class AllPosts extends React.Component{
 
 
 
+        //cat=params.data.id;
         cat=params.data.id;
-        url='https://oliang.itban.com/allposts/'+cat+'/'+page;
+        if(cat>0) {
+            url='https://oliang.itban.com/allposts/'+cat+'/'+page;
+        }else{
+            url='https://oliang.itban.com/searchposts/'+params.data.name+'/'+page;
+        }
+
+        //url='https://oliang.itban.com/allposts/'+cat+'/'+page;
        //console.log('url '+url+ ' at '+at);
         fetch(url,{
             method:'get',

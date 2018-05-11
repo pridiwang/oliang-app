@@ -126,7 +126,7 @@ export class CategoryScreen extends React.Component{
       "name":search,
     }
    //console.log('searching id'+dr.id+' keyword'+search);
-    this.props.navigation.navigate('Posts',{data:dr});
+    this.props.navigation.navigate('AllPosts',{data:dr});
   }
   
 
