@@ -35,7 +35,7 @@ export default class AboutScreen extends React.Component{
          <HTMLView styles={{width:320,flex:5,padding:10,margin:0,fontSize:16,backgroundColor:'#dddddd'}} stylesheet={htmlStyles} value={HTMLcontent} ></HTMLView>
             </View>
             <Text style={{textAlign:"center",margin:5,color:'#666666'}}>หมายเลขรุ่น 1.04 (26) </Text>
-            <Text style={{textAlign:"center",margin:5,color:'#666666'}}>วันที่อัพเดทล่าสุด 10 พฤษภาคม 2561 </Text>
+            <Text style={{textAlign:"center",margin:5,color:'#666666'}}>วันที่อัพเดทล่าสุด 22 พฤษภาคม 2561 </Text>
             <View style={{padding:10,margin:10,alignItems:'center'}} >
             <Image source={require ('../img/appicon4_512.png')} style={{margin:5,height:100,width:100}} />
             </View>
