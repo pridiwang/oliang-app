@@ -1,6 +1,6 @@
 {
   "name": "oliang-app",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "devDependencies": {
     "react-native-scripts": "0.0.40",
