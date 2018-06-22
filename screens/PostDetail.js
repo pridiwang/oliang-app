@@ -110,9 +110,10 @@ export default class DetailScreen extends React.Component{
           };
           let shareContent={
               // +'\r\n'+ params.data.text
-              message: params.data.title + ' / '+ params.data.author, //+ '\r\n'+ fullcontentURL, 
+              message: params.data.title + ' / '+ params.data.author + '\r\n'+ fullcontentURL, 
               title: params.data.title,
               url:fullcontentURL,
+              diaLogTitle:'Share to '
           }
         /*
         if(params.data.mp4!==""){

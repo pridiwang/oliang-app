@@ -96,6 +96,7 @@ export class CategoryScreen extends React.Component{
          //console.log('responseJson');
          //console.log(responseJson);
           AsyncStorage.setItem('userjson',JSON.stringify(responseJson.user));
+          AsyncStorage.setItem('can_post',JSON.stringify(responseJson.user.can_post));
       })
       .catch((error) => {
        //console.error(error);

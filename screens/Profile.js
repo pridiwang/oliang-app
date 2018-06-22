@@ -77,7 +77,7 @@ export default class Profile extends React.Component{
        //console.log(userinfo);
         this.setState({user:userinfo});
        //console.log(this.state.user.username);
-        if((this.state.user.type=='admin')||(this.state.user.type=='author')){
+        if(this.state.user.can_post=='1'){
           this.setState({'canPost':true});
         }
         this.setState({isLoading:false});

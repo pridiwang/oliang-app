@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Picker,Alert,Modal,View,Text,Button,TextInput,Image,StyleSheet,TouchableHighlight,TouchableOpacity, ScrollView}  from 'react-native';
+import {Picker,Alert,Modal,View,Text,Button,TextInput,Image,StyleSheet,TouchableHighlight,TouchableOpacity, ScrollView,Platform,PermissionsAndroid }  from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
 import {Camera, Permissions, Notifications,ImagePicker } from 'expo';
+//import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+
 export default class PostNew extends React.Component{
     static navigationOptions=({navigation})=>({
-        header:null,
+        title:'Post New',
+        headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
+        headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32}  /></TouchableHighlight>,
+        headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-home" style={styles.topbtn} size={32}  /></TouchableHighlight>,
+
         drawerLabel: 'เขียนบทความใหม่',
         drawerIcon: ({ tintColor }) => (
           <Image
@@ -18,17 +26,17 @@ export default class PostNew extends React.Component{
     });
     constructor(props) {
         super(props);
-        this.state = {category: '1'};
-        this.state = {title: ''};
-        this.state = {content: ''};
-        this.imgname = {imgname: ''};
-      }
-      async componentWillMount() {
+        this.state = {title: '',category:'1',content:'',imgname:''};
+        this.imgname = {imgname: ''};        
+    }
+  
+    async componentWillMount() {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
         this.setState({ hasCameraPermission: status === 'granted' });
-      }
-    postSubmit(){
-      if(this.state.title==undefined){
+    }
+    
+    postSubmit = () =>{
+      if((this.state.title===undefined)||(this.state.title==='')){
         Alert.alert('แจ้งเตือน','กรุณาใส่ข้อมูลเรื่อง',[
           {text:'Ok',onPress: ()=>this.refs.title.focus() }
         ]);
@@ -42,43 +50,112 @@ export default class PostNew extends React.Component{
         
         return false;
       }
+      
       var formData = new FormData();
-      formData.append('category',this.state.category);
+      formData.append('category','9');
       formData.append('title',this.state.title);
       formData.append('content',this.state.content);
 
       if(this.state.imgname!=undefined){
         formData.append('image',this.state.imgname);
-      }
-      console.log('posting title '+this.state.title+' content '+this.state.content+' imgname '+this.state.imgname);
+      }   
       fetch('http://oliang.itban.com/postnew', { 
         method: 'POST',
         body: formData,
       })
         Alert.alert("สำเร็จ","เพิ่มบทความใหม่เรียบร้อยแล้ว",[
           {text:'รับทราบ', onPress:()=>this.props.navigation.navigate('Category')}
-
+          
         ]); 
-        
-        return true;
+        return;
     }
     _pickImage = async () => {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
         aspect: [4, 3],
+        mediaTypes:'All',
       });
   
       console.log(result);
+      try{
+      var url='http://oliang.itban.com/upload';
+      //let  url='http://27.254.144.132/upload.php';
+      console.log('url '+url);
+      //headers:{    'Content-Type': 'multipart/form-data; boundary=6ff46e0b6b5148d984f148b6542e5a5d',  },
+      if (!result.cancelled) {
+        this.setState({ image: result.uri });
+        
+        console.log('url '+url);
+        var formData = new FormData();
+        formData.append('userfile',{uri: result.uri, name:'test.jpg',type:result.type,height:result.height,width:result.width});
+        fetch(url, {
+          method: 'post',          
+          body: formData,
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          console.log('action:'+responseJson.action);
+          if(responseJson.response){
+          
+          console.log('fname:'+responseJson.fname);
+          this.setState({imgname:responseJson.fname});
+          }
+
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    }catch(error){
+      console.log(error);
+    }
+    };
+    _pickCamera = async () => {
+      let result = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        mediaTypes:'All',
+      });
   
+      //console.log(result);
+      //headers:{    'Content-Type': 'multipart/form-data; boundary=6ff46e0b6b5148d984f148b6542e5a5d',  },
       if (!result.cancelled) {
         this.setState({ image: result.uri });
         var formData = new FormData();
-        formData.append('userfile',{uri: result.uri, name:'test.jpg',type:'image/jpeg' });
+        formData.append('userfile',{uri: result.uri, name:'test.jpg',type:result.type});
         fetch('http://oliang.itban.com/upload', {
           method: 'POST',
-          headers:{
-            'Content-Type': 'multipart/form-data; boundary=6ff46e0b6b5148d984f148b6542e5a5d',
-          },
+          
+          body: formData,
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          console.log('action:'+responseJson.action);
+          if(responseJson.response){
+          
+          console.log('fname:'+responseJson.fname);
+          this.setState({imgname:responseJson.fname});
+          }
+
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    };
+    _pickVdo = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: false,
+        mediaTypes:'All',
+      });
+      console.log(result);
+      if (!result.cancelled) {
+        this.setState({ image: result.uri });
+        var formData = new FormData();
+        formData.append('userfile',{uri: result.uri, name:'test.mp4',type:result.type});
+        fetch('http://oliang.itban.com/upload', {
+          method: 'POST',
           body: formData,
         })
         .then((response) => response.json())
@@ -112,8 +189,9 @@ export default class PostNew extends React.Component{
 </Picker>
     */
     render(){
+      
       let { image } = this.state;
-        const { hasCameraPermission } = this.state;
+      const { hasCameraPermission } = this.state;
         if (hasCameraPermission === null) {
             return <View />;
           } else if (hasCameraPermission === false) {
@@ -123,23 +201,30 @@ export default class PostNew extends React.Component{
           <KeyboardAwareScrollView style={{padding:10,paddingTop:30}}>
           
       <Text style={{flex:1,fontSize:24,backgroundColor:'#600',color:'white',textAlign:'center'}}> - เขียนบทความใหม่ - </Text>
-            <View style={{flexDirection:'row',justifyContent:'center'}} >
-    <Button title='<-' onPress={()=>this.props.navigation.navigate('Category')} />
-    <Button title='รูปภาพ' onPress={this._pickImage} />
-    <Button title='วิดีโอ' onPress={this._pickImage} />
-    <Button title='ส่งบทความ' onPress={()=>this.postSubmit()} />
+            <View style={{flexDirection:'row',justifyContent:'space-between',flex:1}} >
+    
+    
+    <TouchableHighlight onPress={this._pickImage} >
+    <Ionicons name="md-image" style={styles.mbtn} size={32}  /></TouchableHighlight>
+    <TouchableHighlight onPress={this._pickVdo} >
+    <Ionicons name="logo-youtube" style={styles.mbtn} size={32}  /></TouchableHighlight>
+    <TouchableHighlight onPress={this._pickCamera} >
+    <Ionicons name="md-camera" style={styles.mbtn} size={32}  /></TouchableHighlight>
+    <TouchableHighlight onPress={this.postSubmit} >
+    <Ionicons name="md-send" style={styles.mbtn} size={32}  /></TouchableHighlight>
+    
     </View>
     {image && <Image source={{uri: image}} style={{width:320,height:200}} /> }
     
             <Text>เรื่อง</Text>
-            <TextInput ref='title' multiline={true} style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-    onChangeText={(title) => this.setState({title})}  onSubmitEditing={(event) => { 
+            <TextInput ref='title' multiline={true} underlineColorAndroid="rgba(255,255,255,0)" style={{height: 40, borderColor: '#bbbbbb', borderWidth: 1,paddingHorizontal:2,backgroundColor:'#fff'}}
+    onChangeText={(text) => this.setState({title:text})}  onSubmitEditing={(event) => { 
       this.refs.content.focus(); 
     }}
     value={this.state.title}></TextInput>
     <Text>ข้อความ</Text>
-            <TextInput ref='content' multiline={true} style={{height: 160, borderColor: 'gray', borderWidth: 1,textAlignVertical:'top'}}
-    onChangeText={(content) => this.setState({content})}
+            <TextInput ref='content' underlineColorAndroid="rgba(255,255,255,0)" multiline={true} style={{height:160, borderColor: '#bbbbbb', borderWidth: 1,textAlignVertical:'top',paddingHorizontal:2,backgroundColor:'#fff'}}
+    onChangeText={(text) => this.setState({content:text})}
     value={this.state.content}></TextInput>
   
 
@@ -150,7 +235,7 @@ export default class PostNew extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ddd',
      alignItems: 'center',
     justifyContent: 'center',
     padding:30,    
@@ -163,6 +248,7 @@ const styles = StyleSheet.create({
   icon:{
     width:20,height:20
   },
-  txtInput:{height:30,margin:5,backgroundColor:'#eeeeee',padding:5,}
-
+  txtInput:{height:30,margin:5,backgroundColor:'#eeeeee',padding:5,},
+  topbtn:{margin:10},
+  mbtn:{margin:5,color:'#666666'},
 });

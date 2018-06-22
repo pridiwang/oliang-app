@@ -4,7 +4,7 @@ import {View,Text,Image,StyleSheet,TouchableHighlight,ScrollView,Button,Platform
 import Loginscreen from './Login';
 import {themeLight,themeDark} from './Styles';
 import HTMLView from 'react-native-htmlview';
-import VersionNumber from 'react-native-version-number';
+
 import MyWebView from 'react-native-webview-autoheight';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 function renderNode(node, index, siblings, parent, defaultRenderer) {
