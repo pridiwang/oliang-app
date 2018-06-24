@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Picker,Alert,Modal,View,Text,Button,TextInput,Image,StyleSheet,TouchableHighlight,TouchableOpacity, ScrollView,Platform,PermissionsAndroid }  from 'react-native';
+import {Picker,Alert,Modal,View,Text,Button,TextInput,Image,StyleSheet,TouchableHighlight,TouchableOpacity, ScrollView,Platform}  from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
 import {Camera, Permissions, Notifications,ImagePicker } from 'expo';
 //import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
-
 export default class PostNew extends React.Component{
     static navigationOptions=({navigation})=>({
         title:'Post New',
@@ -27,15 +25,18 @@ export default class PostNew extends React.Component{
     constructor(props) {
         super(props);
         this.state = {title: '',category:'1',content:'',imgname:''};
-        this.imgname = {imgname: ''};        
+        this.imgname = {imgname: ''};
     }
-  
     async componentWillMount() {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
         this.setState({ hasCameraPermission: status === 'granted' });
+        const { status2 } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        this.setState({ hasCameraRollPermission: status2 === 'granted' });
     }
     
     postSubmit = () =>{
+      console.log('postnew ');
+
       if((this.state.title===undefined)||(this.state.title==='')){
         Alert.alert('แจ้งเตือน','กรุณาใส่ข้อมูลเรื่อง',[
           {text:'Ok',onPress: ()=>this.refs.title.focus() }
@@ -58,7 +59,8 @@ export default class PostNew extends React.Component{
 
       if(this.state.imgname!=undefined){
         formData.append('image',this.state.imgname);
-      }   
+      }
+      console.log('posting title '+this.state.title+' content '+this.state.content+' imgname '+this.state.imgname);
       fetch('http://oliang.itban.com/postnew', { 
         method: 'POST',
         body: formData,
@@ -69,29 +71,35 @@ export default class PostNew extends React.Component{
         ]); 
         return;
     }
-    _pickImage = async () => {
+    _pickImage = async ()=> {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
-        aspect: [4, 3],
-        mediaTypes:'All',
+        aspect:[4,3],
+        mediaTypes:'Images',
       });
   
       console.log(result);
-      try{
-      var url='http://oliang.itban.com/upload';
-      //let  url='http://27.254.144.132/upload.php';
-      console.log('url '+url);
-      //headers:{    'Content-Type': 'multipart/form-data; boundary=6ff46e0b6b5148d984f148b6542e5a5d',  },
+      //headers:{    'Content-Type': 'multipart/form-data; boundary=6ff46e0b6b5148d984f148b6542e5a5d',  },allowsEditing: true,aspect: [4, 3],
+      
       if (!result.cancelled) {
         this.setState({ image: result.uri });
-        
-        console.log('url '+url);
         var formData = new FormData();
-        formData.append('userfile',{uri: result.uri, name:'test.jpg',type:result.type,height:result.height,width:result.width});
+        var rand = Math.floor(Math.random() * 1000000) + 100000 ;
+        var url ='http://oliang.itban.com:80/upload';
+        //var url ='http://27.254.144.132:80/upload.php';
+        this.setState({imgname:'media/'+rand+'.jpg'});
+        formData.append('userfile',{uri: result.uri, name:rand+'.jpg',type:result.type,rnd:rand});
         fetch(url, {
-          method: 'post',          
-          body: formData,
-        })
+          method: 'POST',
+          headers:{ 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        /*.catch((error)=>{
+          console.error(error)
+        });
         .then((response) => response.json())
         .then((responseJson) => {
           console.log(responseJson);
@@ -105,19 +113,17 @@ export default class PostNew extends React.Component{
         })
         .catch((error) => {
           console.error(error);
-        });
+        });*/
       }
-    }catch(error){
-      console.log(error);
+      
     }
-    };
     _pickCamera = async () => {
       let result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         mediaTypes:'All',
       });
   
-      //console.log(result);
+      console.log(result);
       //headers:{    'Content-Type': 'multipart/form-data; boundary=6ff46e0b6b5148d984f148b6542e5a5d',  },
       if (!result.cancelled) {
         this.setState({ image: result.uri });
@@ -145,10 +151,12 @@ export default class PostNew extends React.Component{
       }
     };
     _pickVdo = async () => {
+      
       let result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: false,
-        mediaTypes:'All',
+        allowsEditing: true,
+        mediaTypes:'Videos',
       });
+  
       console.log(result);
       if (!result.cancelled) {
         this.setState({ image: result.uri });
@@ -191,7 +199,7 @@ export default class PostNew extends React.Component{
     render(){
       
       let { image } = this.state;
-      const { hasCameraPermission } = this.state;
+      const { hasCameraPermission,hasCameraRollPermission } = this.state;
         if (hasCameraPermission === null) {
             return <View />;
           } else if (hasCameraPermission === false) {
@@ -214,7 +222,7 @@ export default class PostNew extends React.Component{
     <Ionicons name="md-send" style={styles.mbtn} size={32}  /></TouchableHighlight>
     
     </View>
-    {image && <Image source={{uri: image}} style={{width:320,height:200}} /> }
+    {image && <Image source={{uri: image}} style={{flex:1,height:200}} /> }
     
             <Text>เรื่อง</Text>
             <TextInput ref='title' multiline={true} underlineColorAndroid="rgba(255,255,255,0)" style={{height: 40, borderColor: '#bbbbbb', borderWidth: 1,paddingHorizontal:2,backgroundColor:'#fff'}}

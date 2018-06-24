@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ScrollView, StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image,Platform,Keyboard } from 'react-native';
+import {ScrollView, StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image,Platform,Keyboard, ImageBackground } from 'react-native';
 import Expo from 'expo';
 import {Facebook} from 'expo';
 import {StackNavigator,DrawerNavigator,TabNavigator} from 'react-navigation';
@@ -209,7 +209,7 @@ export default class LoginScreen extends React.Component {
     
     return (
       <KeyboardAwareScrollView contentContainerStyle={{flex:100,alignItems:'center'}} keyboardShouldPersistTaps="always"  >
-      <Image source={require('../img/nbtc8.png')} resizeMode='cover' style={{flex:1,alignContent:'center',alignItems:'center'}} >
+      <ImageBackground source={require('../img/nbtc8.png')} resizeMode='cover' style={{flex:1,alignContent:'center',alignItems:'center'}} >
         <View style={{backgroundColor:'rgba(180,180,180,0.6)',padding:10,margin:30,borderRadius:10}} >        
         <Text style={{fontSize:16,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>
         <TextInput editable={true} keyboardType='email-address' placeholder='NBTC Account' placeholderTextColor='#666666'
@@ -235,7 +235,7 @@ export default class LoginScreen extends React.Component {
         <Text style={styles.fbbutton}>เข้าระบบด้วย FACEBOOK </Text></View>
         </TouchableHighlight>
         </View>        
-        </Image>
+        </ImageBackground>
         
         
         </KeyboardAwareScrollView>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image, Keyboard } from 'react-native';
+import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image, Keyboard,ImageBackground } from 'react-native';
 import{ DrawerNavigator } from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
 import util from 'react-native-util';
@@ -196,7 +196,7 @@ flex:1,flexDirection:'row',justifyContent:'flex-end'
 const topage='Posts';
 return (
   <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
-    <Image 
+    <ImageBackground 
         style={{flex:1,flexDirection:'column',paddingTop:15,alignItems:'center',justifyContent:'space-around',height:1024}} 
         resizeMode="cover" 
         source={require ('../img/background5.png')} >
@@ -223,7 +223,7 @@ return (
             </TouchableHighlight>
           }
           />
-    </Image>  
+    </ImageBackground>  
 
   </View>
   
