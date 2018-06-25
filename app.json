@@ -19,7 +19,7 @@
         "android": {
             "package": "th.go.nbtc.oliang.staging",
             "versionCode":33,
-        "icon": "./img/appicon4_1024.png"
+            "icon": "./img/appicon4_1024.png"
         
         },
         "packagerOpts": {
