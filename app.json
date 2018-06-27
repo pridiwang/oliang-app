@@ -13,19 +13,21 @@
         "ios": {
             "bundleIdentifier": "th.go.nbtc.oliang",
             "icon": "./img/appicon4_1024.png",
-            "buildNumber":"36",
+            "buildNumber":"38",
             "supportsTablet":true
         },
         "android": {
             "package": "th.go.nbtc.oliang.staging",
-            "versionCode":36,
+            "versionCode":38,
             "icon": "./img/appicon4_1024.png",
-            "googleServicesFile": "./google-services.json"            
+            "googleServicesFile": "./google-services.json"   
         },
         "packagerOpts": {
             "assetExts": ["ttf"]
         }       
     },
-    "facebookScheme": "fb226125624536427"
- 
+    "facebookScheme": "fb226125624536427",
+    "android":{
+        "googleServicesFile": "./google-services.json"   
+    }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image, Keyboard,ImageBackground } from 'react-native';
+import { Platform, ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image, Keyboard,ImageBackground } from 'react-native';
 import{ DrawerNavigator } from 'react-navigation';
 import {MainNavigator} from '../navigation/MainNavigator';
 import util from 'react-native-util';
@@ -17,8 +17,10 @@ import * as firebase from 'firebase';
 const firebaseConfig = {
   apiKey: "AIzaSyBg81u7F8HU33bjUnmb-PgExAV0xzCJ1SQ",
   authDomain: "oliang-2e483.firebaseapp.com",
+  projectId:"oliang-2e483",
   databaseURL: "https://oliang-2e483.firebaseio.com/",
-  storageBucket: "oliang-2e483.appspot.com"
+  storageBucket: "oliang-2e483.appspot.com",
+  messagingSenderId:"797299882219"
 };
 firebase.initializeApp(firebaseConfig);
 
@@ -50,15 +52,15 @@ async function registerForPushNotificationsAsync(at,user) {
   // Get the token that uniquely identifies this device
 //{gcmSenderId:'797299882219'}
   let token = await Notifications.getExpoPushTokenAsync();
-  let uid=firebase.auth().currentUser.uid;
-  firebase.database().ref('users').child(uid).update({expoToken: token});
+  //uid=firebase.auth().currentUser.uid;
+  //firebase.database().ref('users').child(uid).update({expoToken: token});
   
   console.log(token);
   console.log('token type push token '+token+ ' at:'+at+ ' push_endpoint:'+PUSH_ENDPOINT);
   // POST the token to your backend server from where you can retrieve it to send push notifications.
   var formData = new FormData();
   formData.append('push_token',token);
-  formData.append('firebase_uid',uid);
+  formData.append('firebase_uid','');
   AsyncStorage.setItem('push_token',token);
   return fetch(PUSH_ENDPOINT, {
     method:'POST',
@@ -87,11 +89,17 @@ export class CategoryScreen extends React.Component{
   }
   _handleNotification = (notification) => {
     this.setState({notification: notification});
-    console.log(JSON.stringify(notification));
-    Alert.alert("บทความใหม่","notification \norigin:"+notification.origin+"\ndata:"+notification.data.body);
+    //console.log(JSON.stringify(notification));
+    //Alert.alert("บทความใหม่","notification \norigin:"+notification.origin+"\ndata:"+notification.data.body);
   };
   componentDidMount() { 
-    
+    if (Platform.OS === 'android') {
+      Expo.Notifications.createChannelAndroidAsync('oliang-noti', {
+        name: 'Reminders',
+        priority: 'max',
+        vibrate: [0, 250, 250, 250],
+      });
+    }
     AsyncStorage.getItem('can_post',(err,cp)=>{
       CAN_POST=cp;
       console.log('cp '+cp);

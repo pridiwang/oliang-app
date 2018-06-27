@@ -209,8 +209,8 @@ export default class LoginScreen extends React.Component {
     const { navigate } = this.props.navigation;
     
     return (
-      <KeyboardAwareScrollView contentContainerStyle={{flex:100,alignItems:'center'}} keyboardShouldPersistTaps="always"  >
-      <ImageBackground source={require('../img/nbtc8.png')} resizeMode='cover' style={{flex:1,alignContent:'center',alignItems:'center'}} >
+      <KeyboardAwareScrollView contentContainerStyle={{flex:1,flexDirection:'column',alignItems:'center',justifyContent:'space-between'}} keyboardShouldPersistTaps="always"  >
+      <ImageBackground source={require('../img/nbtc8.png')} resizeMode='cover' style={{width:'100%',height:'100%',alignContent:'center',alignItems:'center'}} >
         <View style={{backgroundColor:'rgba(180,180,180,0.6)',padding:10,margin:30,borderRadius:10}} >        
         <Text style={{fontSize:16,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>
         <TextInput editable={true} keyboardType='email-address' placeholder='NBTC Account' placeholderTextColor='#666666'
