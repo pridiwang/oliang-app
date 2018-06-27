@@ -196,6 +196,7 @@ export default class LoginScreen extends React.Component {
   }
   async componentDidMount(){
     //console.log('component did mount');
+    AsyncStorage.setItem('theme','Light');
     this.chkToken(); 
   }
   //<Text style={{fontSize:36,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>

@@ -7,7 +7,7 @@ import {Camera, Permissions, Notifications,ImagePicker,Video } from 'expo';
 
 import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
+var can_post='0';
 export default class PostNew extends React.Component{
     
   static navigationOptions=({navigation})=>({
@@ -18,6 +18,7 @@ export default class PostNew extends React.Component{
         headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-home" style={styles.topbtn} size={32}  /></TouchableHighlight>,
 
         drawerLabel: 'เขียนบทความใหม่',
+        drawerLockMode: 'locked-closed',
         drawerIcon: ({ tintColor }) => (
           <Image
             source={require('../img/post-icon.png')}
@@ -34,6 +35,16 @@ export default class PostNew extends React.Component{
     async componentDidMount(){
       await AsyncStorage.getItem('at',(err,at1)=>{
         this.setState({at:at1});
+      });
+      await AsyncStorage.getItem("can_post",(err,can_post)=>{
+        console.log('can_post '+can_post);
+        if(can_post=='0'){
+          var navigationOptions=({navigation})=>({
+            drawerLabel:'',
+            drawerIcon:'',title:'' ,
+            drawerLockMode:'locked'
+          });
+        }
       });
     }
     async componentWillMount() {

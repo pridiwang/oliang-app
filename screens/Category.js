@@ -12,9 +12,21 @@ import Logout from './Logout';
 import PostNew from './PostNew';
 import Appuni from './AppUniverse';
 import PostsScreen from './Posts';
-const PUSH_ENDPOINT = 'https://oliang.itban.com/users/push-token';
+import * as firebase from 'firebase';
 
-async function registerForPushNotificationsAsync(at) {
+const firebaseConfig = {
+  apiKey: "AIzaSyBg81u7F8HU33bjUnmb-PgExAV0xzCJ1SQ",
+  authDomain: "oliang-2e483.firebaseapp.com",
+  databaseURL: "https://oliang-2e483.firebaseio.com/",
+  storageBucket: "oliang-2e483.appspot.com"
+};
+firebase.initializeApp(firebaseConfig);
+
+
+const PUSH_ENDPOINT = 'https://oliang.itban.com/users/push-token';
+var CAN_POST='0';
+
+async function registerForPushNotificationsAsync(at,user) {
   //console.log('registerForPushNotificationsAsync');
   const { status: existingStatus } = await Permissions.getAsync(
     Permissions.NOTIFICATIONS
@@ -36,16 +48,21 @@ async function registerForPushNotificationsAsync(at) {
   }
 
   // Get the token that uniquely identifies this device
+//{gcmSenderId:'797299882219'}
   let token = await Notifications.getExpoPushTokenAsync();
-  //console.log('push token '+token+ ' at:'+at+ ' push_endpoint:'+PUSH_ENDPOINT);
+  let uid=firebase.auth().currentUser.uid;
+  firebase.database().ref('users').child(uid).update({expoToken: token});
+  
+  console.log(token);
+  console.log('token type push token '+token+ ' at:'+at+ ' push_endpoint:'+PUSH_ENDPOINT);
   // POST the token to your backend server from where you can retrieve it to send push notifications.
   var formData = new FormData();
   formData.append('push_token',token);
+  formData.append('firebase_uid',uid);
+  AsyncStorage.setItem('push_token',token);
   return fetch(PUSH_ENDPOINT, {
     method:'POST',
-    headers: {
-      'Authorization': at,
-    },
+    headers: {'Authorization': at,},
     body: formData,
   })
   .then((response)=>response.json())
@@ -63,17 +80,33 @@ export class CategoryScreen extends React.Component{
   }
   constructor(props){
     super(props);
-    this.state={isLoading:true};
+    this.state={isLoading:true,notification:{}};
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
     Keyboard.dismiss();
-    
+    CAN_POST='0';
   }
-  
+  _handleNotification = (notification) => {
+    this.setState({notification: notification});
+    console.log(JSON.stringify(notification));
+    Alert.alert("บทความใหม่","notification \norigin:"+notification.origin+"\ndata:"+notification.data.body);
+  };
   componentDidMount() { 
+    
+    AsyncStorage.getItem('can_post',(err,cp)=>{
+      CAN_POST=cp;
+      console.log('cp '+cp);
+      
+    });
     AsyncStorage.getItem('at',(err,at)=>{
       //console.log(' stored at:'+at+' error '+err);
       //navigate('Category');
       registerForPushNotificationsAsync(at);
+      AsyncStorage.getItem('push_token',(err,pt)=>{
+        
+      });
+
+
+      this._notificationSubscription = Notifications.addListener(this._handleNotification);
       url='https://oliang.itban.com/catlist';
       //console.log('url:'+url);
      //console.log('category did mount at:'+at);
@@ -137,6 +170,10 @@ export class CategoryScreen extends React.Component{
     AsyncStorage.getItem('theme',(err,result)=>{
      //console.log('set to:'+result);
     });
+    AsyncStorage.getItem('can_post',(err,can_post)=>{
+      //console.log('set to:'+result);
+      CAN_POST=can_post;
+     });
     if(this.state.isLoading==true){
       return (
         <View>
@@ -250,10 +287,10 @@ const styles = StyleSheet.create({
   icon:{resizeMode:'contain',height:30,width:30,margin:3}
 });
 //Post:{    screen: PostNew,  },
-export default DrawNavigator = DrawerNavigator({
-  
+
+const DrawNavigator1 = DrawerNavigator({
   Back:{    screen: CategoryScreen,  },
-  
+  Postnew:{screen:PostNew} ,
   Profile:{    screen: Profile,headerMode:'screen'  },
   Appuni:{    screen: Appuni,  },
   About:{    screen: AboutScreen,  },
@@ -261,3 +298,17 @@ export default DrawNavigator = DrawerNavigator({
 },{
   headerMode:'none',
 });
+
+const DrawNavigator0 = DrawerNavigator({
+  Back:{    screen: CategoryScreen,  },
+  Profile:{    screen: Profile,headerMode:'screen'  },
+  Appuni:{    screen: Appuni,  },
+  About:{    screen: AboutScreen,  },
+  Logout:{    screen: Logout, }
+},{
+  headerMode:'none',
+});
+
+export default (CAN_POST==='1'? DrawNavigator1 : DrawNavigator0)
+
+
