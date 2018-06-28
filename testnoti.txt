@@ -1,0 +1,6 @@
+curl -H "Content-Type:application/json" -X POST https://exp.host/--/api/v2/push/send -d '{ "to": "ExponentPushToken[jSyt8QPKoBIRaq0IK0SxTO]", "body": "hello beautiful world"}'
+
+
+Android FB: ExponentPushToken[ruAd5HDB1mKX4OMeExnAKw]
+iOS Oliang: ExponentPushToken[jSyt8QPKoBIRaq0IK0SxTO] 
+ ExponentPushToken[ruAd5HDB1mKX4OMeExnAKw]

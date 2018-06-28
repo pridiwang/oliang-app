@@ -6,11 +6,12 @@ import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Expo,{Video} from 'expo';
+import MediaMeta from 'react-native-media-meta';
 
 export default class PlayerScreen extends React.Component{
     
     static navigationOptions=({navigation})=>({
-        title:navigation.state.params.data.name,
+        title:'VDO',
         headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
         style:{height:30},
 
@@ -25,6 +26,7 @@ export default class PlayerScreen extends React.Component{
         const {params} = this.props.navigation.state;
         
         if(params.data.mp4!==""){
+          
             let clip_url=params.data.mp4.replace('.com/media/','.com:8081/vod/oliang/')+'/playlist.m3u8';
            //console.log('vdo content');
             if(Platform.OS=='android'){
@@ -37,7 +39,7 @@ export default class PlayerScreen extends React.Component{
             return (
                 <View style={styles.container} >
               <Expo.Video source={{uri:clip_url}} style={styles.vdo} 
-                    resizeMode='stretch' useNativeControls={true}  shouldPlay={true} hls={true}
+                     useNativeControls={true}  shouldPlay={true} hls={true}
                     />  
                 </View>
             )
@@ -54,7 +56,7 @@ export default class PlayerScreen extends React.Component{
 
 const styles=StyleSheet.create({
     container:{flex:1,backgroundColor:'#333',alignContent:'center',alignItems:'center',justifyContent:'center'},
-    vdo:{width:320,height:180},
+    vdo:{position:'absolute',top:0,bottom:0,left:0,right:0},
 });
 const htmlStyles=StyleSheet.create({
     body:{backgroundColor:'#ffaaaa'},

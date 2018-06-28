@@ -137,7 +137,7 @@ export default class PostsScreen extends React.Component{
                                         <Image source={{uri:rowData.img}} style={styles.postImgSmall} resizeMode="cover" ></Image>
                                         <View style={styles.postText} >
                                             <Text style={styles.postTitle}>{rowData.title} </Text>
-                                            <Text style={styles.postAuthor}>{rowData.thai_date} : {rowData.author} </Text>
+                                            <Text style={styles.postAuthor}>{rowData.author} </Text>
                                             
                                         </View>
                                         <View style={{}}>     

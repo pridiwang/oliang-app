@@ -168,9 +168,10 @@ export default class DetailScreen extends React.Component{
             :(<TouchableHighlight onPress={()=>{
                     if (params.data.mp4.indexOf('youtube')!==-1){
                         //console.log('opening youtube ');
-                        Linking.openURL(params.data.mp4)
+                        Linking.openURL(params.data.mp4);
                     }else{                    
-                        this.props.navigation.navigate('PostPlayer',{data:params.data})
+                        Linking.openURL('http://oliang.itban.com/vdocontent/'+params.data.id);
+                        //this.props.navigation.navigate('PostPlayer',{data:params.data})
                     }
 
             }}>
