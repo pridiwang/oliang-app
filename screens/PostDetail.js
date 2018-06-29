@@ -170,7 +170,8 @@ export default class DetailScreen extends React.Component{
                         //console.log('opening youtube ');
                         Linking.openURL(params.data.mp4);
                     }else{                    
-                        Linking.openURL('http://oliang.itban.com/vdocontent/'+params.data.id);
+                        Linking.openURL(params.data.mp4);
+                        //Linking.openURL('http://oliang.itban.com/vdocontent/'+params.data.id);
                         //this.props.navigation.navigate('PostPlayer',{data:params.data})
                     }
 
