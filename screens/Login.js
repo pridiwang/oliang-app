@@ -51,7 +51,7 @@ export default class LoginScreen extends React.Component {
          //console.log('token:'+token);
           AsyncStorage.setItem('at',token,()=>{
             AsyncStorage.getItem('at',(err,at1)=>{
-             //console.log('token '+token+ ' stored at:'+at1);
+             console.log('token '+token+ ' stored at:'+at1);
               navigate('Category');
 
             });

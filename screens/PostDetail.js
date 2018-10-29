@@ -115,6 +115,9 @@ export default class DetailScreen extends React.Component{
               url:fullcontentURL,
               diaLogTitle:'Share to '
           }
+          console.log('contentURL:'+contentURL);
+          //console.log('fullcontentURL:'+fullcontentURL);
+          
         /*
         if(params.data.mp4!==""){
             let clip_url=params.data.mp4.replace('.com/media/','.com:8081/vod/oliang/')+'/playlist.m3u8';
@@ -185,10 +188,10 @@ export default class DetailScreen extends React.Component{
                     <MyWebView hasZoom='true' source={{uri:contentURL,method:'GET'}} 
                         style={{marginTop:10,marginRight:10,height:800,flex:0.9,backgroundColor:'rgba(0,0,0,0)' }} 
                         scrollEnabled={false}
-                        
+                        startInLoadingState={true} 
                         onShouldStartLoadWithRequest={(event)=>{
-                            //console.log('should start load with request ');
-                            //console.log(event);
+                            console.log('should start load with request ');
+                            console.log(event);
                             if(event.url.indexOf('oliang.itban.com')!==-1){
                                 return true;
                             }else{
