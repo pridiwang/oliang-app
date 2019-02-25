@@ -40,7 +40,7 @@
     "react-native-social-share": "^1.1.0",
     "react-native-util": "^1.0.2",
     "react-native-vector-icons": "^4.6.0",
-    "react-native-webview-autoheight": "^1.0.5",
+    "react-native-webview-autoheight": "^1.0.6",
     "react-navigation": "^1.5.11"
   }
 }

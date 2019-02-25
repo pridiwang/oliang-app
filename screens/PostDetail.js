@@ -93,7 +93,7 @@ export default class DetailScreen extends React.Component{
         Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
         //this.ChkPermission();
         const {params} = this.props.navigation.state;
-        let contentURL="http://oliang.itban.com/content/"+this.state.theme+"/"+params.data.id;
+        let contentURL="http://oliang.itban.com/content2/"+this.state.theme+"/"+params.data.id;
         let fullcontentURL="http://oliang.itban.com/fullcontent/"+params.data.id;
         //console.loglog('content url '+contentURL);
         let shareOptions = {
@@ -116,7 +116,9 @@ export default class DetailScreen extends React.Component{
               url:fullcontentURL,
               diaLogTitle:'Share to '
           }
-          console.log('contentURL:'+contentURL);
+          var rand =  100000 + Math.floor((Math.random() * (10000-99999)));
+          contentURL+='?'+rand;
+          //console.log('contentURL: with rand '+contentURL);
           //console.log('fullcontentURL:'+fullcontentURL);
           
         /*
@@ -167,6 +169,24 @@ export default class DetailScreen extends React.Component{
 //<HTMLView style={styles.content} value={params.data.content} /><HTMLView hasZoom='true' stylesheet={htmlStyles}  value={params.data.content}   />
 //<WebView hasZoom='true' source={{uri:'http://oliang.itban.com/content/'+params.data.id}} style={{marginTop:20}} />
 //<Image resizeMode="cover" source={{uri:params.data.img}} style={styles.img}/>
+/*
+<WebView 
+                    style={{height:1000,padding:0,margin:0,backgroundColor:'rgba(0,0,0,0)'}}
+                    startInLoadingState={true}      
+                    source={{uri: contentURL }} 
+                    onShouldStartLoadWithRequest={(event)=>{
+                        console.log('should start load with request ');
+                        //console.log(event);
+                        if(event.url.indexOf('oliang.itban.com')!==-1){
+                            return true;
+                        }else{
+                            Linking.openURL(event.url);
+                            return false;
+                        }
+                        
+                    }}
+                      />
+*/
             const TopImage = params.data.mp4=='' 
             ? (<View style={{flex:1,height:300,position:'relative'}}><Image resizeMode="cover" source={{uri:params.data.img}} style={styles.img}/></View>) 
             :(<TouchableHighlight onPress={()=>{
@@ -184,17 +204,18 @@ export default class DetailScreen extends React.Component{
             return(
               <ScrollView style={styles.container}>
                 {TopImage}
-                <View style={{padding:10}} >
+                <View style={{padding:10,flex:1,flexDirection:'column'}} >
                     <Text style={styles.title}>{params.data.title}</Text>
-                    <MyWebView hasZoom={true} 
-                        source={{uri:contentURL,method:'GET'}} 
-                        autoHeight={true}
-                        style={{marginTop:10,marginRight:10,flex:1,backgroundColor:'rgba(0,0,0,0)' }}                         
-                        scrollEnabled={false}
-                        startInLoadingState={true} 
+                    
+                    
+                    <MyWebView 
+                        startInLoadingState={true}                         
+                        autoHeight={true}                        
+                        source={{uri: contentURL }}             
+                        style={{margin:0,backgroundColor:'rgba(0,0,0,0)',height:0,flex:1}}
                         onShouldStartLoadWithRequest={(event)=>{
-                            console.log('should start load with request ');
-                            console.log(event);
+                            //console.log('should start load with request ');
+                            //console.log(event);
                             if(event.url.indexOf('oliang.itban.com')!==-1){
                                 return true;
                             }else{
@@ -203,11 +224,11 @@ export default class DetailScreen extends React.Component{
                             }
                             
                         }}
-                        
+                       
                         /> 
-              
+<Button onPress={()=>{Share.share(shareContent)}} title="Share" style={styles.btn} ></Button>                    
                 </View>         
-                <Button onPress={()=>{Share.share(shareContent)}} title="Share" style={styles.btn} ></Button>
+                
               </ScrollView>
           )
         

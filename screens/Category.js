@@ -29,35 +29,20 @@ const PUSH_ENDPOINT = 'https://oliang.itban.com/users/push-token';
 var CAN_POST='0';
 
 async function registerForPushNotificationsAsync(at,user) {
-  //console.log('registerForPushNotificationsAsync');
   const { status: existingStatus } = await Permissions.getAsync(
     Permissions.NOTIFICATIONS
   );
   let finalStatus = existingStatus;
-
-  // only ask if permissions have not already been determined, because
-  // iOS won't necessarily prompt the user a second time.
   if (existingStatus !== 'granted') {
-    // Android remote notification permissions are granted during the app
-    // install, so this will only ask on iOS
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     finalStatus = status;
   }
-
   // Stop here if the user did not grant permissions
   if (finalStatus !== 'granted') {
     return;
   }
-
   // Get the token that uniquely identifies this device
-//{gcmSenderId:'797299882219'}
   let token = await Notifications.getExpoPushTokenAsync();
-  //uid=firebase.auth().currentUser.uid;
-  //firebase.database().ref('users').child(uid).update({expoToken: token});
-  
-  console.log(token);
-  console.log('token type push token '+token+ ' at:'+at+ ' push_endpoint:'+PUSH_ENDPOINT);
-  // POST the token to your backend server from where you can retrieve it to send push notifications.
   var formData = new FormData();
   formData.append('push_token',token);
   formData.append('firebase_uid','');
@@ -71,10 +56,7 @@ async function registerForPushNotificationsAsync(at,user) {
   .then((responseJson)=>{
     //console.log(responseJson)
   });
-  
-  
 }
-
 
 export class CategoryScreen extends React.Component{
   static navigationOptions={
@@ -102,7 +84,7 @@ export class CategoryScreen extends React.Component{
     }
     AsyncStorage.getItem('can_post',(err,cp)=>{
       CAN_POST=cp;
-      console.log('cp '+cp);
+      //console.log('cp '+cp);
       
     });
     AsyncStorage.getItem('at',(err,at)=>{
@@ -316,7 +298,4 @@ const DrawNavigator0 = DrawerNavigator({
 },{
   headerMode:'none',
 });
-
 export default (CAN_POST==='1'? DrawNavigator1 : DrawNavigator0)
-
-
