@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput, View,Button,
+import { Image,ScrollView,ActivityIndicator,StyleSheet, FlatList,Text,TextInput, View,Button,
     TouchableHighlight,Alert,AsyncStorage,RefreshControl,Platform } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 //import { Ionicons } from '@expo/vector-icons';
@@ -8,16 +8,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import renderif from '../utility/renderif';
 import {themeLight,themeDark,htmlLight,htmlDark} from './Styles';
 
-const styles=themeLight;
-const htmlStyles=htmlLight;
+var styles=themeLight;
+var htmlStyles=htmlLight;
 
 //headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Text style={styles.topbtn} > Home </Text></TouchableHighlight>,
 export default class AllPosts extends React.Component{
     static navigationOptions=({navigation})=>({
         title:navigation.state.params.data.name,
         headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
-        headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Category',{data:navigation.state.params.data})}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
-        headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-home" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
+        //,{data:navigation.state.params.data}
+        headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Category')}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
+        headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category')}><Ionicons name="md-home" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
     });
     constructor(props){
         super(props);
@@ -103,12 +104,13 @@ export default class AllPosts extends React.Component{
             const data =this.state._data.concat(responseJson.data);
             
             this.setState({
-                dataSource:this.state.dataSource.cloneWithRows(data),
+                dataSource:data,
                 isLoadingMore:false,
                 _data:data,
             })
         })
     }
+    
     async componentDidMount() {
         const {params} = this.props.navigation.state;
         if(params.data.type=='link'){
@@ -118,13 +120,14 @@ export default class AllPosts extends React.Component{
         }
 
         this.fetchData(responseJson => {
-                let ds = new ListView.DataSource({
+                /*let ds = new FlatList.DataSource({
                     rowHasChanged:(r1,r2)=>1 !== r2
                 });
+                */
                 const data = responseJson.data;
                 this.setState({
                     isLoading: false,                        
-                    dataSource: ds.cloneWithRows(data),
+                    dataSource: data,
                     _data: data,
                 });
         });
@@ -148,28 +151,28 @@ export default class AllPosts extends React.Component{
             return(
                 <View style={styles.postView} >
                     
-                    <ListView style={{flex:5}}
+                    <FlatList style={{flex:5}}
                        
-                    dataSource={this.state.dataSource}
-                    renderRow={ (rowData)=>
+                    data={this.state.dataSource}
+                    keyExtractor={(item,index)=>index.toString()}
+                    renderItem={ (rowData)=>
                     <View style={{flex:1}}>
                     <TouchableHighlight onPress={()=>{
-                        //rowData.unread=0;
-                        //console.log(rowData);
-                        this.props.navigation.navigate('Detail',{data:rowData})
+                        
+                        this.props.navigation.navigate('Detail',{data:rowData.item})
                    }}>
                         <View style={{flex:1,}}>
                             
                                 <View style={styles.postItem}>
                                     
-                                        <Image source={{uri:rowData.img}} style={styles.postImg} resizeMode="cover" />
+                                        <Image source={{uri:rowData.item.img}} style={styles.postImg} resizeMode="cover" />
                                     
                                     <View style={styles.postText} >
                                         <View style={{flex:3}}>
-                                        <Text style={styles.postTitle}>{rowData.title} </Text>
-                                        <Text style={styles.postDate}>{rowData.thai_date} </Text>
+                                        <Text style={styles.postTitle}>{rowData.item.title} </Text>
+                                        <Text style={styles.postDate}>{rowData.item.thai_date} </Text>
                                         </View>
-                                        <Text style={styles.postAuthor}>{rowData.author} </Text>
+                                        <Text style={styles.postAuthor}>{rowData.item.author} </Text>
                                     </View>
                                 </View>
                                 <View style={{flex:2}}>     

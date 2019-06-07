@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {View,Text,Image,StyleSheet,TouchableHighlight,ScrollView,Button,Platform}  from 'react-native';
 import Loginscreen from './Login';
 import {themeLight,themeDark} from './Styles';
-import HTMLView from 'react-native-htmlview';
+
 
 import MyWebView from 'react-native-webview-autoheight';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -22,6 +22,7 @@ export default class AboutScreen extends React.Component{
             style={[styles.icon, {tintColor: tintColor}]}
           />
         ),
+        header:true,
         title:'About',
         headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
         headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
@@ -32,13 +33,20 @@ export default class AboutScreen extends React.Component{
     render(){
     //<ScrollView style={{flex:1}}></ScrollView>
         return(
+          <ScrollView style={styles.container}>
+          
+          <View style={{padding:10,flex:1,flexDirection:'column'}} >
             
-              <MyWebView hasZoom='true' source={{uri:'http://oliang.itban.com/about.html',method:'GET'}} 
-                        style={{marginTop:10,marginRight:10,padding:20,flex:2,backgroundColor:'rgba(0,0,0,0)' }} 
+              <MyWebView
+              startInLoadingState={true}                         
+              autoHeight={true}    
+              hasZoom='true' source={{uri:'http://oliang.itban.com/about.html',method:'GET'}} 
+              style={{margin:0,backgroundColor:'rgba(0,0,0,0)',height:0,flex:1}}
                         scrollEnabled={true}
                         />
-            
-            
+                        <Button title="Back" onPress={()=>this.props.navigation.navigate('Back')} />
+            </View>
+            </ScrollView>
         )
     }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar,Platform,ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
+import { StatusBar,Platform,ScrollView,ActivityIndicator, FlatList,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
 import Drawer from 'react-native-drawer';
 import ControlPanel from './ControlPanel';
 export default class Test extends React.Component{

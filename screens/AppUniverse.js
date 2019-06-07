@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
-import {StackNavigator,TabNavigator} from 'react-navigation';
-import {MainNavigator} from '../navigation/MainNavigator';
+import { ScrollView,ActivityIndicator, FlatList,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
+
 import {themeLight,themeDark} from './Styles';
 export default class AppUniverse extends React.Component{
     
@@ -23,30 +21,29 @@ export default class AppUniverse extends React.Component{
     }
     componentDidMount(){
         url='https://oliang.itban.com/appuni';
-        
+        this.timeoutHandle = setTimeout(()=>{
         AsyncStorage.getItem('at',(err,at)=>{
             return fetch(url,{method:'GET',headers:{'Authorization':at}})
             .then((response)=>response.json())
             .then((responseJson)=>{
-               //console.log('fetch ok');
                 const dr= responseJson.data[0];
-               //console.log('dr');
-               //console.log(dr);
-    //            navigate('category',dr);
                 this.props.navigation.navigate('AllPosts',{data:dr});
             });
 
         });
-
+      }, 500); 
     }
+    componentWillUnmount(){
+      clearTimeout(this.timeoutHandle); 
+ }
     render(){
-        return(
-            
-        <View style={styles.container} >
-        <Text>App Universe</Text>
-        </View>
-        
-        )
+      
+      return (<View style={styles.conatiner} style={{flexDirection:'column',paddingTop:30,backgrounColor:'#fff'}}>
+        <Image source={require('../img/appuni.png')} style={{width:320,height:420}} />
+   <Button title="Back" onPress={()=>this.props.navigation.navigate('Back')} />
+
+      </View>
+        );
 
     }
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar,Platform,ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
-import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
+import { StatusBar,Platform,ScrollView,ActivityIndicator, FlatList,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image } from 'react-native';
+import {createStackNavigator,createTabNavigator,createDrawerNavigator} from 'react-navigation';
 import RadioButton from 'radio-button-react-native';
-import MainNavigator from '../navigation/MainNavigator';
+//import MainNavigator from '../navigation/MainNavigator';
 
 import {themeDark,themeLight,htmlDark,htmlLight,txtLight,txtDark} from './Styles';
 import MyWebView from 'react-native-webview-autoheight';
@@ -11,6 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const styles=themeLight;
 const htmlStyles=htmlLight;
 const txtStyles=txtLight;
+
 export default class Profile extends React.Component{
   static navigationOptions=({navigation})=>({
     drawerLabel: 'ตั้งค่า',
@@ -22,8 +23,8 @@ export default class Profile extends React.Component{
     ),
     title:'Settings',
     headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
-    headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
-    headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-home" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
+    headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Back',)}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
+    headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Back',)}><Ionicons name="md-home" style={styles.topbtn} size={32} color="green" /></TouchableHighlight>,
   });
   constructor (props){
     super(props)
@@ -132,7 +133,7 @@ export default class Profile extends React.Component{
                  </View>
           
 </View>
-<Button title="Save" onPress={()=>this.props.navigation.navigate('Category')} />
+<Button title="Save" onPress={()=>this.props.navigation.navigate('Back')} />
 
                 </View>
         )

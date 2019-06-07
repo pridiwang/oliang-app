@@ -4,7 +4,7 @@ import {ScrollView, StyleSheet, Text,TextInput, View,Button,TouchableHighlight,A
 import Expo from 'expo';
 import {Facebook} from 'expo';
 import {StackNavigator,DrawerNavigator,TabNavigator} from 'react-navigation';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 //226125624536427
 export default class LoginScreen extends React.Component {
   static navigationOptions = {title:'เข้าระบบ',headerStyle:{marginTop: Platform.OS ==='ios' ? 0 :-30 },};
@@ -78,7 +78,7 @@ export default class LoginScreen extends React.Component {
   }
   async fbLogin(){
     const { navigate } = this.props.navigation;
-   //console.log(' calling fblogin');
+   console.log(' calling fblogin');
     
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('226125624536427',
     {
@@ -209,7 +209,7 @@ export default class LoginScreen extends React.Component {
     const { navigate } = this.props.navigation;
     
     return (
-      <KeyboardAwareScrollView contentContainerStyle={{flex:1,flexDirection:'column',alignItems:'center',justifyContent:'space-between'}} keyboardShouldPersistTaps="always"  >
+      <ScrollView contentContainerStyle={{flex:1,flexDirection:'column',alignItems:'center',justifyContent:'space-between'}} keyboardShouldPersistTaps="always"  >
       <ImageBackground source={require('../img/nbtc8.png')} resizeMode='cover' style={{width:'100%',height:'100%',alignContent:'center',alignItems:'center'}} >
         <View style={{backgroundColor:'rgba(180,180,180,0.6)',padding:10,margin:30,borderRadius:10}} >        
         <Text style={{fontSize:16,backgroundColor:'#440000',padding:5,width:260,color:'#ffffff',textAlign:'center'}}>โอเลี้ยง กสทช </Text>
@@ -239,7 +239,7 @@ export default class LoginScreen extends React.Component {
         </ImageBackground>
         
         
-        </KeyboardAwareScrollView>
+        </ScrollView>
         
     )
   }

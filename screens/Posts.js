@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput, View,Button,
+import { Image,ScrollView,ActivityIndicator,StyleSheet, FlatList,Text,TextInput, View,Button,
     TouchableHighlight,Alert,AsyncStorage,RefreshControl,Platform } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 //import { Ionicons } from '@expo/vector-icons';
@@ -81,7 +81,7 @@ export default class PostsScreen extends React.Component{
         })        
         .then((response) => response.json())
         .then((responseJson) => {
-                let ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>1 !== r2});
+                let ds = new FlatList.DataSource({rowHasChanged:(r1,r2)=>1 !== r2});
                 this.setState({
                     isLoading: false,
                     dataSource: ds.cloneWithRows(responseJson.data),
@@ -116,7 +116,7 @@ export default class PostsScreen extends React.Component{
             return(
                 <View style={styles.postView} >
                     
-                    <ListView style={{flex:5}}
+                    <FlatList style={{flex:5}}
                         refreshControl={
                             <RefreshControl
                                 refreshing={this.state.refreshing}

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Animated,Dimensions,Image,ScrollView,ActivityIndicator,StyleSheet, ListView,Text,TextInput, View,Button,
+import { Animated,Dimensions,Image,ScrollView,ActivityIndicator,StyleSheet, FlatList,Text,TextInput, View,Button,
     TouchableHighlight,Alert,AsyncStorage,WebView,Platform,Linking } from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
-import HTMLView from 'react-native-htmlview';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Expo,{Video} from 'expo';
 import MediaMeta from 'react-native-media-meta';

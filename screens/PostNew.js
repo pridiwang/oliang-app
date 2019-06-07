@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Picker,AsyncStorage, Alert,Modal,View,Text,Button,TextInput,Image,StyleSheet,TouchableHighlight,TouchableOpacity, ScrollView,Platform}  from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
-import {MainNavigator} from '../navigation/MainNavigator';
-import {Camera, Permissions, Notifications,ImagePicker,Video } from 'expo';
-
+//import {MainNavigator} from '../navigation/MainNavigator';
+import {Camera, Notifications,ImagePicker,Video } from 'expo';
+import * as Permissions from 'expo-permissions';
 import { Ionicons } from '@expo/vector-icons';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+//import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 var can_post='0';
 export default class PostNew extends React.Component{
     
@@ -207,7 +207,7 @@ export default class PostNew extends React.Component{
             return <Text>No access to camera</Text>;
           } else {
         return (
-          <KeyboardAwareScrollView style={{padding:10,paddingTop:10,flexGrow:1}}>
+          <ScrollView style={{padding:10,paddingTop:10,flexGrow:1}}>
       <Text style={{flex:1,fontSize:18,backgroundColor:'#600',color:'white',textAlign:'center'}}> - เขียนบทความใหม่ - </Text>
       <Text>เรื่อง</Text>
             <TextInput ref='title' multiline={true} underlineColorAndroid="rgba(255,255,255,0)" style={{height: 40,fontSize:14, borderColor: '#bbbbbb', borderWidth:1,padding:2,backgroundColor:'#fff',textAlignVertical:'top'}}
@@ -231,7 +231,7 @@ export default class PostNew extends React.Component{
     </View>
     {image && <Image source={{uri: image}} style={{flex:1,height:200}} /> }
     {vdo && <Video source={{uri:vdo}} resizeMode="cover" useNativeControls={true}  style={{flex:1,height:200}} /> }
-            </KeyboardAwareScrollView>)
+            </ScrollView>)
           }
     }
 }

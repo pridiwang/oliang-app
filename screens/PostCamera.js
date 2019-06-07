@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { Camera, Permissions } from 'expo';
-
+import { Camera } from 'expo';
+import * as Permissions from 'expo-permissions';
 export default class PostCamera extends React.Component {
     static navigationOptions=({navigation})=>({
        header:null, 

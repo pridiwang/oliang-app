@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Platform, ScrollView,ActivityIndicator, ListView,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image, Keyboard,ImageBackground } from 'react-native';
-import{ DrawerNavigator } from 'react-navigation';
-import {MainNavigator} from '../navigation/MainNavigator';
+import { Platform, ScrollView,ActivityIndicator, FlatList,StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image, Keyboard,ImageBackground } from 'react-native';
+import{ createDrawerNavigator } from 'react-navigation';
+//import {MainNavigator} from '../navigation/MainNavigator';
 import util from 'react-native-util';
 import Expo from 'expo';
-import { Permissions, Notifications } from 'expo';
+import { Notifications,ScreenOrientation } from 'expo';
+import * as Permissions from 'expo-permissions';
 import Profile from './Profile';
 import AboutScreen from './About';
 import Logout from './Logout';
@@ -60,12 +61,13 @@ async function registerForPushNotificationsAsync(at,user) {
 
 export class CategoryScreen extends React.Component{
   static navigationOptions={
-      header:null,
+    header: null,  
   }
   constructor(props){
     super(props);
-    this.state={isLoading:true,notification:{}};
-    Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
+    this.state={isLoading:true,notification:{},dataSource:null};
+    //Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
+    //await ScreenOrientation.allowAsync(ScreenOrientation.Orientation.PORTRAIT);
     Keyboard.dismiss();
     CAN_POST='0';
   }
@@ -98,8 +100,8 @@ export class CategoryScreen extends React.Component{
 
       this._notificationSubscription = Notifications.addListener(this._handleNotification);
       url='https://oliang.itban.com/catlist';
-      //console.log('url:'+url);
-     //console.log('category did mount at:'+at);
+     //console.log('url:'+url);
+    //console.log('category did mount at:'+at);
       
       return fetch(url,{
         method:'get',
@@ -110,9 +112,14 @@ export class CategoryScreen extends React.Component{
     ) 
       .then((response)=>response.json())
       .then((responseJson)=>{
-        //console.log('fetch ok');
-        let ds = new ListView.DataSource({rowHasChanged:(r1,r2)=>1 !== r2});
-        this.setState({ isLoading: false, dataSource: ds.cloneWithRows(responseJson.data),},
+        
+       //console.log('fetch ok');
+       //console.log('responseJson');
+       //console.log(responseJson);
+        const data = responseJson.data;
+       //console.log('data');
+       //console.log(data);
+        this.setState({ isLoading: false, dataSource: data},
           function(err){
               //console.log('err:'+err);
           });
@@ -171,55 +178,8 @@ export class CategoryScreen extends React.Component{
       </View>
       )
     }else{
-//        <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
-//<Image source={require('../img/menu-icon.png')}            style={{width:30,height:30}}             />
-      // resizeMode='cover' flex:1,flexDirection:'column',contentContainerStyle={styles.container}
-      //,justifyContent:'space-between' width:240,flex:0.20,marginBottom:0,paddingBottom:50
-//flex:1,width:240,padding:5,paddingTop:0,bottom:0
-//<View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center'}}  >
-/*
-        <View style={{height:40,padding:5,flex:1,flexDirection:'row',justifyContent:'space-between'} }> 
-        <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
-              <Image source={require('../img/menu-icon.png')} style={{width:30,height:30,marginRight:10}} />
-            </TouchableHighlight>
 
-            <TextInput placeholder="search" style={{height:30,width:200,color:'#ffffff',fontSize:20,borderBottomColor:'white',borderBottomWidth:1,alignItems:'center'}}
-            onChangeText={(text) => this.setState({text})}
-            />
-            <TouchableHighlight onPress={()=>{this.searchPost()}} >
-            <Image source={require ("../img/search-icon.png")} style={{height:30,width:30,right:0}} />
-            </TouchableHighlight>
-            </View>
-        <ScrollView 
-        contentContainerStyle={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',paddingTop:10,}}
-         >
-         <Image source={require ('../img/oliang-text.png')} style={{flex:0.3,width:240}} />
-         <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.2,width:160,margin:5}} />
-          <ListView style={{marginTop:20,width:260}} dataSource={this.state.dataSource}
-            renderRow={ (dr) =>
-            <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
-            <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
-            </TouchableHighlight>
-            }
-          />
-          
-          </ScrollView>
-          <ScrollView 
-        contentContainerStyle={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',paddingTop:10,}}
-         >
-         <Image source={require ('../img/oliang-text.png')} style={{flex:0.3,width:240}} />
-         <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.2,width:160,margin:5}} />
-          <ListView style={{marginTop:20,width:260}} dataSource={this.state.dataSource}
-            renderRow={ (dr) =>
-            <TouchableHighlight  onPress={()=>{this.props.navigation.navigate('Posts',{data:dr})}}>
-            <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
-            </TouchableHighlight>
-            }
-          />
-          
-          </ScrollView>          
-flex:1,flexDirection:'row',justifyContent:'flex-end'
-*/
+
 const topage='Posts';
 return (
   <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
@@ -228,7 +188,7 @@ return (
         resizeMode="cover" 
         source={require ('../img/background5.png')} >
         <View style={{flex:0.1,height:40,paddingTop:5,flexDirection:'row',justifyContent:'space-between'} }> 
-        <TouchableHighlight onPress={()=>{this.props.navigation.navigate('DrawerOpen')}} >      
+        <TouchableHighlight onPress={()=>{this.props.navigation.openDrawer();}} >      
               <Image source={require('../img/menu-icon.png')} style={styles.icon} />
             </TouchableHighlight>
          
@@ -243,12 +203,16 @@ return (
             </View>
         <Image source={require ('../img/oliang-text.png')} style={{flex:0.15,resizeMode:'contain'}} />
         <Image source={require ('../img/nbtc_telco.png')} style={{flex:0.15,resizeMode:'contain'}} />
-        <ListView style={{flex:8,marginTop:20,width:260,bottom:0}} dataSource={this.state.dataSource}
-            renderRow={ (dr) =>              
-            <TouchableHighlight  onPress={()=>{this.props.navigation.navigate( dr.id==8 ? 'Posts' : 'AllPosts' ,{data:dr})}}>
-            <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.name}</Text></View>
-            </TouchableHighlight>
+        <FlatList style={{flex:8,marginTop:20,width:260,bottom:0}} data={this.state.dataSource}
+            renderItem={ (dr) =>{    
+             //console.log('dr');          
+             //console.log(dr);          
+            return (<TouchableHighlight  onPress={()=>{this.props.navigation.navigate( dr.id==8 ? 'Posts' : 'AllPosts' ,{data:dr.item})}}>
+            <View style={{borderBottomWidth:1,borderColor:'#aaa',padding:5}}><Text style={styles.catname}>{dr.item.name}</Text></View>
+            </TouchableHighlight>)
+            }
           }
+          keyExtractor={(item,index)=>index.toString()}
           />
     </ImageBackground>  
 
@@ -258,15 +222,14 @@ return (
       
     }
   }
-  //<Text style={{flex:1,backgroundColor:'rgba(0,0,0,0)',color:'#a00',fontSize:48}}>โอเลี้ยง กสทช</Text>
+  
   UserLogout(){
     const { navigate } = this.props.navigation;
-    //console.log('loging out');
+  
     AsyncStorage.clear(()=>{
-      //console.log('async storage cleared ');
+  
       navigate('Login');
     });
-
   }
 }
 
@@ -278,7 +241,7 @@ const styles = StyleSheet.create({
 });
 //Post:{    screen: PostNew,  },
 
-const DrawNavigator1 = DrawerNavigator({
+const DrawNavigator1 = createDrawerNavigator({
   Back:{    screen: CategoryScreen,  },
   Postnew:{screen:PostNew} ,
   Profile:{    screen: Profile,headerMode:'screen'  },
@@ -289,11 +252,12 @@ const DrawNavigator1 = DrawerNavigator({
   headerMode:'none',
 });
 
-const DrawNavigator0 = DrawerNavigator({
+const DrawNavigator0 = createDrawerNavigator({
   Back:{    screen: CategoryScreen,  },
+  
   Profile:{    screen: Profile,headerMode:'screen'  },
   Appuni:{    screen: Appuni,  },
-  About:{    screen: AboutScreen,  },
+  About:{    screen: AboutScreen,navigationOptions:{header:true,headerMode:'screen'}  },
   Logout:{    screen: Logout, }
 },{
   headerMode:'none',
