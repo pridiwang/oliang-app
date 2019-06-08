@@ -5,7 +5,7 @@ import { Animated,Dimensions,Image,ScrollView,ActivityIndicator,StyleSheet, Flat
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Expo,{Video} from 'expo';
+import Expo from 'expo';
 import MediaMeta from 'react-native-media-meta';
 
 export default class PlayerScreen extends React.Component{

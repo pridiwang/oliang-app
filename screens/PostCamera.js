@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo';
+import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 export default class PostCamera extends React.Component {
     static navigationOptions=({navigation})=>({

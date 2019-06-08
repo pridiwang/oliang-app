@@ -84,12 +84,13 @@ export class CategoryScreen extends React.Component{
   }
   componentDidMount() { 
     if (Platform.OS === 'android') {
-      Expo.Notifications.createChannelAndroidAsync('oliang-noti', {
+      Notifications.createChannelAndroidAsync('oliang-noti', {
         name: 'Reminders',
         priority: 'max',
         vibrate: [0, 250, 250, 250],
       });
     }
+    
     AsyncStorage.getItem('at',(err,at)=>{
       registerForPushNotificationsAsync(at);
       AsyncStorage.getItem('push_token',(err,pt)=>{
