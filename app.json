@@ -8,18 +8,18 @@
         "loading":{
             "backgroundImage": "./img/nbtc-telecom.png"
         },
-        "version": "1.1.6",        
+        "version": "1.1.7",        
         "slug": "nbtc-oliang-app",
         "ios": {
             "bundleIdentifier": "th.go.nbtc.oliang",
             "icon": "./img/appicon4_1024.png",
-            "buildNumber":"50",
+            "buildNumber":"51",
             "supportsTablet":true
         },
         "android": {
             "permissions": [],
             "package": "th.go.nbtc.oliang.staging",
-            "versionCode":50,
+            "versionCode":51,
             "icon": "./img/appicon4_1024.png",
             "googleServicesFile": "./google-services.json"
         },

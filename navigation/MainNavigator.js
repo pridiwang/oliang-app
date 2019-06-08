@@ -15,7 +15,7 @@ import Test from '../screens/Test';
 import Splash from '../screens/Splash';
 import AboutScreen from '../screens/About';
 //import Logout from '../screens/Logout';
-//import PostNew from '../screens/PostNew';
+import PostNew from '../screens/PostNew';
 import PostCamera from '../screens/PostCamera';
 import WebScreen from '../screens/Web';
 //import Noti from '../screens/Noti';
