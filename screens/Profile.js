@@ -76,7 +76,7 @@ export default class Profile extends React.Component{
         var userinfo=JSON.parse(result1);
        //console.log(userinfo);
         this.setState({user:userinfo});
-       //console.log(this.state.user.username);
+       console.log(this.state.user);
         if(this.state.user.can_post=='1'){
           this.setState({'canPost':true});
         }
@@ -99,7 +99,7 @@ export default class Profile extends React.Component{
         return(
             <View style={styles1.container} >
                 {this.state.canPost &&
-                <Button title="เขียนบทความใหม่" onPress={()=>this.props.navigation.navigate('PostNew')} />
+                <Button title="เขียนบทความใหม่" onPress={()=>this.props.navigation.navigate('Postnew')} />
                 }
           <Image source={{uri:this.state.user.img}} style={{width:100,height:100}} />
           <View style={{flexDirection:'row',flex:1,}}>

@@ -66,16 +66,22 @@ export class CategoryScreen extends React.Component{
   constructor(props){
     super(props);
     this.state={isLoading:true,notification:{},dataSource:null};
-    //Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
-    //await ScreenOrientation.allowAsync(ScreenOrientation.Orientation.PORTRAIT);
     Keyboard.dismiss();
-    CAN_POST='0';
+    //CAN_POST='0';
   }
   _handleNotification = (notification) => {
     this.setState({notification: notification});
     //console.log(JSON.stringify(notification));
     //Alert.alert("บทความใหม่","notification \norigin:"+notification.origin+"\ndata:"+notification.data.body);
   };
+  componentWillMount() { 
+    AsyncStorage.getItem('can_post',(err,cp)=>{
+      CAN_POST=cp;
+      //console.log('cp '+cp,' CAN_POST '+CAN_POST);
+      
+    });
+
+  }
   componentDidMount() { 
     if (Platform.OS === 'android') {
       Expo.Notifications.createChannelAndroidAsync('oliang-noti', {
@@ -84,14 +90,7 @@ export class CategoryScreen extends React.Component{
         vibrate: [0, 250, 250, 250],
       });
     }
-    AsyncStorage.getItem('can_post',(err,cp)=>{
-      CAN_POST=cp;
-      //console.log('cp '+cp);
-      
-    });
     AsyncStorage.getItem('at',(err,at)=>{
-      //console.log(' stored at:'+at+' error '+err);
-      //navigate('Category');
       registerForPushNotificationsAsync(at);
       AsyncStorage.getItem('push_token',(err,pt)=>{
         
@@ -100,9 +99,6 @@ export class CategoryScreen extends React.Component{
 
       this._notificationSubscription = Notifications.addListener(this._handleNotification);
       url='https://oliang.itban.com/catlist';
-     //console.log('url:'+url);
-    //console.log('category did mount at:'+at);
-      
       return fetch(url,{
         method:'get',
         headers:{
@@ -112,39 +108,20 @@ export class CategoryScreen extends React.Component{
     ) 
       .then((response)=>response.json())
       .then((responseJson)=>{
-        
-       //console.log('fetch ok');
-       //console.log('responseJson');
-       //console.log(responseJson);
         const data = responseJson.data;
-       //console.log('data');
-       //console.log(data);
+
         this.setState({ isLoading: false, dataSource: data},
           function(err){
-              //console.log('err:'+err);
+
           });
-         //console.log('responseJson');
-         //console.log(responseJson);
+
           AsyncStorage.setItem('userjson',JSON.stringify(responseJson.user));
           AsyncStorage.setItem('can_post',JSON.stringify(responseJson.user.can_post));
       })
       .catch((error) => {
-       //console.error(error);
-      });
 
-      url='https://oliang.itban.com/appuni';
-      //console.log('url:'+url);
-      //console.log('at:'+at);
-      registerForPushNotificationsAsync(at);
-      return fetch(url,{method:'GET',headers:{'Authorization':at}})
-      .then((response)=>response.json())
-      .then((responseJson)=>{
-        //console.log('fetch ok');
-        let dr=responseJson.data[0];
       });
-    
     });
-    
   }
 
   searchPost(){
@@ -168,7 +145,7 @@ export class CategoryScreen extends React.Component{
      //console.log('set to:'+result);
     });
     AsyncStorage.getItem('can_post',(err,can_post)=>{
-      //console.log('set to:'+result);
+      //console.log('set can post to:'+can_post);
       CAN_POST=can_post;
      });
     if(this.state.isLoading==true){
@@ -188,7 +165,7 @@ return (
         resizeMode="cover" 
         source={require ('../img/background5.png')} >
         <View style={{flex:0.1,height:40,paddingTop:5,flexDirection:'row',justifyContent:'space-between'} }> 
-        <TouchableHighlight onPress={()=>{this.props.navigation.openDrawer();}} >      
+        <TouchableHighlight onPress={()=>{this.props.navigation.toggleDrawer();}} >      
               <Image source={require('../img/menu-icon.png')} style={styles.icon} />
             </TouchableHighlight>
          
@@ -230,7 +207,7 @@ return (
   
       navigate('Login');
     });
-  }
+  } 
 }
 
 const styles = StyleSheet.create({
@@ -242,24 +219,23 @@ const styles = StyleSheet.create({
 //Post:{    screen: PostNew,  },
 
 const DrawNavigator1 = createDrawerNavigator({
-  Back:{    screen: CategoryScreen,  },
-  Postnew:{screen:PostNew} ,
-  Profile:{    screen: Profile,headerMode:'screen'  },
-  Appuni:{    screen: Appuni,  },
-  About:{    screen: AboutScreen,  },
-  Logout:{    screen: Logout, }
+  Back:     {screen: CategoryScreen,  },
+  Postnew:  {screen:PostNew,} ,
+  Profile:  {screen: Profile,headerMode:'screen',  },
+  Appuni:   {screen: Appuni,  },
+  About:    {screen: AboutScreen,  },
+  Logout:   {screen: Logout,}
 },{
   headerMode:'none',
 });
 
 const DrawNavigator0 = createDrawerNavigator({
   Back:{    screen: CategoryScreen,  },
-  
   Profile:{    screen: Profile,headerMode:'screen'  },
-  Appuni:{    screen: Appuni,  },
   About:{    screen: AboutScreen,navigationOptions:{header:true,headerMode:'screen'}  },
+  Appuni:{    screen: Appuni,  },
   Logout:{    screen: Logout, }
 },{
   headerMode:'none',
 });
-export default (CAN_POST==='1'? DrawNavigator1 : DrawNavigator0)
+export default (CAN_POST==='1' ? DrawNavigator1 : DrawNavigator0 )

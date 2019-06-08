@@ -25,7 +25,7 @@ static navigationOptions = {
     });
     AsyncStorage.clear(()=>{
      //console.log('async storage cleared ');
-      navigate('Splash');
+      navigate('Login');
     });
     
   }

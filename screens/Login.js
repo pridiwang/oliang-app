@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {ScrollView, StyleSheet, Text,TextInput, View,Button,TouchableHighlight,Alert,AsyncStorage,Image,Platform,Keyboard, ImageBackground } from 'react-native';
 import Expo from 'expo';
-import {Facebook} from 'expo';
+import * as Facebook from 'expo-facebook';
 import {StackNavigator,DrawerNavigator,TabNavigator} from 'react-navigation';
 
 //226125624536427
@@ -78,15 +78,15 @@ export default class LoginScreen extends React.Component {
   }
   async fbLogin(){
     const { navigate } = this.props.navigation;
-   console.log(' calling fblogin');
+   //console.log(' calling fblogin');
     
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('226125624536427',
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync('226125624536427',
     {
         permissions: ['public_profile','email'],
-        behavior: 'web',
+        behavior: 'system',
       });
      //console.log('type:'+type);
-    if (type === 'success') {
+    if (type === 'success') { 
      //console.log(' login success token:'+token);
       
       // Get the user's name using Facebook's Graph API //,{parameters:{fields:{public_profile,email},access_token:token}}

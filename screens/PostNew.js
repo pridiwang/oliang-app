@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import {Picker,AsyncStorage, Alert,Modal,View,Text,Button,TextInput,Image,StyleSheet,TouchableHighlight,TouchableOpacity, ScrollView,Platform}  from 'react-native';
 import {StackNavigator,TabNavigator,DrawerNavigator} from 'react-navigation';
 //import {MainNavigator} from '../navigation/MainNavigator';
-import {Camera, Notifications,ImagePicker,Video } from 'expo';
+//import {Camera, Notifications } from 'expo';
+import * as ImagePicker from 'expo-image-picker';
+import { Audio, Video } from 'expo-av';
+import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import { Ionicons } from '@expo/vector-icons';
 //import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -16,7 +19,8 @@ export default class PostNew extends React.Component{
         headerStyle:{marginTop: Platform.OS ==='ios' ? 0 : -30 },
         headerLeft: <TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-arrow-back" style={styles.topbtn} size={32}  /></TouchableHighlight>,
         headerRight:<TouchableHighlight onPress={()=>navigation.navigate('Category',)}><Ionicons name="md-home" style={styles.topbtn} size={32}  /></TouchableHighlight>,
-
+        headerMode:'screen',
+        header:true,
         drawerLabel: 'เขียนบทความใหม่',
         drawerLockMode: 'locked-closed',
         drawerIcon: ({ tintColor }) => (
@@ -207,7 +211,7 @@ export default class PostNew extends React.Component{
             return <Text>No access to camera</Text>;
           } else {
         return (
-          <ScrollView style={{padding:10,paddingTop:10,flexGrow:1}}>
+          <ScrollView style={{padding:10,paddingTop:30,flexGrow:1}}>
       <Text style={{flex:1,fontSize:18,backgroundColor:'#600',color:'white',textAlign:'center'}}> - เขียนบทความใหม่ - </Text>
       <Text>เรื่อง</Text>
             <TextInput ref='title' multiline={true} underlineColorAndroid="rgba(255,255,255,0)" style={{height: 40,fontSize:14, borderColor: '#bbbbbb', borderWidth:1,padding:2,backgroundColor:'#fff',textAlignVertical:'top'}}
@@ -220,6 +224,8 @@ export default class PostNew extends React.Component{
     onChangeText={(text) => this.setState({content:text})}
     value={this.state.content}></TextInput>
   <View style={{flexDirection:'row',justifyContent:'space-between',flex:1}} >
+  <TouchableHighlight onPress={()=>this.props.navigation.navigate('Back')} >
+      <Ionicons name="md-backspace" style={styles.mbtn} size={32}  /></TouchableHighlight>
     <TouchableHighlight onPress={this._pickImage} >
       <Ionicons name="md-image" style={styles.mbtn} size={32}  /></TouchableHighlight>
     <TouchableHighlight onPress={this._pickVdo} >
@@ -231,6 +237,7 @@ export default class PostNew extends React.Component{
     </View>
     {image && <Image source={{uri: image}} style={{flex:1,height:200}} /> }
     {vdo && <Video source={{uri:vdo}} resizeMode="cover" useNativeControls={true}  style={{flex:1,height:200}} /> }
+
             </ScrollView>)
           }
     }
